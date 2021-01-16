@@ -40,7 +40,8 @@ function createAnimals() {
     let x = random(0, width);
     let y = random(0, height);
     let animalImage = random(animalImages);
-    let animal = new Animal(x, y, animalImage);
+    let angle = random(-15, 15)
+    let animal = new Animal(x, y, animalImage, angle);
     animals.push(animal);
   }
 }
