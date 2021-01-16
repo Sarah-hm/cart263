@@ -13,6 +13,8 @@ let animals = [];
 
 let sausageDogImage = undefined;
 let sausageDog = undefined;
+
+let barkSFX = undefined;
 // preload()
 // Description of preload
 function preload() {
@@ -22,6 +24,7 @@ function preload() {
   }
 
   sausageDogImage = loadImage(`assets/images/sausage-dog.png`)
+  barkSFX = loadSound(`assets/sounds/bark.wav`)
 }
 
 // setup()
