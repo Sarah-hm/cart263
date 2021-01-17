@@ -30,6 +30,7 @@ function preload() {
 // setup()
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  angleMode(DEGREES)
   createAnimals()
   createSausageDog()
 }
@@ -40,7 +41,7 @@ function createAnimals() {
     let x = random(0, width);
     let y = random(0, height);
     let animalImage = random(animalImages);
-    let angle = random(-15, 15)
+    let angle = random(-90, 90)
     let animal = new Animal(x, y, animalImage, angle);
     animals.push(animal);
   }
@@ -70,5 +71,9 @@ function drawSausageDog() {
 }
 
 function mousePressed() {
+  for (let i = 0; i < animals.length; i++) {
+    animals[i].mousePressed();
+  }
   sausageDog.mousePressed();
+
 }

@@ -5,10 +5,19 @@ class Animal {
     this.image = image;
 
     this.angle = angle;
+
+    this.clicked = false;
   }
 
   update() {
+    this.setTransparency();
     this.display();
+  }
+
+  setTransparency() {
+    if (this.overlap(mouseX, mouseY)) {
+      tint(255, 255)
+    } else(tint(255, 10))
   }
 
   display() {
