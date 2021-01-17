@@ -6,12 +6,15 @@ class Animal {
 
     this.angle = angle;
 
+    this.clickSound = loseSFX;
+
     this.clicked = false;
   }
 
   update() {
     this.setTransparency();
     this.display();
+    this.checkIfLose();
   }
 
   setTransparency() {
@@ -37,6 +40,21 @@ class Animal {
       return true;
     } else {
       return false
+    }
+  }
+
+  mousePressed() {
+    if (this.overlap(mouseX, mouseY)) {
+      this.clicked = true
+    }
+  }
+
+  checkIfLose() {
+    if (this.clicked) {
+      this.clicked = false;
+      if (!this.clickSound.isPlaying()) {
+        this.clickSound.play();
+      }
     }
   }
 }

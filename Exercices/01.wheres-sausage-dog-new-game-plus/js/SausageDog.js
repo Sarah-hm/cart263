@@ -19,10 +19,10 @@ class SausageDog extends Animal {
   }
 
   //The closer the mouse is, the louder the bark
-  //Got helped from my own P2 coding because I AM RUSTY AS HECK. 
+  //Got helped from my own P2 coding because I AM RUSTY AS HECK.
   bark() {
     let d = int(dist(mouseX, mouseY, this.x, this.y))
-    this.barkVolume = map(d, 600, 0, 0, 0.7);
+    this.barkVolume = map(d, 800, 0, 0, 0.7);
     this.barkSound.setVolume(this.barkVolume);
     if (!this.barkSound.isPlaying()) {
       this.barkSound.play();

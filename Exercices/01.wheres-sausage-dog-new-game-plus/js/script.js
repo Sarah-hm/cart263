@@ -15,6 +15,7 @@ let sausageDogImage = undefined;
 let sausageDog = undefined;
 
 let barkSFX = undefined;
+let loseSFX = undefined;
 // preload()
 // Description of preload
 function preload() {
@@ -23,8 +24,9 @@ function preload() {
     animalImages.push(animalImage);
   }
 
-  sausageDogImage = loadImage(`assets/images/sausage-dog.png`)
-  barkSFX = loadSound(`assets/sounds/bark.wav`)
+  sausageDogImage = loadImage(`assets/images/sausage-dog.png`);
+  barkSFX = loadSound(`assets/sounds/bark.wav`);
+  loseSFX = loadSound(`assets/sounds/sadTrombone.wav`);
 }
 
 // setup()
