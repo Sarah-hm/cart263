@@ -7,7 +7,7 @@ Modifications from Activity 01:
 it barks louder if the mouse get closer to him, helping you find him
 -All animals are transparent unless your mouse is hovering over them;
 -All animals are displayed at a random angle between -15 and 15 degrees;
--A sad trombone plays if you click on the wrong animal. 
+-A sad trombone plays if you click on the wrong animal.
 ******************/
 
 //Declare variables
@@ -58,7 +58,8 @@ function createAnimals() {
 function createSausageDog() {
   let x = random(0, width);
   let y = random(0, height);
-  sausageDog = new SausageDog(x, y, sausageDogImage);
+  let angle = random(-90, 90)
+  sausageDog = new SausageDog(x, y, sausageDogImage, angle);
 }
 
 // draw()
