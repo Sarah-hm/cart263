@@ -19,7 +19,7 @@ class Animal {
 
   setTransparency() {
     if (this.overlap(mouseX, mouseY)) {
-      tint(255, 255)
+      tint(255, 255);
     } else(tint(255, 10))
   }
 
@@ -39,13 +39,13 @@ class Animal {
       y < this.y + this.image.height / 2) {
       return true;
     } else {
-      return false
+      return false;
     }
   }
 
   mousePressed() {
-    if (this.overlap(mouseX, mouseY)) {
-      this.clicked = true
+    if (this.overlap(mouseX, mouseY) && !sausageDog.overlap(mouseX, mouseY)) {
+      this.clicked = true;
     }
   }
 

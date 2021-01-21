@@ -32,7 +32,7 @@ class SausageDog extends Animal {
 
   mousePressed() {
     if (this.overlap(mouseX, mouseY)) {
-      this.found = true
+      this.found = true;
     }
   }
 }

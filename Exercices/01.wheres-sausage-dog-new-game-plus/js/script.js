@@ -2,6 +2,12 @@
 /*****************
 Activity 01 - Where's sausage dog?
 Sarah Hm
+Modifications from Activity 01:
+-The sausage dog barks at all time (once you interact with the webpage);
+it barks louder if the mouse get closer to him, helping you find him
+-All animals are transparent unless your mouse is hovering over them;
+-All animals are displayed at a random angle between -15 and 15 degrees;
+-A sad trombone plays if you click on the wrong animal. 
 ******************/
 
 //Declare variables
