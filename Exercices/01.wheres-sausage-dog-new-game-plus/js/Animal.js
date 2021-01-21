@@ -8,13 +8,12 @@ class Animal {
 
     this.clickSound = loseSFX;
 
-    this.clicked = false;
   }
 
   update() {
     this.setTransparency();
     this.display();
-    this.checkIfLose();
+    // this.checkIfLose();
   }
 
   setTransparency() {
@@ -45,16 +44,10 @@ class Animal {
 
   mousePressed() {
     if (this.overlap(mouseX, mouseY) && !sausageDog.overlap(mouseX, mouseY)) {
-      this.clicked = true;
-    }
-  }
-
-  checkIfLose() {
-    if (this.clicked) {
-      this.clicked = false;
       if (!this.clickSound.isPlaying()) {
         this.clickSound.play();
       }
     }
+
   }
 }

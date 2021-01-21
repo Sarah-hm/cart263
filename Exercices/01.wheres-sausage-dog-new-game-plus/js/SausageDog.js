@@ -1,15 +1,21 @@
 class SausageDog extends Animal {
+  //construct a sausage dog based on Animal.js
   constructor(x, y, image) {
     super(x, y, image);
     this.found = false;
     this.rotationSpeed = 0.25;
 
-    //bark
+    //make it bark
     this.barkSound = barkSFX;
     this.barkVolume = 0.5;
 
+
+    this.clickSound = loseSFX;
+
+    this.clicked = false;
   }
 
+  //Will update just like Animal.js as well as bark. If it's found, will rotat.e
   update() {
     super.update();
     this.bark();
@@ -33,6 +39,8 @@ class SausageDog extends Animal {
   mousePressed() {
     if (this.overlap(mouseX, mouseY)) {
       this.found = true;
+    } else if (!this.clickSound.isPlaying()) {
+      this.clickSound.play();
     }
   }
 }
