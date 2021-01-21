@@ -6,8 +6,7 @@ class Animal {
 
     this.angle = angle;
 
-    this.clickSound = loseSFX;
-
+    this.loseSound = loseSFX;
   }
 
   update() {
@@ -19,7 +18,7 @@ class Animal {
   setTransparency() {
     if (this.overlap(mouseX, mouseY)) {
       tint(255, 255);
-    } else(tint(255, 10))
+    } else tint(255, 10);
   }
 
   display() {
@@ -27,15 +26,17 @@ class Animal {
     imageMode(CENTER);
     translate(this.x, this.y);
     rotate(this.angle);
-    image(this.image, 0, 0)
-    pop()
+    image(this.image, 0, 0);
+    pop();
   }
 
   overlap(x, y) {
-    if (x > this.x - this.image.width / 2 &&
+    if (
+      x > this.x - this.image.width / 2 &&
       x < this.x + this.image.width / 2 &&
       y > this.y - this.image.height / 2 &&
-      y < this.y + this.image.height / 2) {
+      y < this.y + this.image.height / 2
+    ) {
       return true;
     } else {
       return false;
@@ -43,11 +44,10 @@ class Animal {
   }
 
   mousePressed() {
-    if (this.overlap(mouseX, mouseY) && !sausageDog.overlap(mouseX, mouseY)) {
-      if (!this.clickSound.isPlaying()) {
-        this.clickSound.play();
+    if (this.overlap(mouseX, mouseY)) {
+      if (!this.loseSound.isPlaying()) {
+        this.loseSound.play();
       }
     }
-
   }
 }

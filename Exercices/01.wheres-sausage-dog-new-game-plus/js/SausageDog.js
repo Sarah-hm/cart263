@@ -5,23 +5,16 @@ class SausageDog extends Animal {
     this.found = false;
     this.rotationSpeed = 0.25;
 
-    //make it bark
+    // make it bark
     this.barkSound = barkSFX;
     this.barkVolume = 0.5;
-
-
-    this.clickSound = loseSFX;
-
-    this.clicked = false;
   }
 
   //Will update just like Animal.js as well as bark. If it's found, will rotat.e
   update() {
     super.update();
     this.bark();
-    if (this.found) {
-      this.angle += this.rotationSpeed;
-    }
+    this.checkIfWin();
   }
 
   //The closer the mouse is, the louder the bark
@@ -39,8 +32,14 @@ class SausageDog extends Animal {
   mousePressed() {
     if (this.overlap(mouseX, mouseY)) {
       this.found = true;
-    } else if (!this.clickSound.isPlaying()) {
-      this.clickSound.play();
+      console.log(this.found)
+    }
+  }
+
+  checkIfWin() {
+    console.log(`pleaseWork`)
+    if (this.found) {
+      this.angle += this.rotationSpeed;
     }
   }
 }
