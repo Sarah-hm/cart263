@@ -22,8 +22,10 @@ let sausageDog = undefined;
 
 let barkSFX = undefined;
 let loseSFX = undefined;
+
+
 // preload()
-// Description of preload
+// preloads 10 animal images + 1 sausage dog image, barking sound + sad trombone sound
 function preload() {
   for (let i = 0; i < NUM_ANIMAL_IMAGES; i++) {
     let animalImage = loadImage(`assets/images/animal${i}.png`);
@@ -36,6 +38,7 @@ function preload() {
 }
 
 // setup()
+//sets a canvas, degree, creates animals and sausage dog
 function setup() {
   createCanvas(windowWidth, windowHeight);
   angleMode(DEGREES)
@@ -43,6 +46,7 @@ function setup() {
   createSausageDog()
 }
 
+//Creates 100 random animals at a random position and angle
 function createAnimals() {
   //create animals
   for (let i = 0; i < NUM_ANIMALS; i++) {
@@ -55,6 +59,7 @@ function createAnimals() {
   }
 }
 
+//Creates 1 sausage dog at a random position and angle
 function createSausageDog() {
   let x = random(0, width);
   let y = random(0, height);
@@ -63,22 +68,26 @@ function createSausageDog() {
 }
 
 // draw()
+// Sets a yellow background, draws 100 animals and 1 sausage dog
 function draw() {
   background(255, 255, 0);
   drawAnimals();
   drawSausageDog();
 }
 
+//Updates the animal object using the length of the animals array (100)
 function drawAnimals() {
   for (let i = 0; i < animals.length; i++) {
     animals[i].update();
   }
 }
 
+//Updates the sausage dog object
 function drawSausageDog() {
   sausageDog.update();
 }
 
+//Reacts to animal(sad trombone) or sausage dog(win, rotation) object when mouse is pressed on it
 function mousePressed() {
   for (let i = 0; i < animals.length; i++) {
     animals[i].mousePressed();

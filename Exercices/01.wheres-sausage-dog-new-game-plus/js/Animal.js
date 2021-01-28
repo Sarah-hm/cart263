@@ -1,4 +1,5 @@
 class Animal {
+  //Set the parameters (position, image, angle, sound)
   constructor(x, y, image, angle) {
     this.x = x;
     this.y = y;
@@ -9,6 +10,7 @@ class Animal {
     this.loseSound = loseSFX;
   }
 
+  //Updates the transparency and displays the animal
   update() {
     this.setTransparency();
     this.display();
@@ -21,6 +23,7 @@ class Animal {
     } else tint(255, 10);
   }
 
+  //Display the animal at a certain position, angle and with an image
   display() {
     push();
     imageMode(CENTER);
@@ -30,6 +33,7 @@ class Animal {
     pop();
   }
 
+  //Check if the animal overlaps with mouse position, returns true or false
   overlap(x, y) {
     if (
       x > this.x - this.image.width / 2 &&
@@ -43,6 +47,7 @@ class Animal {
     }
   }
 
+  //Plays sad trombone sound if mouse is pressed on an animal
   mousePressed() {
     if (this.overlap(mouseX, mouseY)) {
       if (!this.loseSound.isPlaying()) {
