@@ -141,6 +141,14 @@ const animals = [
   "zebra"
 ];
 
+const instructions = `Guess the animal pronounced backwards
+by saying 'I think it is _'
+
+Press any key to start`
+
+const goodAnswerResponses = [`That is correct`, `You did good`, `Never thought you would get this one`, `wow! Good job!`]
+const wrongAnswerResponses = [`Not even close`, `You really thought you were going to get it?`, `That is embarrassing`, `That is just sad`]
+
 let currentAnimal = ``;
 let currentAnswer = ``;
 
@@ -168,32 +176,53 @@ function setup() {
 // draw()
 // Description of draw()
 function draw() {
-  background(0);
   checkState();
+}
 
-  function checkState() {
-    if (state === `title`) {
-      titleScreen()
-    } else if (state === `game`) {
-      game()
-    }
+
+function checkState() {
+  if (state === `title`) {
+    titleScreen()
+  } else if (state === `game`) {
+    game()
   }
+}
+
+
+function titleScreen() {
+  push()
+  background(255, 255, 0);
+  textSize(24);
+  fill(0);
+  text(instructions, width / 2, height / 2)
+  pop()
 }
 
 function game() {
+  background(0);
+  checkCurrentAnswer();
+}
+
+function checkCurrentAnswer() {
   if (currentAnswer === currentAnimal) {
     fill(0, 255, 0)
+    // let goodAnswerReaction = random(goodAnswerResponses);
+    // responsiveVoice.speak(goodAnswerReaction);
   } else {
     fill(255, 0, 0);
   }
-  text(currentAnimal, width / 2, height / 2);
+  text(currentAnswer, width / 2, height / 2);
+
 }
 
-
-function mousePressed() {
+function keyPressed() {
   if (state === `title`) {
     state = `game`
-  } else if (state === `game`) {
+  }
+}
+
+function mousePressed() {
+  if (state === `game`) {
     currentAnimal = random(animals);
     let reverseAnimal = reverseString(currentAnimal);
     responsiveVoice.speak(reverseAnimal);

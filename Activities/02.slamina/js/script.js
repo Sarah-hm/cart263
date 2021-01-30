@@ -1,7 +1,7 @@
 "use strict";
 
 /*****************
-
+Sarah Hontoy-Major
 Activity 02 : slamina mina eh eh waka waka eh eh
 ******************/
 const animals = [
