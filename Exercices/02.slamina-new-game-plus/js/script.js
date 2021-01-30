@@ -239,8 +239,8 @@ function setTimer() {
 function success() {
   push()
   gameState = `success`
-  // let goodAnswerReaction = random(goodAnswerResponses);
-  // responsiveVoice.speak(goodAnswerReaction);
+  let goodAnswerReaction = random(goodAnswerResponses);
+  responsiveVoice.speak(goodAnswerReaction);
   fill(0, 255, 0)
   text(currentAnswer, width / 2, height / 2);
   pop();
