@@ -178,12 +178,12 @@ function setup() {
 
 
 // draw()
-// Description of draw()
+// check if states
 function draw() {
   checkState();
 }
 
-
+//If state is title, show the instructions; if state is game, play the game.
 function checkState() {
   if (state === `title`) {
     titleScreen()
@@ -192,7 +192,7 @@ function checkState() {
   }
 }
 
-
+//Sets background to yellow and instruction string in the middle of canvas
 function titleScreen() {
   push()
   background(255, 255, 0);
@@ -202,14 +202,14 @@ function titleScreen() {
   pop()
 }
 
+//Set the bg to black, set timer (that is 0 before clicking), check currect voice input
 function game() {
   background(0);
   setTimer();
   checkCurrentAnswer();
 }
 
-
-
+//If the answer is good, goes to success function. If it's wrong, goes to fail function.
 function checkCurrentAnswer() {
   if (currentAnswer === currentAnimal) {
     success();
@@ -219,12 +219,15 @@ function checkCurrentAnswer() {
 }
 
 
-//timer will reduce by 1 every second until it's game over
+//timer will go down by 1 every second, if you succeed it will stop, if it goes to 0 you will fail.
 function setTimer() {
   if (gameState === `ongoing`) {
     if (frameCount % 60 === 0 && timer > 0) {
       timer--
     }
+  }
+  if (timer === 0) {
+    fail()
   }
   push()
   fill(255)
@@ -232,6 +235,7 @@ function setTimer() {
   pop()
 }
 
+//You succeeded. Gives you nice voice feedback + showcases the answer in green
 function success() {
   push()
   gameState = `success`
@@ -242,6 +246,7 @@ function success() {
   pop();
 }
 
+//You failed. Gives you not-so-nice voice feedback + showcases your answer in red
 function fail() {
   push()
   gameState = `fail`
@@ -252,6 +257,7 @@ function fail() {
   pop();
 }
 
+//Changes state from title to game when any key is pressed
 function keyPressed() {
   if (state === `title`) {
     state = `game`
@@ -269,6 +275,7 @@ function mousePressed() {
   }
 }
 
+//Guess an animal
 function guessAnimal(animal) {
   currentAnswer = animal.toLowerCase();
   console.log(currentAnswer);
