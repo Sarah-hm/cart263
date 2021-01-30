@@ -153,6 +153,10 @@ let currentAnimal = ``;
 let currentAnswer = ``;
 
 let state = `title` //Can be title or game
+let gameState = `` //can be ``, ongoing, success, fail
+
+// set a timer with 10 seconds
+let timer = ``;
 
 // setup()
 // Description of setup
@@ -200,19 +204,52 @@ function titleScreen() {
 
 function game() {
   background(0);
+  setTimer();
   checkCurrentAnswer();
 }
 
+
+
 function checkCurrentAnswer() {
   if (currentAnswer === currentAnimal) {
-    fill(0, 255, 0)
-    // let goodAnswerReaction = random(goodAnswerResponses);
-    // responsiveVoice.speak(goodAnswerReaction);
-  } else {
-    fill(255, 0, 0);
+    success();
+  } else if (!currentAnswer === currentAnimal) {
+    fail();
   }
-  text(currentAnswer, width / 2, height / 2);
+}
 
+
+//timer will reduce by 1 every second until it's game over
+function setTimer() {
+  if (gameState === `ongoing`) {
+    if (frameCount % 60 === 0 && timer > 0) {
+      timer--
+    }
+  }
+  push()
+  fill(255)
+  text(timer, width / 2, height / 10)
+  pop()
+}
+
+function success() {
+  push()
+  gameState = `success`
+  // let goodAnswerReaction = random(goodAnswerResponses);
+  // responsiveVoice.speak(goodAnswerReaction);
+  fill(0, 255, 0)
+  text(currentAnswer, width / 2, height / 2);
+  pop();
+}
+
+function fail() {
+  push()
+  gameState = `fail`
+  // let wrongAnswerReaction = random(wrongAnswerResponses);
+  // responsiveVoice.speak(wrongAnswerReaction);
+  fill(0, 255, 0)
+  text(currentAnswer, width / 2, height / 2);
+  pop();
 }
 
 function keyPressed() {
@@ -221,11 +258,14 @@ function keyPressed() {
   }
 }
 
+//if the we're in the game, current Animal will be randomly selected, told backwards and timer will be set to 10 seconds
 function mousePressed() {
   if (state === `game`) {
     currentAnimal = random(animals);
     let reverseAnimal = reverseString(currentAnimal);
     responsiveVoice.speak(reverseAnimal);
+    timer = 20;
+    gameState = `ongoing`
   }
 }
 
