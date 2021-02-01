@@ -206,14 +206,14 @@ function titleScreen() {
 function game() {
   background(0);
   setTimer();
-  checkCurrentAnswer();
+
 }
 
 //If the answer is good, goes to success function. If it's wrong, goes to fail function.
 function checkCurrentAnswer() {
   if (currentAnswer === currentAnimal) {
     success();
-  } else if (!currentAnswer === currentAnimal) {
+  } else if (currentAnswer !== currentAnimal) {
     fail();
   }
 }
@@ -250,8 +250,8 @@ function success() {
 function fail() {
   push()
   gameState = `fail`
-  // let wrongAnswerReaction = random(wrongAnswerResponses);
-  // responsiveVoice.speak(wrongAnswerReaction);
+  let wrongAnswerReaction = random(wrongAnswerResponses);
+  responsiveVoice.speak(wrongAnswerReaction);
   fill(0, 255, 0)
   text(currentAnswer, width / 2, height / 2);
   pop();
@@ -278,6 +278,7 @@ function mousePressed() {
 //Guess an animal
 function guessAnimal(animal) {
   currentAnswer = animal.toLowerCase();
+  checkCurrentAnswer();
   console.log(currentAnswer);
 }
 
