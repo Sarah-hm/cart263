@@ -255,33 +255,30 @@ function guessAnimal(animal) {
 //If the answer is good, goes to success function. If it's wrong, goes to fail function.
 function checkCurrentAnswer() {
   if (currentAnswer == currentAnimal) {
-    success();
+    gameState = `success`
   } else if (currentAnswer !== currentAnimal) {
-    fail();
+    gameState = `fail`
   }
+  showAnimalString();
 }
 
-//You succeeded. Gives you nice voice feedback + showcases the answer in green
-function success() {
-  push()
-  gameState = `success`
-  let goodAnswerReaction = random(goodAnswerResponses);
-  responsiveVoice.speak(goodAnswerReaction);
-  fill(0)
-  text(currentAnimal, width / 2, height / 2);
-  console.log(currentAnimal);
-  pop();
-}
 
-//You failed. Gives you not-so-nice voice feedback + showcases your answer in red
-function fail() {
-  push()
-  gameState = `fail`
-  let wrongAnswerReaction = random(wrongAnswerResponses);
-  responsiveVoice.speak(wrongAnswerReaction);
-  fill(0, 255, 0)
-  text(currentAnswer, width / 2, height / 2);
-  pop();
+//Show the animal whether you got it or not, but gives you appropriate color and feedback
+function showAnimalString() {
+  //You succeeded. Gives you nice voice feedback + showcases the answer in green
+  if (gameState === `success`) {
+    let goodAnswerReaction = random(goodAnswerResponses);
+    responsiveVoice.speak(goodAnswerReaction);
+    fill(0, 255, 0)
+  }
+  //You failed. Gives you not-so-nice voice feedback + showcases your answer in red
+  else if (gameState === `fail`) {
+    let wrongAnswerReaction = random(wrongAnswerResponses);
+    responsiveVoice.speak(wrongAnswerReaction);
+    fill(255, 0, 0)
+  }
+  text(currentAnimal, width / 2, height / 2)
+  console.log(currentAnimal)
 }
 
 /**
@@ -296,4 +293,5 @@ function reverseString(string) {
   let result = reverseCharacters.join('');
   // Return the result
   return result;
+  f
 }
