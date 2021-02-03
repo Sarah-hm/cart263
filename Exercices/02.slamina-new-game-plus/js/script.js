@@ -141,10 +141,11 @@ const animals = [
   "zebra"
 ];
 
-const instructions = `Guess the animal pronounced backwards
+const instructions = `Guess the animal said backwards
 by saying 'I think it is _'
 
-Press any key to start`
+Press any key to start
+and then click your mouse`
 
 const goodAnswerResponses = [`That is correct`, `You did good`, `Never thought you would get this one`, `wow! Good job!`]
 const wrongAnswerResponses = [`Not even close`, `You really thought you were going to get it?`, `That is embarrassing`, `That is just sad`]
@@ -206,16 +207,6 @@ function titleScreen() {
 function game() {
   background(0);
   setTimer();
-
-}
-
-//If the answer is good, goes to success function. If it's wrong, goes to fail function.
-function checkCurrentAnswer() {
-  if (currentAnswer === currentAnimal) {
-    success();
-  } else if (currentAnswer !== currentAnimal) {
-    fail();
-  }
 }
 
 
@@ -233,28 +224,6 @@ function setTimer() {
   fill(255)
   text(timer, width / 2, height / 10)
   pop()
-}
-
-//You succeeded. Gives you nice voice feedback + showcases the answer in green
-function success() {
-  push()
-  gameState = `success`
-  let goodAnswerReaction = random(goodAnswerResponses);
-  responsiveVoice.speak(goodAnswerReaction);
-  fill(0, 255, 0)
-  text(currentAnswer, width / 2, height / 2);
-  pop();
-}
-
-//You failed. Gives you not-so-nice voice feedback + showcases your answer in red
-function fail() {
-  push()
-  gameState = `fail`
-  let wrongAnswerReaction = random(wrongAnswerResponses);
-  responsiveVoice.speak(wrongAnswerReaction);
-  fill(0, 255, 0)
-  text(currentAnswer, width / 2, height / 2);
-  pop();
 }
 
 //Changes state from title to game when any key is pressed
@@ -280,6 +249,39 @@ function guessAnimal(animal) {
   currentAnswer = animal.toLowerCase();
   checkCurrentAnswer();
   console.log(currentAnswer);
+}
+
+
+//If the answer is good, goes to success function. If it's wrong, goes to fail function.
+function checkCurrentAnswer() {
+  if (currentAnswer == currentAnimal) {
+    success();
+  } else if (currentAnswer !== currentAnimal) {
+    fail();
+  }
+}
+
+//You succeeded. Gives you nice voice feedback + showcases the answer in green
+function success() {
+  push()
+  gameState = `success`
+  let goodAnswerReaction = random(goodAnswerResponses);
+  responsiveVoice.speak(goodAnswerReaction);
+  fill(0)
+  text(currentAnimal, width / 2, height / 2);
+  console.log(currentAnimal);
+  pop();
+}
+
+//You failed. Gives you not-so-nice voice feedback + showcases your answer in red
+function fail() {
+  push()
+  gameState = `fail`
+  let wrongAnswerReaction = random(wrongAnswerResponses);
+  responsiveVoice.speak(wrongAnswerReaction);
+  fill(0, 255, 0)
+  text(currentAnswer, width / 2, height / 2);
+  pop();
 }
 
 /**
