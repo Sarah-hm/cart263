@@ -207,6 +207,17 @@ function titleScreen() {
 function game() {
   background(0);
   setTimer();
+  if (gameState === `success`) {
+    fill(0, 255, 0)
+    text(currentAnimal, width / 2, height / 2)
+    console.log(currentAnimal)
+  }
+  //You failed. Gives you not-so-nice voice feedback + showcases your answer in red
+  else if (gameState === `fail`) {
+    fill(255, 0, 0)
+    text(currentAnimal, width / 2, height / 2)
+    console.log(currentAnimal)
+  }
 }
 
 
@@ -269,16 +280,12 @@ function showAnimalString() {
   if (gameState === `success`) {
     let goodAnswerReaction = random(goodAnswerResponses);
     responsiveVoice.speak(goodAnswerReaction);
-    fill(0, 255, 0)
   }
   //You failed. Gives you not-so-nice voice feedback + showcases your answer in red
   else if (gameState === `fail`) {
     let wrongAnswerReaction = random(wrongAnswerResponses);
     responsiveVoice.speak(wrongAnswerReaction);
-    fill(255, 0, 0)
   }
-  text(currentAnimal, width / 2, height / 2)
-  console.log(currentAnimal)
 }
 
 /**
@@ -293,5 +300,4 @@ function reverseString(string) {
   let result = reverseCharacters.join('');
   // Return the result
   return result;
-  f
 }
