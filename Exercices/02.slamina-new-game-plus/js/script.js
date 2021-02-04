@@ -229,7 +229,7 @@ function setTimer() {
     }
   }
   if (timer === 0) {
-    fail()
+    gameState = `fail`
   }
   push()
   fill(255)
