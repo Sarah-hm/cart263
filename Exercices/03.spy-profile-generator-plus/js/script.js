@@ -4,9 +4,10 @@
 Sarah Hontoy-Major
 Exercice 3 : spy profil generator
 
-password : advocacy
+Let's you create a new profile or use an already existing profile (only 1) if you know your password.
 ******************/
 
+//Set the profile object with the spy's information
 let spyProfile = {
   name: `REDACTED`,
   alias: `REDACTED`,
@@ -15,15 +16,18 @@ let spyProfile = {
   password: `REDACTED`
 };
 
+//All the JSON data needed to create the profile
 let tarotData = undefined;
 let objectData = undefined;
 let instrumentData = undefined;
 let descriptionData = undefined;
 let jobData = undefined;
 
+//Set possible states
 let state = `homepage` // can be homepage or profile
 
-let generateProfileString = `Generate a profile`
+// Set variables for the homepage buttons
+let generateProfileString = `Create new profile`
 let button1X = undefined;
 let button1Y = undefined;
 let buttonSizeX = 400;
@@ -129,7 +133,7 @@ function generateSpyProfile() {
   state = `profile`;
 }
 
-//Will ask your password from an already existing profile. If you get it wrong, responsiveVoice will give feedback. 
+//Will ask your password from an already existing profile. If you get it wrong, responsiveVoice will give feedback.
 function promptPassword() {
   let data = JSON.parse(localStorage.getItem(`spy-profile-data-plus`));
   if (data !== null) {
