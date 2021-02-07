@@ -53,20 +53,18 @@ function setup() {
   button1Y = height / 3
   button2X = width / 2
   button2Y = height / 3 * 2
-
-
-
 }
 
 
 // draw()
 // Description of draw()
 function draw() {
-  background(140, 180, 0)
+  background(0);
   checkState();
   // displayProfile();
 }
 
+//Check State, whether homepage or profile and go to the appropriate function
 function checkState() {
   if (state === `homepage`) {
     homepage();
@@ -75,6 +73,7 @@ function checkState() {
   }
 }
 
+//Displays two buttons : create a new profile or use the password for an already existing profile
 function homepage() {
   background(0)
 
@@ -97,13 +96,17 @@ function homepage() {
   pop();
 }
 
+// On the homepage, will be sent to the appropriate function if you click on button 1 or button 2
 function mousePressed() {
-  if (mouseX < button1X + buttonSizeX &&
+  if (state === `homepage` &&
+    mouseX < button1X + buttonSizeX &&
     mouseX > button1X - buttonSizeX &&
     mouseY < button1Y + buttonSizeY &&
     mouseY > button1Y - buttonSizeY) {
     generateSpyProfile()
-  } else if (mouseX < button2X + buttonSizeX &&
+  } else if (
+    state = `homepage` &&
+    mouseX < button2X + buttonSizeX &&
     mouseX > button2X - buttonSizeX &&
     mouseY < button2Y + buttonSizeY &&
     mouseY > button2Y - buttonSizeY) {
@@ -111,6 +114,7 @@ function mousePressed() {
   }
 }
 
+// Will generate a new profile using your name.
 function generateSpyProfile() {
   spyProfile.name = prompt(`Ay agent. What is your name?`)
   spyProfile.alias = `The ${random(descriptionData.descriptions)} ${random(instrumentData.instruments)}`;
@@ -121,8 +125,11 @@ function generateSpyProfile() {
   spyProfile.password = random(card.keywords);
 
   localStorage.setItem(`spy-profile-data-plus`, JSON.stringify(spyProfile));
+
+  state = `profile`;
 }
 
+//Will ask your password from an already existing profile. If you get it wrong, responsiveVoice will give feedback. 
 function promptPassword() {
   let data = JSON.parse(localStorage.getItem(`spy-profile-data-plus`));
   if (data !== null) {
@@ -133,18 +140,18 @@ function promptPassword() {
       spyProfile.undercoverJob = data.undercoverJob
       spyProfile.secretWeapon = data.secretWeapon;
       spyProfile.password = data.password;
+
       state = `profile`
+    } else {
+      responsiveVoice.speak(`That's not even close`)
     }
-    // else {
-    //   angry reaction in responsiveVoice.
-    // }
   } else {
-    generateSpyProfile();
+    homepage();
   }
 }
 
 
-
+//display profile with information.
 function displayProfile() {
   let profile = `** SPY PROFILE **
 Name: ${spyProfile.name}
@@ -156,8 +163,9 @@ Password: ${spyProfile.password}`;
   push()
   textSize(32);
   textFont(`Courier, monospace`)
+  textStyle(BOLD);
   textAlign(LEFT, TOP)
-  fill(0);
+  fill(0, 255, 0);
   text(profile, 200, 200)
   pop()
 }
