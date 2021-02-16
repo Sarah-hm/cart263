@@ -13,10 +13,12 @@ let handpose = undefined;
 let predictions = [];
 let bubble = undefined;
 
+let popSound = undefined;
+
 // preload()
 // Description of preload
 function preload() {
-
+  popSound = loadSound(`assets/sounds/comedy_bubble_pop_001.mp3`)
 }
 
 
@@ -87,6 +89,9 @@ function draw() {
     if (d < bubble.size / 2) {
       bubble.x = random(width);
       bubble.y = height;
+      if (!popSound.isPlaying()) {
+        popSound.play();
+      }
     }
   }
 

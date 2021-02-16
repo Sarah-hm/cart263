@@ -13,6 +13,7 @@ let handpose = undefined;
 let predictions = [];
 let bubble = undefined;
 
+
 // preload()
 // Description of preload
 function preload() {
