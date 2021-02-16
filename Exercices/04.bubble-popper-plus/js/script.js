@@ -90,7 +90,8 @@ function draw() {
     if (d < bubble.size / 2) {
       bubble.x = random(width);
       bubble.y = height;
-      bubblePopped++
+      bubble.vy--;
+      bubblePopped++;
       if (!popSound.isPlaying()) {
         popSound.play();
       }
@@ -104,6 +105,7 @@ function draw() {
   if (bubble.y < 0) {
     bubble.x = random(width);
     bubble.y = height;
+    bubblePopped--;
   }
 
 
