@@ -14,6 +14,7 @@ let predictions = [];
 let bubble = undefined;
 
 let popSound = undefined;
+let bubblePopped = 0
 
 // preload()
 // Description of preload
@@ -40,7 +41,7 @@ function setup() {
 
   //Listen for predictions
   handpose.on(`predict`, function(results) {
-    console.log(results);
+    // console.log(results);
     predictions = results;
   });
 
@@ -89,6 +90,7 @@ function draw() {
     if (d < bubble.size / 2) {
       bubble.x = random(width);
       bubble.y = height;
+      bubblePopped++
       if (!popSound.isPlaying()) {
         popSound.play();
       }
@@ -103,6 +105,18 @@ function draw() {
     bubble.x = random(width);
     bubble.y = height;
   }
+
+
+
+  //display Score
+  push()
+  textStyle(BOLD)
+  textFont(`courier`)
+  textSize(750)
+  textAlign(CENTER)
+  fill(0, 255, 0, 50)
+  text(bubblePopped, width / 2, height)
+  pop()
 
   push();
   fill(0, 255, 0);
