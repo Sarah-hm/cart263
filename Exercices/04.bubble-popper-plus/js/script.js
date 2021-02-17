@@ -1,13 +1,14 @@
 "use strict";
 
 /*****************
-
-Activity 04 : bubble popper
+Exercice 04 : bubble popper plus
 Sarah Hontoy-Major
 
-This is activity 04: bubble popper
+Pop bubbles with you index with sound effect, score is displayes in the background.
+Speed increases everytime you pop a bubble, but score decreases if the bubble gets to the height without being popped.
 ******************/
 
+//Declare variables
 let video = undefined;
 let handpose = undefined;
 let predictions = [];
@@ -16,15 +17,13 @@ let bubble = undefined;
 let popSound = undefined;
 let bubblePopped = 0
 
-// preload()
-// Description of preload
+//Preload bubble popping sound effect
 function preload() {
   popSound = loadSound(`assets/sounds/comedy_bubble_pop_001.mp3`)
 }
 
 
-// setup()
-// Description of setup
+//Setup a smol canvas; handpose with webcam input to create pin; create bubble object
 function setup() {
   createCanvas(640, 480);
 
@@ -45,7 +44,7 @@ function setup() {
     predictions = results;
   });
 
-  //our bubble
+  //the bubble
   bubble = {
     x: random(width),
     y: height,
@@ -55,12 +54,19 @@ function setup() {
   }
 }
 
-
-// draw()
-// Description of draw()
+//Set background,
 function draw() {
   background(0);
 
+  drawPin();
+  checkImpact();
+  drawBubble();
+  displayScore();
+
+}
+
+function drawPin() {
+  //set the tip and base of index as coordinates for pin position, draw pin and red base
   if (predictions.length > 0) {
     let hand = predictions[0];
     let index = hand.annotations.indexFinger;
@@ -86,6 +92,7 @@ function draw() {
     ellipse(baseX, baseY, 20);
     pop();
 
+    // If pin touches bubble, bubble reset at bottom of screem, score and speed increase and pop sound effect plays
     let d = dist(tipX, tipY, bubble.x, bubble.y);
     if (d < bubble.size / 2) {
       bubble.x = random(width);
@@ -97,20 +104,32 @@ function draw() {
       }
     }
   }
+}
 
+
+function drawBubble() {
   //Move the bubble
   bubble.x += bubble.vx;
   bubble.y += bubble.vy;
 
+  //If bubble gets at the height, resets at random width at bottom of screen and decreases the score
   if (bubble.y < 0) {
     bubble.x = random(width);
     bubble.y = height;
     bubblePopped--;
   }
 
+  //Display the bubble
+  push();
+  fill(0, 255, 0);
+  noStroke();
+  ellipse(bubble.x, bubble.y, bubble.size);
+  pop();
 
+}
 
-  //display Score
+//display Score
+function displayScore() {
   push()
   textStyle(BOLD)
   textFont(`courier`)
@@ -119,12 +138,4 @@ function draw() {
   fill(0, 255, 0, 50)
   text(bubblePopped, width / 2, height)
   pop()
-
-  push();
-  fill(0, 255, 0);
-  noStroke();
-  ellipse(bubble.x, bubble.y, bubble.size);
-  pop();
-
-
 }
