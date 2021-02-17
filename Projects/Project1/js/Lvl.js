@@ -3,8 +3,8 @@ class Lvl {
   constructor() {
     // QUESTION:
     this.questionPositionX = width / 2
-    this.questionPositionY = height / 5
-    this.questionString = `You're not Cheddar, you're`
+    this.questionPositionY = height / 5 * 3.5
+    this.questionString = `You're not Cheddar, you're ...`
     this.questionFont = `courier`
     this.questionFontFill = {
       r: 255,
@@ -14,11 +14,11 @@ class Lvl {
     this.questionTextSize = 32
 
     //IMAGE/GIF
-    this.image = undefined;
+    this.image = lvl1Image;
     this.imagePositionX = width / 2;
-    this.imagePostionY = height / 2;
-    this.imageWidth = undefined;
-    this.imageHeight = undefined;
+    this.imagePositionY = height / 3
+    this.imageWidth = 600;
+    this.imageHeight = 333;
 
 
     //POSSIBLE ANSWERS
@@ -39,6 +39,7 @@ class Lvl {
     push();
     textAlign(CENTER);
     textSize(this.question)
+    textStyle(ITALIC);
     textSize(this.questionTextSize)
     fill(this.questionFontFill.r, this.questionFontFill.g, this.questionFontFill.b);
     text(this.questionString, this.questionPositionX, this.questionPositionY);
@@ -46,7 +47,12 @@ class Lvl {
   }
 
   displayImage() {
-
+    push();
+    translate(this.imagePositionX, this.imagePositionY)
+    imageMode(CENTER);
+    scale(0.9);
+    image(this.image, 0, 0, this.imageWidth, this.imageHeight);
+    pop();
   }
 
   displayAnswers() {

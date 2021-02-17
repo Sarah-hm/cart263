@@ -11,11 +11,13 @@ This is my project 1, who wants to be Raymond Holt? the televised questionnaire 
 
 let currentState = undefined;
 
+//Lvl1 variables
+let lvl1Image = undefined;
 
 // preload()
 // Description of preload
 function preload() {
-
+  lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
 }
 
 
