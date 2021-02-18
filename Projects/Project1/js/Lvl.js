@@ -22,6 +22,8 @@ class Lvl {
 
 
     //POSSIBLE ANSWERS
+    this.annyangCommand = 'just a common b****'
+
     this.aString = `this is answer A`;
     this.aPositionX = width / 4;
     this.aPositionY = height / 10 * 6;
@@ -57,5 +59,12 @@ class Lvl {
 
   displayAnswers() {
 
+  }
+
+
+  win() {
+    fill(255);
+    text(`you win`, width / 2, height / 10 * 9);
+    console.log(`you win`)
   }
 }

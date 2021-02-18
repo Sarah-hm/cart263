@@ -10,6 +10,8 @@ This is my project 1, who wants to be Raymond Holt? the televised questionnaire 
 //Declare variables
 
 let currentState = undefined;
+let currentAnswer = ``;
+let currentGuess = ``;
 
 //Lvl1 variables
 let lvl1Image = undefined;
@@ -27,6 +29,16 @@ function setup() {
   createCanvas(900, 600)
 
   currentState = new Lvl();
+
+  if (annyang) {
+    let command = {
+      '*guess': guessAnswer
+    };
+    annyang.addCommands(command)
+    annyang.start();
+  } else {
+    alert(`You should really use chrome and enable your mic, otherwise this is going to get boring real quick.`)
+  }
 }
 
 
@@ -35,4 +47,17 @@ function setup() {
 function draw() {
   background(0);
   currentState.update();
+}
+
+function guessAnswer(guess) {
+  currentAnswer = currentState.annyangCommand
+  currentGuess = guess.toLowerCase();
+  console.log(currentGuess);
+  console.log(currentAnswer);
+
+  if (currentGuess !== ``) {
+    if (currentAnswer === currentGuess) {
+      currentState.win()
+    }
+  }
 }
