@@ -13,12 +13,23 @@ let currentState = undefined;
 let currentAnswer = ``;
 let currentGuess = ``;
 
+//homepahe variables
+let titleImg = undefined
+let titleImg0 = undefined;
+let titleImg1 = undefined;
+let titleImg2 = undefined;
+
 //Lvl1 variables
 let lvl1Image = undefined;
 
 // preload()
 // Description of preload
 function preload() {
+  //homepage
+  titleImg0 = loadImage(`assets/images/homepage/titleImg0.png`);
+  titleImg1 = loadImage(`assets/images/homepage/titleImg1.png`);
+  titleImg2 = loadImage(`assets/images/homepage/titleImg2.png`)
+  //lvl1
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
 }
 
@@ -28,7 +39,7 @@ function preload() {
 function setup() {
   createCanvas(900, 600)
 
-  currentState = new Lvl();
+  currentState = new Homepage();
 
   if (annyang) {
     let command = {

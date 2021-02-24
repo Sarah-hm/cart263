@@ -22,6 +22,7 @@ class Lvl {
 
 
     //POSSIBLE ANSWERS
+    //side note: love how annyang censores curse words
     this.annyangCommand = 'just a common b****'
 
     this.aString = `this is answer A`;
