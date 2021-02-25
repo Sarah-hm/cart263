@@ -41,7 +41,7 @@ function preload() {
   titleRHImg1 = loadImage(`assets/images/homepage/RaymondHolt1.png`);
   titleRHImg2 = loadImage(`assets/images/homepage/RaymondHolt2.png`);
 
-  adamGorryLights = loadFont(`assets/fonts/adam_gorry_lights.otf`);
+  // adamGorryLights = loadFont(`assets/fonts/adam_gorry_lights.otf`);
 
   //lvl1
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
@@ -67,13 +67,6 @@ function setup() {
 }
 
 
-// draw()
-// Description of draw()
-function draw() {
-  background(0);
-  currentState.update();
-}
-
 function guessAnswer(guess) {
   currentAnswer = currentState.annyangCommand
   currentGuess = guess.toLowerCase();
@@ -85,4 +78,16 @@ function guessAnswer(guess) {
       currentState.win()
     }
   }
+}
+
+
+// draw()
+// Description of draw()
+function draw() {
+  background(0);
+  currentState.update();
+}
+
+function mousePressed() {
+  currentState.mousePressed();
 }

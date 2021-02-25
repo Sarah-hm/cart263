@@ -59,19 +59,23 @@ class Homepage {
 
     //Instruction string variables
     this.instructionsString = `Instructions`;
-    this.instructionsFont = adamGorryLightsFont;
+    this.instructionsFont = adamGorryLights;
     this.instructionsPositionX = width / 7 * 6;
     this.instructionsPositionY = height / 12;
     this.instructionsTextSize = 32;
     this.instructionsFill = {
-      r: 0,
-      g: 0,
-      b: 0
+      r: 248,
+      g: 232,
+      b: 21
     }
 
     //instructions button variables
     this.instructionsButtonWidth = 200;
     this.instructionsButtonHeight = 50;
+    this.instructionsButtonUpperCornerX = this.instructionsPositionX + this.instructionsButtonWidth / 2;
+    this.instructionsButtonUpperCornerY = this.instructionsPositionY - this.instructionsButtonHeight / 2;
+    this.instructionsButtonBottomCornerX = this.instructionsPositionX - this.instructionsButtonWidth / 2;
+    this.instructionsButtonBottomCornerY = this.instructionsPositionY + this.instructionsButtonHeight / 2;
     this.instructionsButtonRoundedCorner = 20;
     this.instructionsButtonColor = {
       r: 191,
@@ -82,6 +86,15 @@ class Homepage {
     this.buttonMaximumAlpha = 255;
     this.buttonMinimumAlpha = 0;
     this.buttonModifiedAlphaValue = 50;
+
+
+    //Opening instructions
+    this.instructionsButtonOpened = false;
+    this.instructionsButtonResizingValue = 50;
+    this.instructionsButtonMaximumBottomCornerX = 50;
+    this.instructionsButtonMaximumBottomCornerY = height - 50;
+    this.instructionsButtonMinimumBottomCornerX = this.instructionsPositionX - this.instructionsButtonWidth / 2;
+    this.instructionsButtonMinimumBottomCornerY = this.instructionsPositionY + this.instructionsButtonHeight / 2;
 
     ////Generalbackground color
     this.background = {
@@ -97,6 +110,7 @@ class Homepage {
     this.displayTitle();
     this.displayRaymondHolt();
     this.displayInstructions();
+    this.instructionsButtonResize()
   }
 
   setBackground() {
@@ -172,16 +186,18 @@ class Homepage {
           this.instructionsButtonColor.a += this.buttonModifiedAlphaValue
         }
       } else {
-        if (this.instructionsButtonColor.a > this.buttonMinimumAlpha) {
-          this.instructionsButtonColor.a -= this.buttonModifiedAlphaValue
+        if (!this.instructionsButtonOpened) {
+          if (this.instructionsButtonColor.a > this.buttonMinimumAlpha) {
+            this.instructionsButtonColor.a -= this.buttonModifiedAlphaValue
+          }
         }
       }
       //Display button
       push();
-      rectMode(CENTER);
+      rectMode(CORNERS);
       noStroke();
       fill(this.instructionsButtonColor.r, this.instructionsButtonColor.g, this.instructionsButtonColor.b, this.instructionsButtonColor.a);
-      rect(this.instructionsPositionX, this.instructionsPositionY, this.instructionsButtonWidth, this.instructionsButtonHeight, this.instructionsButtonRoundedCorner)
+      rect(this.instructionsButtonUpperCornerX, this.instructionsButtonUpperCornerY, this.instructionsButtonBottomCornerX, this.instructionsButtonBottomCornerY, this.instructionsButtonRoundedCorner)
       pop();
 
       ////string
@@ -194,6 +210,40 @@ class Homepage {
       text(this.instructionsString, this.instructionsPositionX, this.instructionsPositionY)
       pop();
     }
+  }
+
+  mousePressed() {
+    if (
+      mouseX > this.instructionsPositionX - this.instructionsButtonWidth / 2 &&
+      mouseX < this.instructionsPositionX + this.instructionsButtonWidth / 2 &&
+      mouseY > this.instructionsPositionY - this.instructionsButtonHeight / 2 &&
+      mouseY < this.instructionsPositionY + this.instructionsButtonHeight / 2) {
+      if (!this.instructionsButtonOpened) {
+        this.instructionsButtonOpened = true
+      } else if (this.instructionsButtonOpened) {
+        this.instructionsButtonOpened = false
+      }
+    }
+  }
+
+  instructionsButtonResize() {
+    if (this.instructionsButtonOpened) {
+      if (this.instructionsButtonBottomCornerX > this.instructionsButtonMaximumBottomCornerX)
+        this.instructionsButtonBottomCornerX -= this.instructionsButtonResizingValue;
+      if (this.instructionsButtonBottomCornerY < this.instructionsButtonMaximumBottomCornerY) {
+        this.instructionsButtonBottomCornerY += this.instructionsButtonResizingValue;
+      }
+      this.instructionsString = `              X`;
+    } else if (!this.instructionsButtonOpened) {
+      if (this.instructionsButtonBottomCornerX < this.instructionsButtonMinimumBottomCornerX) {
+        this.instructionsButtonBottomCornerX += this.instructionsButtonResizingValue;
+      }
+      if (this.instructionsButtonBottomCornerY > this.instructionsButtonMinimumBottomCornerY) {
+        this.instructionsButtonBottomCornerY -= this.instructionsButtonResizingValue
+      }
+      this.instructionsString = `Instructions`
+    }
+
   }
 
 }
