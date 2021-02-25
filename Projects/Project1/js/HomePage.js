@@ -52,33 +52,38 @@ class Homepage {
     this.RHImg2FinalPositionY = height - this.RHImg2Height / 2 + 20;
     this.RHImg2velocity = -5;
 
-    this.instructionsString = `Instructions`;
-    this.instructionsPositionX = width / 7 * 6;
-    this.instructionsPositionY = height / 10;
-    this.instructionsAlpha = 0;
-    this.instructionsFinalAlpha = 100;
-
+    ////instructions
+    //Timed appearance
     this.instructionsCurrentTimer = 0;
     this.instructionsAppearanceTime = 2;
 
+    //Instruction string variables
+    this.instructionsString = `Instructions`;
+    this.instructionsFont = adamGorryLightsFont;
+    this.instructionsPositionX = width / 7 * 6;
+    this.instructionsPositionY = height / 12;
     this.instructionsTextSize = 32;
+    this.instructionsFill = {
+      r: 0,
+      g: 0,
+      b: 0
+    }
+
+    //instructions button variables
     this.instructionsButtonWidth = 200;
-    this.instructionsButtonHeight = 100;
-    this.instructionsNeutralButtonColor = {
-      r: 59,
-      g: 61,
-      b: 126
+    this.instructionsButtonHeight = 50;
+    this.instructionsButtonRoundedCorner = 20;
+    this.instructionsButtonColor = {
+      r: 191,
+      g: 88,
+      b: 156,
+      a: 0
     }
-    this.instructionHoverButtonColor = {
-      r: 248,
-      b: 232,
-      g: 21
-    }
+    this.buttonMaximumAlpha = 255;
+    this.buttonMinimumAlpha = 0;
+    this.buttonModifiedAlphaValue = 50;
 
-
-
-
-    //background color
+    ////Generalbackground color
     this.background = {
       r: 59,
       g: 61,
@@ -96,7 +101,6 @@ class Homepage {
 
   setBackground() {
     background(this.background.r, this.background.g, this.background.b);
-
   }
 
 
@@ -150,11 +154,41 @@ class Homepage {
   }
 
   displayInstructions() {
+    //wait a few seconds for the instruction button to appear
     if (this.instructionsCurrentTimer < this.instructionsAppearanceTime && frameCount % 60 === 0) {
       this.instructionsCurrentTimer++
     }
+
+    //when the timer has passed, instructions button will appear
     if (this.instructionsCurrentTimer >= this.instructionsAppearanceTime) {
+
+      ////button
+      //If you hover over the instructions, the background button will appear gradually, otherwise it will disappear gradually (max alpha of 255, minimum of 0)
+      if (mouseX > this.instructionsPositionX - this.instructionsButtonWidth / 2 &&
+        mouseX < this.instructionsPositionX + this.instructionsButtonWidth / 2 &&
+        mouseY > this.instructionsPositionY - this.instructionsButtonHeight / 2 &&
+        mouseY < this.instructionsPositionY + this.instructionsButtonHeight / 2) {
+        if (this.instructionsButtonColor.a < this.buttonMaximumAlpha) {
+          this.instructionsButtonColor.a += this.buttonModifiedAlphaValue
+        }
+      } else {
+        if (this.instructionsButtonColor.a > this.buttonMinimumAlpha) {
+          this.instructionsButtonColor.a -= this.buttonModifiedAlphaValue
+        }
+      }
+      //Display button
       push();
+      rectMode(CENTER);
+      noStroke();
+      fill(this.instructionsButtonColor.r, this.instructionsButtonColor.g, this.instructionsButtonColor.b, this.instructionsButtonColor.a);
+      rect(this.instructionsPositionX, this.instructionsPositionY, this.instructionsButtonWidth, this.instructionsButtonHeight, this.instructionsButtonRoundedCorner)
+      pop();
+
+      ////string
+      //display the string
+      push();
+      // textFont(this.instructionsFont);
+      fill(this.instructionsFill.r, this.instructionsFill.g, this.instructionsFill.b);
       textAlign(CENTER, CENTER);
       textSize(this.instructionsTextSize);
       text(this.instructionsString, this.instructionsPositionX, this.instructionsPositionY)

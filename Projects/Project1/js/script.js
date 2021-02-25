@@ -23,8 +23,8 @@ let titleRHImg0 = undefined;
 let titleRHImg1 = undefined;
 let titleRHImg2 = undefined;
 
-let neutralInstructionImg = undefined;
-let hoverInstructionImg = undefined;
+let adamGorryLights = undefined;
+
 
 //Lvl1 variables
 let lvl1Image = undefined;
@@ -40,6 +40,8 @@ function preload() {
   titleRHImg0 = loadImage(`assets/images/homepage/RaymondHolt0.png`);
   titleRHImg1 = loadImage(`assets/images/homepage/RaymondHolt1.png`);
   titleRHImg2 = loadImage(`assets/images/homepage/RaymondHolt2.png`);
+
+  adamGorryLights = loadFont(`assets/fonts/adam_gorry_lights.otf`);
 
   //lvl1
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
