@@ -228,11 +228,19 @@ class Homepage {
 
   instructionsButtonResize() {
     if (this.instructionsButtonOpened) {
+      //Enlarge button until it reaches the Maximum value chosen
       if (this.instructionsButtonBottomCornerX > this.instructionsButtonMaximumBottomCornerX)
         this.instructionsButtonBottomCornerX -= this.instructionsButtonResizingValue;
       if (this.instructionsButtonBottomCornerY < this.instructionsButtonMaximumBottomCornerY) {
         this.instructionsButtonBottomCornerY += this.instructionsButtonResizingValue;
       }
+
+      //Make instructions appear getting to the maximum size of the 'button'
+      if (this.instructionsButtonBottomCornerX <= this.instructionsButtonMaximumBottomCornerX && this.instructionsButtonBottomCornerY >= this.instructionsButtonMaximumBottomCornerY) {
+        this.displayFullInstructions()
+        console.log(this.instructionsBUttonBottomCornerX)
+      }
+      //Change 'instructions' for a X to close
       this.instructionsString = `              X`;
     } else if (!this.instructionsButtonOpened) {
       if (this.instructionsButtonBottomCornerX < this.instructionsButtonMinimumBottomCornerX) {
@@ -244,6 +252,16 @@ class Homepage {
       this.instructionsString = `Instructions`
     }
 
+  }
+
+  displayFullInstructions() {
+    push()
+    textAlign(CENTER, CENTER);
+    fill(0);
+    textSize(32)
+    text(`this the full intructions bitch`, width / 2, height / 2)
+
+    pop()
   }
 
 }
