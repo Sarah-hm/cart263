@@ -19,6 +19,13 @@ let titleImg0 = undefined;
 let titleImg1 = undefined;
 let titleImg2 = undefined;
 
+let titleRHImg0 = undefined;
+let titleRHImg1 = undefined;
+let titleRHImg2 = undefined;
+
+let neutralInstructionImg = undefined;
+let hoverInstructionImg = undefined;
+
 //Lvl1 variables
 let lvl1Image = undefined;
 
@@ -29,6 +36,11 @@ function preload() {
   titleImg0 = loadImage(`assets/images/homepage/titleImg0.png`);
   titleImg1 = loadImage(`assets/images/homepage/titleImg1.png`);
   titleImg2 = loadImage(`assets/images/homepage/titleImg2.png`)
+
+  titleRHImg0 = loadImage(`assets/images/homepage/RaymondHolt0.png`);
+  titleRHImg1 = loadImage(`assets/images/homepage/RaymondHolt1.png`);
+  titleRHImg2 = loadImage(`assets/images/homepage/RaymondHolt2.png`);
+
   //lvl1
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
 }
