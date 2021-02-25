@@ -52,7 +52,29 @@ class Homepage {
     this.RHImg2FinalPositionY = height - this.RHImg2Height / 2 + 20;
     this.RHImg2velocity = -5;
 
-    this.InstructionImg = neutralInstructionImg;
+    this.instructionsString = `Instructions`;
+    this.instructionsPositionX = width / 7 * 6;
+    this.instructionsPositionY = height / 10;
+    this.instructionsAlpha = 0;
+    this.instructionsFinalAlpha = 100;
+
+    this.instructionsCurrentTimer = 0;
+    this.instructionsAppearanceTime = 2;
+
+    this.instructionsTextSize = 32;
+    this.instructionsButtonWidth = 200;
+    this.instructionsButtonHeight = 100;
+    this.instructionsNeutralButtonColor = {
+      r: 59,
+      g: 61,
+      b: 126
+    }
+    this.instructionHoverButtonColor = {
+      r: 248,
+      b: 232,
+      g: 21
+    }
+
 
 
 
@@ -69,6 +91,7 @@ class Homepage {
     this.displayBackRaymondHolt();
     this.displayTitle();
     this.displayRaymondHolt();
+    this.displayInstructions();
   }
 
   setBackground() {
@@ -124,6 +147,19 @@ class Homepage {
     imageMode(CENTER);
     image(this.RHImg0, this.RHImg0PositionX, this.RHImg0PositionY, this.RHImg0Width, this.RHImg0Height)
     pop()
+  }
+
+  displayInstructions() {
+    if (this.instructionsCurrentTimer < this.instructionsAppearanceTime && frameCount % 60 === 0) {
+      this.instructionsCurrentTimer++
+    }
+    if (this.instructionsCurrentTimer >= this.instructionsAppearanceTime) {
+      push();
+      textAlign(CENTER, CENTER);
+      textSize(this.instructionsTextSize);
+      text(this.instructionsString, this.instructionsPositionX, this.instructionsPositionY)
+      pop();
+    }
   }
 
 }
