@@ -152,7 +152,6 @@ class Homepage {
   update() {
     this.setBackground();
     this.displayUnmuteButton();
-    this.playThemeSong();
     this.displayBackRaymondHolt();
     this.displayTitle();
     this.displayRaymondHolt();
@@ -187,12 +186,6 @@ class Homepage {
     }
   }
 
-  playThemeSong() {
-    if (!themeSong.isPlaying() && !this.themeSongHasPlayed) {
-      this.themeSong.play();
-      this.themeSongHasPlayed = true;
-    }
-  }
 
   displayBackRaymondHolt() {
     ////RHImg2 (t-shirt Raymond, right)
@@ -306,29 +299,6 @@ class Homepage {
     }
   }
 
-  mousePressed() {
-    //Clicking on instructions will make the instructions background button expand to show all instructions
-    if (
-      mouseX > this.instructionsPositionX - this.instructionsButtonWidth / 2 &&
-      mouseX < this.instructionsPositionX + this.instructionsButtonWidth / 2 &&
-      mouseY > this.instructionsPositionY - this.instructionsButtonHeight / 2 &&
-      mouseY < this.instructionsPositionY + this.instructionsButtonHeight / 2) {
-      if (!this.instructionsButtonOpened) {
-        this.instructionsButtonOpened = true
-      } else if (this.instructionsButtonOpened) {
-        this.instructionsButtonOpened = false
-      }
-    }
-    //Clicking the unmute button will remove the unmute button + make the music play (but only because the user interacted with the program and not because the button is actually doing something)
-    if (
-      mouseX > this.unmuteButtonX - this.unmuteButtonWidth / 2 &&
-      mouseX < this.unmuteButtonX + this.unmuteButtonWidth / 2 &&
-      mouseY > this.unmuteButtonY - this.unmuteButtonHeight / 2 &&
-      mouseY < this.unmuteButtonY + this.unmuteButtonHeight / 2) {
-      this.unmuteButtonOn = false;
-    }
-
-  }
 
   instructionsButtonResize() {
     if (this.instructionsButtonOpened) {
@@ -367,4 +337,42 @@ class Homepage {
     pop()
   }
 
+
+  mousePressed() {
+    //Clicking on instructions will make the instructions background button expand to show all instructions
+    if (
+      mouseX > this.instructionsPositionX - this.instructionsButtonWidth / 2 &&
+      mouseX < this.instructionsPositionX + this.instructionsButtonWidth / 2 &&
+      mouseY > this.instructionsPositionY - this.instructionsButtonHeight / 2 &&
+      mouseY < this.instructionsPositionY + this.instructionsButtonHeight / 2) {
+      if (!this.instructionsButtonOpened) {
+        this.instructionsButtonOpened = true
+      } else if (this.instructionsButtonOpened) {
+        this.instructionsButtonOpened = false
+      }
+    }
+    //Clicking the unmute button will remove the unmute button + make the theme song play once
+    if (
+      mouseX > this.unmuteButtonX - this.unmuteButtonWidth / 2 &&
+      mouseX < this.unmuteButtonX + this.unmuteButtonWidth / 2 &&
+      mouseY > this.unmuteButtonY - this.unmuteButtonHeight / 2 &&
+      mouseY < this.unmuteButtonY + this.unmuteButtonHeight / 2) {
+      this.unmuteButtonOn = false
+      if (!themeSong.isPlaying() && !this.themeSongHasPlayed) {
+        this.themeSong.play();
+        this.themeSongHasPlayed = true;
+      };
+    }
+    //Clicking 'start' button will lead you to Lvl 1 if instructions are closed. Theme song will fade to 0 if still playing
+    if (!this.instructionsButtonOpened) {
+      if (mouseX > this.startButtonX - this.startButtonWidth / 2 &&
+        mouseX < this.startButtonX + this.startButtonWidth / 2 &&
+        mouseY > this.startButtonY - this.startButtonHeight / 2 &&
+        mouseY < this.startButtonY + this.startButtonHeight / 2) {
+        currentState = new Lvl1;
+        this.themeSong.fade(0, 2)
+      }
+    }
+
+  }
 }

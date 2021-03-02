@@ -14,7 +14,7 @@ class Lvl {
     this.questionTextSize = 32
 
     //IMAGE/GIF
-    this.image = lvl1Image;
+    this.image = undefined;
     this.imagePositionX = width / 2;
     this.imagePositionY = height / 3
     this.imageWidth = 600;
