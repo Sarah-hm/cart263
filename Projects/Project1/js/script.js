@@ -64,7 +64,7 @@ function preload() {
 function setup() {
   createCanvas(900, 600)
 
-  currentState = new Homepage();
+  currentState = new Lvl1();
 
   if (annyang) {
     let command = {

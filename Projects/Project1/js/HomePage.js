@@ -365,10 +365,10 @@ class Homepage {
     }
     //Clicking 'start' button will lead you to Lvl 1 if instructions are closed. Theme song will fade to 0 if still playing
     if (!this.instructionsButtonOpened) {
-      if (mouseX > this.startButtonX - this.startButtonWidth / 2 &&
-        mouseX < this.startButtonX + this.startButtonWidth / 2 &&
-        mouseY > this.startButtonY - this.startButtonHeight / 2 &&
-        mouseY < this.startButtonY + this.startButtonHeight / 2) {
+      if (mouseX > this.startButtonX - this.startButtonWidth &&
+        mouseX < this.startButtonX + this.startButtonWidth &&
+        mouseY > this.startButtonY - this.startButtonHeight &&
+        mouseY < this.startButtonY + this.startButtonHeight) {
         currentState = new Lvl1;
         this.themeSong.fade(0, 2)
       }
