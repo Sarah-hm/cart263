@@ -18,6 +18,10 @@ class Homepage {
     //Flickering speed between img
     this.titleFlickerSpeed = 10;
 
+    //Theme song variables
+    this.themeSong = themeSong
+    this.themeSongHasPlayed = false;
+
     ////Raymond Holt pictures
     //Pointing Raymond Holt = RHImg0;
     this.RHImg0 = titleRHImg0;
@@ -83,9 +87,10 @@ class Homepage {
       b: 156,
       a: 0
     }
+    this.buttonModifiedAlphaValue = 50;
     this.buttonMaximumAlpha = 255;
     this.buttonMinimumAlpha = 0;
-    this.buttonModifiedAlphaValue = 50;
+
 
 
     //Opening instructions
@@ -95,6 +100,27 @@ class Homepage {
     this.instructionsButtonMaximumBottomCornerY = height - 50;
     this.instructionsButtonMinimumBottomCornerX = this.instructionsPositionX - this.instructionsButtonWidth / 2;
     this.instructionsButtonMinimumBottomCornerY = this.instructionsPositionY + this.instructionsButtonHeight / 2;
+
+
+    //(fake) unmute button
+    this.unmuteButtonOn = true;
+    this.unmuteButtonX = width / 15;
+    this.unmuteButtonY = height / 15;
+    this.unmuteButtonWidth = 100;
+    this.unmuteButtonHeight = 50;
+    this.unmuteButtonString = `unmute`;
+    this.unmuteTextSize = 20;
+    this.unmuteStringFill = {
+      r: 59,
+      g: 61,
+      b: 126
+    }
+    this.unmuteButtonFill = {
+      r: 248,
+      g: 232,
+      b: 21
+    }
+
 
     ////Generalbackground color
     this.background = {
@@ -106,6 +132,8 @@ class Homepage {
 
   update() {
     this.setBackground();
+    this.displayUnmuteButton();
+    this.playThemeSong();
     this.displayBackRaymondHolt();
     this.displayTitle();
     this.displayRaymondHolt();
@@ -117,6 +145,34 @@ class Homepage {
     background(this.background.r, this.background.g, this.background.b);
   }
 
+  displayUnmuteButton() {
+    //It's fake. It doesn't do anything but makes the user interact with the program at least once to make the music play. If it's lazy and it works, it's not lazy. THANK YOU.
+    if (this.unmuteButtonOn) {
+      //background button
+      push()
+      rectMode(CENTER);
+      noStroke();
+      fill(this.unmuteButtonFill.r, this.unmuteButtonFill.g, this.unmuteButtonFill.b)
+      //make the round corner exactly like the instructions one for ease of (possible)modification
+      rect(this.unmuteButtonX, this.unmuteButtonY, this.unmuteButtonWidth, this.unmuteButtonHeight, this.instructionsButtonRoundedCorner)
+      pop()
+
+      //string
+      push()
+      textAlign(CENTER, CENTER);
+      textSize(this.unmuteTextSize);
+      fill(this.unmuteStringFill.r, this.unmuteStringFill.g, this.unmuteStringFill.b);
+      text(this.unmuteButtonString, this.unmuteButtonX, this.unmuteButtonY);
+      pop()
+    }
+  }
+
+  playThemeSong() {
+    if (!themeSong.isPlaying() && !this.themeSongHasPlayed) {
+      this.themeSong.play();
+      this.themeSongHasPlayed = true;
+    }
+  }
 
   displayBackRaymondHolt() {
     ////RHImg2 (t-shirt Raymond, right)
@@ -213,6 +269,7 @@ class Homepage {
   }
 
   mousePressed() {
+    //Clicking on instructions will make the instructions background button expand to show all instructions
     if (
       mouseX > this.instructionsPositionX - this.instructionsButtonWidth / 2 &&
       mouseX < this.instructionsPositionX + this.instructionsButtonWidth / 2 &&
@@ -224,6 +281,15 @@ class Homepage {
         this.instructionsButtonOpened = false
       }
     }
+    //Clicking the unmute button will remove the unmute button + make the music play (but only because the user interacted with the program and not because the button is actually doing something)
+    if (
+      mouseX > this.unmuteButtonX - this.unmuteButtonWidth / 2 &&
+      mouseX < this.unmuteButtonX + this.unmuteButtonWidth / 2 &&
+      mouseY > this.unmuteButtonY - this.unmuteButtonHeight / 2 &&
+      mouseY < this.unmuteButtonY + this.unmuteButtonHeight / 2) {
+      this.unmuteButtonOn = false;
+    }
+
   }
 
   instructionsButtonResize() {
@@ -260,7 +326,6 @@ class Homepage {
     fill(0);
     textSize(32)
     text(`this the full intructions bitch`, width / 2, height / 2)
-
     pop()
   }
 
