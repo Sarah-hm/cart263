@@ -20,7 +20,6 @@ class Lvl {
     this.imageHeight = 333;
 
     // ===== Answer choices (double, square, cash) =====
-
     this.doubleButton = {
       string: `double`,
       x: width / 5,
@@ -36,6 +35,7 @@ class Lvl {
       x: width / 5 * 4,
     };
 
+    this.answerChoices = [this.doubleButton, this.squareButton, this.cashButton];
 
     this.answerChoicesButtonY = height / 5 * 4.2;
     this.answerChoicesButtonWidth = 200;
@@ -98,10 +98,9 @@ class Lvl {
 
   update() {
     this.setBackground();
+    this.displayImage();
     this.displayQuestion();
     this.displayAnswerChoices();
-    this.displayImage();
-    this.displayAnswers();
   }
 
   setBackground() {
@@ -110,6 +109,15 @@ class Lvl {
       this.backgroundFill.g,
       this.backgroundFill.b
     );
+  }
+
+  displayImage() {
+    push();
+    translate(this.imagePositionX, this.imagePositionY);
+    imageMode(CENTER);
+    // scale(0.9);
+    image(this.image, 0, 0, this.imageWidth, this.imageHeight);
+    pop();
   }
 
   displayQuestion() {
@@ -128,15 +136,13 @@ class Lvl {
   }
 
   displayAnswerChoices() {
-    // let answerChoicesX = []
-    //double
 
-    let answerChoices = [this.doubleButton, this.squareButton, this.cashButton];
-    for (let i = 0; i < answerChoices.length; i++) {
+    for (let i = 0; i < this.answerChoices.length; i++) {
+      //button (fill color changes if hovering over)
       push()
       if (
-        mouseX > answerChoices[i].x - this.answerChoicesButtonWidth / 2 &&
-        mouseX < answerChoices[i].x + this.answerChoicesButtonWidth / 2 &&
+        mouseX > this.answerChoices[i].x - this.answerChoicesButtonWidth / 2 &&
+        mouseX < this.answerChoices[i].x + this.answerChoicesButtonWidth / 2 &&
         mouseY > this.answerChoicesButtonY - this.answerChoicesButtonHeight / 2 &&
         mouseY < this.answerChoicesButtonY + this.answerChoicesButtonHeight / 2
       ) {
@@ -155,39 +161,31 @@ class Lvl {
       rectMode(CENTER);
       strokeWeight(this.answerChoicesButtonStrokeWeight);
       stroke(this.answerChoicesButtonStrokeFill.r, this.answerChoicesButtonStrokeFill.g, this.answerChoicesButtonStrokeFill.b);
-      rect(answerChoices[i].x, this.answerChoicesButtonY, this.answerChoicesButtonWidth, this.answerChoicesButtonHeight, this.answerChoicesButtonRoundedCorner);
+      rect(this.answerChoices[i].x, this.answerChoicesButtonY, this.answerChoicesButtonWidth, this.answerChoicesButtonHeight, this.answerChoicesButtonRoundedCorner);
       pop()
+
       //text
       push()
       fill(this.answerChoicesTextFill.r, this.answerChoicesTextFill.g, this.answerChoicesTextFill.b)
       textAlign(CENTER, CENTER);
       textSize(this.questionTextSize)
-      text(answerChoices[i].string, answerChoices[i].x, this.answerChoicesButtonY)
+      text(this.answerChoices[i].string, this.answerChoices[i].x, this.answerChoicesButtonY)
       pop()
-
-
     }
-
-
-    // for (let i=0, i<answerChoices.length,i++){
-    //
-    // }
-
-    //square
-
-    //cash
   }
 
-  displayImage() {
-    push();
-    translate(this.imagePositionX, this.imagePositionY);
-    imageMode(CENTER);
-    // scale(0.9);
-    image(this.image, 0, 0, this.imageWidth, this.imageHeight);
-    pop();
+
+  displayDoubleAnswers() {
+
   }
 
-  displayAnswers() {}
+  displaySquareAnswers() {
+
+  }
+
+  displayCashInput() {
+
+  }
 
   win() {
     fill(255);
@@ -196,6 +194,24 @@ class Lvl {
   }
 
   mousePressed() {
-
+    for (let i = 0; i < this.answerChoices.length; i++) {
+      if (
+        mouseX > this.answerChoices[i].x - this.answerChoicesButtonWidth / 2 &&
+        mouseX < this.answerChoices[i].x + this.answerChoicesButtonWidth / 2 &&
+        mouseY > this.answerChoicesButtonY - this.answerChoicesButtonHeight / 2 &&
+        mouseY < this.answerChoicesButtonY + this.answerChoicesButtonHeight / 2
+      ) {
+        if (i === 0) {
+          this.displayDoubleAnswers()
+        } else if (i === 1) {
+          this.displaySquareAnswers()
+        } else if (i === 2) {
+          this.displayCashInput()
+        }
+        console.log([i]);
+      }
+    }
   }
+
+
 }
