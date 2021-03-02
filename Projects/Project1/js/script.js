@@ -14,10 +14,13 @@ let currentAnswer = ``;
 let currentGuess = ``;
 
 //homepahe variables
-let titleImg = undefined
 let titleImg0 = undefined;
 let titleImg1 = undefined;
 let titleImg2 = undefined;
+
+let startImg0 = undefined;
+let startImg1 = undefined;
+let startImg2 = undefined;
 
 let titleRHImg0 = undefined;
 let titleRHImg1 = undefined;
@@ -37,7 +40,11 @@ function preload() {
   //homepage
   titleImg0 = loadImage(`assets/images/homepage/titleImg0.png`);
   titleImg1 = loadImage(`assets/images/homepage/titleImg1.png`);
-  titleImg2 = loadImage(`assets/images/homepage/titleImg2.png`)
+  titleImg2 = loadImage(`assets/images/homepage/titleImg2.png`);
+
+  startImg0 = loadImage(`assets/images/homepage/startImg0.png`);
+  startImg1 = loadImage(`assets/images/homepage/startImg1.png`);
+  startImg2 = loadImage(`assets/images/homepage/startImg2.png`);
 
   titleRHImg0 = loadImage(`assets/images/homepage/RaymondHolt0.png`);
   titleRHImg1 = loadImage(`assets/images/homepage/RaymondHolt1.png`);

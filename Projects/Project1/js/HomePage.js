@@ -1,7 +1,8 @@
 class Homepage {
 
   constructor() {
-    //image that is displayed;
+    // ==== title image ====
+    //title image that is displayed;
     this.titleImg = titleImg0;
 
     //title Images to randomly choose from
@@ -15,22 +16,40 @@ class Homepage {
     this.titleWidth = 900;
     this.titleHeight = 600;
 
-    //Flickering speed between img
+    // ==== Start button ====
+    this.startImg = startImg0;
+
+    //title Images to randomly choose from
+    this.startImg0 = startImg0;
+    this.startImg1 = startImg1;
+    this.startImg2 = startImg2;
+
+    //Position and Size of title img
+    this.startButtonWidth = 170;
+    this.startButtonHeight = 250;
+    this.startButtonX = width - this.startButtonWidth
+    this.startButtonY = height - this.startButtonHeight
+
+    //Timing appearance
+    this.startButtonCurrentTimer = 0;
+    this.startButtonAppearanceTime = 1;
+
+    //Flickering speed between img (title + start)
     this.titleFlickerSpeed = 10;
 
-    //Theme song variables
+    //==== Theme Song ====
     this.themeSong = themeSong
     this.themeSongHasPlayed = false;
 
-    ////Raymond Holt pictures
+    //==== Raymond Holt pictures ====
     //Pointing Raymond Holt = RHImg0;
     this.RHImg0 = titleRHImg0;
     this.RHImg0Width = 214;
     this.RHImg0Height = 403;
-    this.RHImg0PositionX = width / 5 * 2.9;
+    this.RHImg0PositionX = width / 5 * 2.6;
     this.RHImg0PositionY = height + this.RHImg0Height;
     //RHImg0 movement
-    this.RHImg0FinalPositionX = width / 5 * 3;
+    this.RHImg0FinalPositionX = width / 5 * 2.6;
     this.RHImg0FinalPositionY = height - this.RHImg0Height / 2 + 10;
     this.RHImg0velocity = 4;
 
@@ -41,7 +60,7 @@ class Homepage {
     this.RHImg1PositionX = 0 - this.RHImg1Width / 2;
     this.RHImg1PositionY = height - this.RHImg1Height / 2 + 30;
     //RHImg0 movement
-    this.RHImg1FinalPositionX = width / 5 * 1.8;
+    this.RHImg1FinalPositionX = width / 5 * 1.5;
     this.RHImg1FinalPositionY = height - this.RHImg1Height / 2 + 30;
     this.RHImg1velocity = 5;
 
@@ -52,11 +71,11 @@ class Homepage {
     this.RHImg2PositionX = width + this.RHImg2Width / 2;
     this.RHImg2PositionY = height - this.RHImg2Height / 2 + 20;
     //RHImg0 movement
-    this.RHImg2FinalPositionX = width / 5 * 3.6;
+    this.RHImg2FinalPositionX = width / 5 * 3.3;
     this.RHImg2FinalPositionY = height - this.RHImg2Height / 2 + 20;
     this.RHImg2velocity = -5;
 
-    ////instructions
+    //==== Instructions =====
     //Timed appearance
     this.instructionsCurrentTimer = 0;
     this.instructionsAppearanceTime = 2;
@@ -102,7 +121,7 @@ class Homepage {
     this.instructionsButtonMinimumBottomCornerY = this.instructionsPositionY + this.instructionsButtonHeight / 2;
 
 
-    //(fake) unmute button
+    //===== (fake) unmute button =====
     this.unmuteButtonOn = true;
     this.unmuteButtonX = width / 15;
     this.unmuteButtonY = height / 15;
@@ -122,7 +141,7 @@ class Homepage {
     }
 
 
-    ////Generalbackground color
+    ////==== Generalbackground color ====
     this.background = {
       r: 59,
       g: 61,
@@ -137,6 +156,7 @@ class Homepage {
     this.displayBackRaymondHolt();
     this.displayTitle();
     this.displayRaymondHolt();
+    this.displayStartButton();
     this.displayInstructions();
     this.instructionsButtonResize()
   }
@@ -222,6 +242,24 @@ class Homepage {
     image(this.RHImg0, this.RHImg0PositionX, this.RHImg0PositionY, this.RHImg0Width, this.RHImg0Height)
     pop()
   }
+
+
+  displayStartButton() {
+    if (this.startButtonCurrentTimer < this.startButtonAppearanceTime && frameCount % 60 === 0) {
+      this.startButtonCurrentTimer++
+    }
+    if (this.startButtonCurrentTimer >= this.startButtonAppearanceTime) {
+      if (frameCount % this.titleFlickerSpeed === 0) {
+        let startImages = [this.startImg0, this.startImg1, this.startImg2]
+        this.startImg = random(startImages);
+      }
+      push()
+      imageMode(CORNER);
+      image(this.startImg, this.startButtonX, this.startButtonY, this.startButtonWidth, this.startButtonHeight);
+      pop()
+    }
+  }
+
 
   displayInstructions() {
     //wait a few seconds for the instruction button to appear
