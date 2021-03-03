@@ -30,6 +30,9 @@ let adamGorryLights = undefined;
 
 let themeSong = undefined;
 
+let skipImg0 = undefined;
+let skipImg1 = undefined;
+let skipImg2 = undefined;
 
 //Lvl1 variables
 let lvl1Image = undefined;
@@ -51,6 +54,10 @@ function preload() {
   titleRHImg2 = loadImage(`assets/images/homepage/RaymondHolt2.png`);
 
   themeSong = loadSound(`assets/sounds/brooklyn-nine-nine-theme-song.mp3`)
+
+  skipImg0 = loadImage(`assets/images/skipImg0.png`);
+  skipImg1 = loadImage(`assets/images/skipImg1.png`);
+  skipImg2 = loadImage(`assets/images/skipImg2.png`)
 
   // adamGorryLights = loadFont(`assets/fonts/adam_gorry_lights.otf`);
 

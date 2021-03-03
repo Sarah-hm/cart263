@@ -19,9 +19,12 @@ class Lvl {
     this.imageWidth = 600;
     this.imageHeight = 333;
 
-    // ===== Answer choices (double, square, cash) =====
 
-    //Individual parameters
+    // ==== answer set up choice ===
+
+    // Player choses, after seeing the question, if they want to see 2, 4 or no choice to answer.
+
+    //Three buttons (double, square, cash), with their respective string and x position:
     this.doubleChoiceButton = {
       string: `double`,
       x: width / 5,
@@ -37,41 +40,42 @@ class Lvl {
       x: (width / 5) * 4,
     };
 
-    //all three options put into an array for efficiency
+    //All other characteristics of the three buttons (double, square, cash) are the same:
+    this.answerChoice = {
+      on: true,
+      y: (height / 5) * 4.2,
+      width: 200,
+      height: 75,
+      roundCorner: 20,
+      strokeWeight: 5,
+      textFill: {
+        r: 25,
+        g: 97,
+        b: 172
+      },
+      buttonFill: {
+        r: 193,
+        g: 225,
+        b: 210,
+      },
+      hoverFill: {
+        r: 191,
+        g: 88,
+        b: 156,
+      },
+      strokeFill: {
+        r: 25,
+        g: 97,
+        b: 172,
+      }
+    }
+
+    //all three options put into an array (to display, fill, etc)
     this.answerChoices = [
       this.doubleChoiceButton,
       this.squareChoiceButton,
       this.cashChoiceButton,
     ];
-
-    //universal parameted for answer choices :
-    this.answerChoicesOpened = true;
-    this.answerChoicesButtonY = (height / 5) * 4.2;
-    this.answerChoicesButtonWidth = 200;
-    this.answerChoicesButtonHeight = 75;
-    this.answerChoicesButtonRoundedCorner = 20;
-
-    this.answerChoicesTextFill = {
-      r: 25,
-      g: 97,
-      b: 172,
-    };
-    this.answerChoicesButtonFill = {
-      r: 193,
-      g: 225,
-      b: 210,
-    };
-    this.answerChoicesButtonHoverFill = {
-      r: 191,
-      g: 88,
-      b: 156,
-    };
-    this.answerChoicesButtonStrokeWeight = 5;
-    this.answerChoicesButtonStrokeFill = {
-      r: 25,
-      g: 97,
-      b: 172,
-    };
 
     // ==== (Possible) Answers ====
 
@@ -80,8 +84,10 @@ class Lvl {
     this.answerB = undefined;
     this.answerC = undefined;
     this.answerD = undefined;
+    // Possible answer defined by voice input via annyang
+    this.annyangCommand = undefined;
 
-    // X,Y position depending if player chose double or square answerTextSize
+    // If player chooses `double`, two choices will appear with a given string, x and y
     this.doubleButton = {
       on: false,
       a: {
@@ -96,8 +102,7 @@ class Lvl {
       },
     };
 
-    this.doubleButtons = [this.doubleButton.a, this.doubleButton.b];
-
+    //If player chooses 'square', four choices will appear with a given string, x and y
     this.squareButton = {
       on: false,
       a: {
@@ -122,14 +127,8 @@ class Lvl {
       },
     };
 
-    this.squareButtons = [
-      this.squareButton.a,
-      this.squareButton.b,
-      this.squareButton.c,
-      this.squareButton.d,
-    ];
 
-    //universal to all buttons
+    //universal to all answers' buttons (double or square) : size, color
     this.answerButtons = {
       width: 350,
       height: 70,
@@ -156,11 +155,27 @@ class Lvl {
       },
     };
 
-    //POSSIBLE ANSWERS
+    //Array of possible 'double' answers (to display, fill, etc)
+    this.doubleButtons = [this.doubleButton.a, this.doubleButton.b];
 
-    this.annyangCommand = undefined;
+    //Array of possible 'square' answers (to display, fill, etc)
+    this.squareButtons = [
+      this.squareButton.a,
+      this.squareButton.b,
+      this.squareButton.c,
+      this.squareButton.d,
+    ];
 
-    //Background color:
+    // ====== state of the Lvl 1 ======
+
+    this.lost = false;
+    this.won = false;
+
+    //when won, the game will wait this.winTimer seconds before proceeding to the next lvl
+    this.winTimer = 2;
+    this.currentWinTimer = 0
+
+    //===Background color===
     this.backgroundFill = {
       r: 59,
       g: 61,
@@ -177,6 +192,7 @@ class Lvl {
     this.displayDoubleAnswers();
     this.displaySquareAnswers();
     this.displayCashInput();
+    this.checkWin();
   }
 
   setBackground() {
@@ -212,61 +228,61 @@ class Lvl {
   }
 
   displayAnswerChoices() {
-    if (this.answerChoicesOpened) {
+    if (this.answerChoice.on) {
       for (let i = 0; i < this.answerChoices.length; i++) {
         //button (fill color changes if hovering over)
         push();
         if (
           mouseX >
-          this.answerChoices[i].x - this.answerChoicesButtonWidth / 2 &&
+          this.answerChoices[i].x - this.answerChoice.width / 2 &&
           mouseX <
-          this.answerChoices[i].x + this.answerChoicesButtonWidth / 2 &&
+          this.answerChoices[i].x + this.answerChoice.width / 2 &&
           mouseY >
-          this.answerChoicesButtonY - this.answerChoicesButtonHeight / 2 &&
+          this.answerChoice.y - this.answerChoice.height / 2 &&
           mouseY <
-          this.answerChoicesButtonY + this.answerChoicesButtonHeight / 2
+          this.answerChoice.y + this.answerChoice.height / 2
         ) {
           fill(
-            this.answerChoicesButtonHoverFill.r,
-            this.answerChoicesButtonHoverFill.g,
-            this.answerChoicesButtonHoverFill.b
+            this.answerChoice.hoverFill.r,
+            this.answerChoice.hoverFill.g,
+            this.answerChoice.hoverFill.b
           );
         } else {
           fill(
-            this.answerChoicesButtonFill.r,
-            this.answerChoicesButtonFill.g,
-            this.answerChoicesButtonFill.b
+            this.answerChoice.buttonFill.r,
+            this.answerChoice.buttonFill.g,
+            this.answerChoice.buttonFill.b
           );
         }
         rectMode(CENTER);
-        strokeWeight(this.answerChoicesButtonStrokeWeight);
+        strokeWeight(this.answerChoice.strokeWeight);
         stroke(
-          this.answerChoicesButtonStrokeFill.r,
-          this.answerChoicesButtonStrokeFill.g,
-          this.answerChoicesButtonStrokeFill.b
+          this.answerChoice.strokeFill.r,
+          this.answerChoice.strokeFill.g,
+          this.answerChoice.strokeFill.b
         );
         rect(
           this.answerChoices[i].x,
-          this.answerChoicesButtonY,
-          this.answerChoicesButtonWidth,
-          this.answerChoicesButtonHeight,
-          this.answerChoicesButtonRoundedCorner
+          this.answerChoice.y,
+          this.answerChoice.width,
+          this.answerChoice.height,
+          this.answerChoice.roundCorner
         );
         pop();
 
         //text
         push();
         fill(
-          this.answerChoicesTextFill.r,
-          this.answerChoicesTextFill.g,
-          this.answerChoicesTextFill.b
+          this.answerChoice.textFill.r,
+          this.answerChoice.textFill.g,
+          this.answerChoice.textFill.b
         );
         textAlign(CENTER, CENTER);
         textSize(this.questionTextSize);
         text(
           this.answerChoices[i].string,
           this.answerChoices[i].x,
-          this.answerChoicesButtonY
+          this.answerChoice.y
         );
         pop();
       }
@@ -296,11 +312,11 @@ class Lvl {
           );
         }
         rectMode(CENTER);
-        strokeWeight(this.answerChoicesButtonStrokeWeight);
+        strokeWeight(this.answerChoice.strokeWeight);
         stroke(
-          this.answerChoicesButtonStrokeFill.r,
-          this.answerChoicesButtonStrokeFill.g,
-          this.answerChoicesButtonStrokeFill.b
+          this.answerChoice.strokeFill.r,
+          this.answerChoice.strokeFill.g,
+          this.answerChoice.strokeFill.b
         );
         rect(
           this.doubleButtons[i].x,
@@ -353,11 +369,11 @@ class Lvl {
           );
         }
         rectMode(CENTER);
-        strokeWeight(this.answerChoicesButtonStrokeWeight);
+        strokeWeight(this.answerChoice.strokeWeight);
         stroke(
-          this.answerChoicesButtonStrokeFill.r,
-          this.answerChoicesButtonStrokeFill.g,
-          this.answerChoicesButtonStrokeFill.b
+          this.answerChoice.strokeFill.r,
+          this.answerChoice.strokeFill.g,
+          this.answerChoice.strokeFill.b
         );
         rect(
           this.squareButtons[i].x,
@@ -392,27 +408,71 @@ class Lvl {
   }
 
   win() {
+    this.won = true;
+  }
 
-    console.log(`you win`);
+  checkWin() {
+    if (this.won === true && this.doubleButton.on) { //redraw rectangle over it with the proper color? not the most efficient coding but... If it works, it works.
+      push()
+      rectMode(CENTER)
+      fill(
+        this.answerButtons.fillHover.r,
+        this.answerButtons.fillHover.g,
+        this.answerButtons.fillHover.b
+      );
+      strokeWeight(this.answerChoice.strokeWeight);
+      stroke(
+        this.answerChoice.strokeFill.r,
+        this.answerChoice.strokeFill.g,
+        this.answerChoice.strokeFill.b
+      );
+      rect(
+        this.winningDoubleButton.x, this.winningDoubleButton.y,
+        this.answerButtons.width,
+        this.answerButtons.height,
+        this.answerButtons.roundCorner
+      );
+      pop()
+      //text
+      push();
+      fill(
+        this.answerButtons.textFill.r,
+        this.answerButtons.textFill.g,
+        this.answerButtons.textFill.b
+      );
+      textAlign(CENTER, CENTER);
+      textSize(this.questionTextSize);
+      text(
+        this.winningDoubleButton.string,
+        this.winningDoubleButton.x,
+        this.winningDoubleButton.y
+      );
+      pop();
 
+
+    }
   }
 
   lose() {
-    console.log(`you lose`);
+    if (this.lost) {
+      image()
+    }
   }
 
+
+
   mousePressed() {
-    if (this.answerChoicesOpened) {
+    if (this.answerChoice.on) {
       for (let i = 0; i < this.answerChoices.length; i++) {
         if (
           mouseX >
-          this.answerChoices[i].x - this.answerChoicesButtonWidth / 2 &&
+          this.answerChoices[i].x - this.answerChoice.width / 2 &&
           mouseX <
-          this.answerChoices[i].x + this.answerChoicesButtonWidth / 2 &&
+          this.answerChoices[i].x + this.answerChoice.width / 2 &&
           mouseY >
-          this.answerChoicesButtonY - this.answerChoicesButtonHeight / 2 &&
+          this.answerChoice.y - this.answerChoice.height / 2 &&
           mouseY <
-          this.answerChoicesButtonY + this.answerChoicesButtonHeight / 2
+          this.answerChoice.y + this.answerChoice.height / 2
         ) {
           if (this.answerChoices[i].x === this.doubleChoiceButton.x) {
             this.doubleButton.on = true;
@@ -421,7 +481,7 @@ class Lvl {
           } else if (this.answerChoices[i].x === this.cashChoiceButton.x) {
             this.cashAnswer.on = true;
           }
-          this.answerChoicesOpened = false;
+          this.answerChoice.on = false;
         }
       }
     }
@@ -460,7 +520,7 @@ class Lvl {
           ) {
             this.win();
           } else {
-            this.lose();
+            this.lost = true;
           }
         }
       }
