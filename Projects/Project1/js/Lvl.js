@@ -87,14 +87,16 @@ class Lvl {
       a: {
         string: undefined,
         x: width / 4,
-        y: (height / 10) * 9,
+        y: (height / 10) * 8.5,
       },
       b: {
         string: undefined,
         x: (width / 4) * 3,
-        y: (height / 10) * 9,
+        y: (height / 10) * 8.5,
       },
     };
+
+    this.doubleButtons = [this.doubleButton.a, this.doubleButton.b];
 
     this.squareButton = {
       on: false,
@@ -273,14 +275,116 @@ class Lvl {
 
   displayDoubleAnswers() {
     if (this.doubleButton.on === true) {
-      for (let i = 0; i < this.answerChoices.length; i++) {
-        //button (fill color changes if hovering over)
+      for (let i = 0; i < this.doubleButtons.length; i++) {
+        push();
+        if (
+          mouseX > this.doubleButtons[i].x - this.answerButtons.width / 2 &&
+          mouseX < this.doubleButtons[i].x + this.answerButtons.width / 2 &&
+          mouseY > this.doubleButtons[i].y - this.answerButtons.height / 2 &&
+          mouseY < this.doubleButtons[i].y + this.answerButtons.height / 2
+        ) {
+          fill(
+            this.answerButtons.fillHover.r,
+            this.answerButtons.fillHover.g,
+            this.answerButtons.fillHover.b
+          );
+        } else {
+          fill(
+            this.answerButtons.fill.r,
+            this.answerButtons.fill.g,
+            this.answerButtons.fill.b
+          );
+        }
+        rectMode(CENTER);
+        strokeWeight(this.answerChoicesButtonStrokeWeight);
+        stroke(
+          this.answerChoicesButtonStrokeFill.r,
+          this.answerChoicesButtonStrokeFill.g,
+          this.answerChoicesButtonStrokeFill.b
+        );
+        rect(
+          this.doubleButtons[i].x,
+          this.doubleButtons[i].y,
+          this.answerButtons.width,
+          this.answerButtons.height,
+          this.answerButtons.roundCorner
+        );
+        pop();
+
+        //text
+        push();
+        fill(
+          this.answerButtons.textFill.r,
+          this.answerButtons.textFill.g,
+          this.answerButtons.textFill.b
+        );
+        textAlign(CENTER, CENTER);
+        textSize(this.questionTextSize);
+        text(
+          this.doubleButtons[i].string,
+          this.doubleButtons[i].x,
+          this.doubleButtons[i].y
+        );
+        pop();
       }
     }
   }
 
   displaySquareAnswers() {
-    if (this.squareButton.on === true) {}
+    if (this.squareButton.on === true) {
+      for (let i = 0; i < this.squareButtons.length; i++) {
+        push();
+        if (
+          mouseX > this.squareButtons[i].x - this.answerButtons.width / 2 &&
+          mouseX < this.squareButtons[i].x + this.answerButtons.width / 2 &&
+          mouseY > this.squareButtons[i].y - this.answerButtons.height / 2 &&
+          mouseY < this.squareButtons[i].y + this.answerButtons.height / 2
+        ) {
+          fill(
+            this.answerButtons.fillHover.r,
+            this.answerButtons.fillHover.g,
+            this.answerButtons.fillHover.b
+          );
+        } else {
+          fill(
+            this.answerButtons.fill.r,
+            this.answerButtons.fill.g,
+            this.answerButtons.fill.b
+          );
+        }
+        rectMode(CENTER);
+        strokeWeight(this.answerChoicesButtonStrokeWeight);
+        stroke(
+          this.answerChoicesButtonStrokeFill.r,
+          this.answerChoicesButtonStrokeFill.g,
+          this.answerChoicesButtonStrokeFill.b
+        );
+        rect(
+          this.squareButtons[i].x,
+          this.squareButtons[i].y,
+          this.answerButtons.width,
+          this.answerButtons.height,
+          this.answerButtons.roundCorner
+        );
+        pop();
+
+        //text
+        push();
+        fill(
+          this.answerButtons.textFill.r,
+          this.answerButtons.textFill.g,
+          this.answerButtons.textFill.b
+        );
+        textAlign(CENTER, CENTER);
+        textSize(this.questionTextSize);
+        text(
+          this.squareButtons[i].string,
+          this.squareButtons[i].x,
+          this.squareButtons[i].y
+        );
+        pop();
+      }
+    }
   }
 
   displayCashInput() {
@@ -289,9 +393,12 @@ class Lvl {
 
   win() {
 
-    fill(255);
     console.log(`you win`);
 
+  }
+
+  lose() {
+    console.log(`you lose`);
   }
 
   mousePressed() {
@@ -318,5 +425,47 @@ class Lvl {
         }
       }
     }
+
+    if (this.squareButton.on) {
+      for (let i = 0; i < this.squareButtons.length; i++) {
+        if (
+          mouseX > this.squareButtons[i].x - this.answerButtons.width / 2 &&
+          mouseX < this.squareButtons[i].x + this.answerButtons.width / 2 &&
+          mouseY > this.squareButtons[i].y - this.answerButtons.height / 2 &&
+          mouseY < this.squareButtons[i].y + this.answerButtons.height / 2
+        ) {
+          if (
+            this.squareButtons[i].x === this.winningSquareButton.x &&
+            this.squareButtons[i].y === this.winningSquareButton.y
+          ) {
+            this.win();
+          } else {
+            this.lose();
+          }
+        }
+      }
+    }
+
+    if (this.doubleButton.on) {
+      for (let i = 0; i < this.doubleButtons.length; i++) {
+        if (
+          mouseX > this.doubleButtons[i].x - this.answerButtons.width / 2 &&
+          mouseX < this.doubleButtons[i].x + this.answerButtons.width / 2 &&
+          mouseY > this.doubleButtons[i].y - this.answerButtons.height / 2 &&
+          mouseY < this.doubleButtons[i].y + this.answerButtons.height / 2
+        ) {
+          if (
+            this.doubleButtons[i].x === this.winningDoubleButton.x &&
+            this.doubleButtons[i].y === this.winningDoubleButton.y
+          ) {
+            this.win();
+          } else {
+            this.lose();
+          }
+        }
+      }
+    }
+
+
   }
 }
