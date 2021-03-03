@@ -101,22 +101,22 @@ class Lvl {
       a: {
         string: undefined,
         x: width / 4,
-        y: (height / 10) * 7.8,
+        y: height / 10 * 7.8,
       },
       b: {
         string: undefined,
-        x: (width / 4) * 3,
-        y: (height / 10) * 7.8,
+        x: width / 4 * 3,
+        y: height / 10 * 7.8,
       },
       c: {
         string: undefined,
         x: width / 4,
-        y: (height / 10) * 9.2,
+        y: height / 10 * 9.2,
       },
       d: {
         string: undefined,
-        x: (width / 4) * 3,
-        y: (height / 10) * 9.2,
+        x: width / 4 * 3,
+        y: height / 10 * 9.2,
       },
     };
 
