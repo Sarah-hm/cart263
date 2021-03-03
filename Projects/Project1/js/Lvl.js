@@ -158,10 +158,6 @@ class Lvl {
 
     this.annyangCommand = undefined;
 
-    this.answerWidth = 200;
-    this.answerHeight = 100;
-    this.answerTextSize = 20;
-
     //Background color:
     this.backgroundFill = {
       r: 59,
@@ -292,9 +288,10 @@ class Lvl {
   }
 
   win() {
+
     fill(255);
-    text(`you win`, width / 2, (height / 10) * 9);
     console.log(`you win`);
+
   }
 
   mousePressed() {
@@ -311,7 +308,7 @@ class Lvl {
           this.answerChoicesButtonY + this.answerChoicesButtonHeight / 2
         ) {
           if (this.answerChoices[i].x === this.doubleChoiceButton.x) {
-            this.doubleChoiceButtons.on = true;
+            this.doubleButton.on = true;
           } else if (this.answerChoices[i].x === this.squareChoiceButton.x) {
             this.squareButton.on = true;
           } else if (this.answerChoices[i].x === this.cashChoiceButton.x) {

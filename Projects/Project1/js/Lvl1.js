@@ -16,6 +16,11 @@ class Lvl1 extends Lvl {
 
     this.answerD = `undefined`;
 
+    this.winningAnswer = this.answerC;
+    this.losingAnswers = [this.answerA, this.answerB, this.answerD]
+
+    this.winningDoubleButton = this.doubleButton.b;
+    this.winningSquareButton = this.squareButton.c;
   }
 
   update() {
@@ -25,20 +30,20 @@ class Lvl1 extends Lvl {
   displayDoubleAnswers() {
     super.displayDoubleAnswers()
     if (this.doubleButton.on === true) {
-      this.doubleButtons.a.string = this.answerB
-      this.doubleButtons.b.string = this.answerC
+      this.doubleButton.a.string = this.losingAnswers[0]
+      this.doubleButton.b.string = this.winningAnswer
+
     }
   }
 
 
   displaySquareAnswers() {
     super.displaySquareAnswers()
-
     if (this.squareButton.on === true) {
-      this.squareButton.a.string = this.answerA;
-      this.squareButton.b.string = this.answerB;
-      this.squareButton.c.string = this.answerC;
-      this.squareButton.d.string = this.answerD;
+      this.squareButton.a.string = this.losingAnswers[0]
+      this.squareButton.b.string = this.losingAnswers[1]
+      this.squareButton.c.string = this.winningAnswer
+      this.squareButton.d.string = this.losingAnswers[2]
 
       for (let i = 0; 0 < this.squareButtons.length; i++) {
         push()
@@ -76,22 +81,29 @@ class Lvl1 extends Lvl {
 
       }
     }
-
   }
 
   displayCashInput() {
 
   }
 
+  win() {
+    super.win();
+
+  }
+
   mousePressed() {
     super.mousePressed();
-    for (let i = 0; 0 < this.squareButtons.length; i++) {
-      if (mouseX > this.squareButtons[i].x - this.answerButtons.width / 2 &&
-        mouseX < this.squareButtons[i].x + this.answerButtons.width / 2 &&
-        mouseY > this.squareButtons[i].y - this.answerButtons.height / 2 &&
-        mouseY < this.squareButtons[i].y + this.answerButtons.height / 2) {
-        if (this.squareButtons[i].x === this.squareButton.a.x && this.squareButtons[i].y === this.squareButton.a.y) {
-          console.log(`button a`);
+
+    if (this.squareButton.on) {
+      for (let i = 0; 0 < this.squareButtons.length; i++) {
+        if (mouseX > this.squareButtons[i].x - this.answerButtons.width / 2 &&
+          mouseX < this.squareButtons[i].x + this.answerButtons.width / 2 &&
+          mouseY > this.squareButtons[i].y - this.answerButtons.height / 2 &&
+          mouseY < this.squareButtons[i].y + this.answerButtons.height / 2) {
+          if (this.squareButtons[i].x === this.squareButton.a.x && this.squareButtons[i].y === this.squareButton.a.y) {
+            console.log(`button a`);
+          }
         }
       }
     }

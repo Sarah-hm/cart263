@@ -86,7 +86,7 @@ function guessAnswer(guess) {
 
   if (currentGuess !== ``) {
     if (currentAnswer === currentGuess) {
-      currentState.win()
+      currentState.win();
     }
   }
 }
