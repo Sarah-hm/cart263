@@ -258,6 +258,8 @@ class Lvl {
 
   displayAnswerChoices() {
     if (this.answerChoice.on) {
+      this.lost = false;
+      this.won = false;
       this.doubleButton.on = false;
       this.squareButton.on = false;
       this.cashButton.on = false;
@@ -489,9 +491,9 @@ class Lvl {
       pop();
 
       //display player input
+      this.lowerCaseWinningAnswer = this.winningAnswer.toLowerCase();
       this.lowerCaseCashAnswer = this.cashButton.string.toLowerCase();
-
-      if (this.lowerCaseCashAnswer === this.winningAnswer) {
+      if (this.lowerCaseCashAnswer === this.lowerCaseWinningAnswer) {
         this.won = true;
       }
     }
@@ -598,31 +600,6 @@ class Lvl {
 
 
   mousePressed() {
-    if (this.answerChoice.on) {
-      this.lost = false;
-      this.won = false;
-      for (let i = 0; i < this.answerChoices.length; i++) {
-        if (
-          mouseX >
-          this.answerChoices[i].x - this.answerChoice.width / 2 &&
-          mouseX <
-          this.answerChoices[i].x + this.answerChoice.width / 2 &&
-          mouseY >
-          this.answerChoice.y - this.answerChoice.height / 2 &&
-          mouseY <
-          this.answerChoice.y + this.answerChoice.height / 2
-        ) {
-          if (this.answerChoices[i].x === this.doubleChoiceButton.x) {
-            this.doubleButton.on = true;
-          } else if (this.answerChoices[i].x === this.squareChoiceButton.x) {
-            this.squareButton.on = true;
-          } else if (this.answerChoices[i].x === this.cashChoiceButton.x) {
-            this.cashButton.on = true;
-          }
-          this.answerChoice.on = false;
-        }
-      }
-    }
 
     if (this.squareButton.on) {
       for (let i = 0; i < this.squareButtons.length; i++) {
@@ -660,6 +637,30 @@ class Lvl {
           } else {
             this.lost = true;
           }
+        }
+      }
+    }
+
+    if (this.answerChoice.on) {
+      for (let i = 0; i < this.answerChoices.length; i++) {
+        if (
+          mouseX >
+          this.answerChoices[i].x - this.answerChoice.width / 2 &&
+          mouseX <
+          this.answerChoices[i].x + this.answerChoice.width / 2 &&
+          mouseY >
+          this.answerChoice.y - this.answerChoice.height / 2 &&
+          mouseY <
+          this.answerChoice.y + this.answerChoice.height / 2
+        ) {
+          if (this.answerChoices[i].x === this.doubleChoiceButton.x) {
+            this.doubleButton.on = true;
+          } else if (this.answerChoices[i].x === this.squareChoiceButton.x) {
+            this.squareButton.on = true;
+          } else if (this.answerChoices[i].x === this.cashChoiceButton.x) {
+            this.cashButton.on = true;
+          }
+          this.answerChoice.on = false;
         }
       }
     }

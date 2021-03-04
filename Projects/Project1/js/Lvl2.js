@@ -7,20 +7,20 @@ class Lvl2 extends Lvl {
 
     this.annyangCommand = "I specifically requested it";
 
-    this.answerA = `I ordered you to`;
+    this.answerA = `I want it that way`;
 
     this.answerB = `I specifically requested it`;
 
-    this.answerC = `I want it that way`;
+    this.answerC = `I ordered you to`;
 
-    this.answerD = `blablabla`;
+    this.answerD = `I commanded it`;
 
     this.winningAnswer = this.answerB;
     this.losingAnswers = [this.answerA, this.answerC, this.answerD]
 
     this.possibleAnswers = [this.answerA, this.answerB, this.answerC, this.answerD]
 
-    this.winningDoubleButton = this.doubleButton.b;
+    this.winningDoubleButton = this.doubleButton.a;
     this.winningSquareButton = this.squareButton.b;
 
   }
