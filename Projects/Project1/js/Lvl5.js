@@ -1,4 +1,4 @@
-//LVL5 : 
+//LVL5 :
 //Everytime somone steps up and says who they are, the world... becomes a better, more interesting place
 class Lvl5 extends Lvl {
   constructor() {
@@ -9,22 +9,23 @@ class Lvl5 extends Lvl {
 
     this.annyangCommand = "becomes a better more interesting place";
 
-    this.answerA = `velvet thunder`;
+    this.answerA = `population increases by 1`;
 
-    this.answerB = `cheddar lover`;
+    this.answerB = `becomes more intriguing
+and refreshing`;
 
     this.answerC = `becomes a better,
 more interesting place`;
 
-    this.answerD = `who's guarding hades?`;
+    this.answerD = `says 'yas queen'`;
 
-    this.winningAnswer = this.answerD;
+    this.winningAnswer = this.answerC;
     this.losingAnswers = [this.answerA, this.answerB, this.answerC]
 
     this.possibleAnswers = [this.answerA, this.answerB, this.answerC, this.answerD]
 
     this.winningDoubleButton = this.doubleButton.b;
-    this.winningSquareButton = this.squareButton.d;
+    this.winningSquareButton = this.squareButton.c;
 
   }
 

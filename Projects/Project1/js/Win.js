@@ -1,6 +1,6 @@
-//LVL6 : Bonus
-// Fremulon - Not a doctor.
-class Lvl6 extends Lvl {
+//WIN
+// Last page, you won yay
+class Win {
   constructor() {
     super();
     this.image = lvl6Image;

@@ -42,6 +42,8 @@ let lvl4Image = undefined;
 let lvl5Image = undefined;
 let lvl6Image = undefined;
 
+let winImage = undefined;
+
 // preload()
 // Description of preload
 function preload() {
@@ -71,8 +73,10 @@ function preload() {
   lvl2Image = loadImage(`assets/images/Lvl2Image.png`)
   lvl3Image = loadImage(`assets/images/Lvl3Image.png`)
   lvl4Image = loadImage(`assets/images/Lvl4Image.png`)
-  lvl5Image = loadImage(`assets/images/Lvl4Image.png`)
-  lvl6Image = loadImage(`assets/images/Lvl4Image.png`)
+  lvl5Image = loadImage(`assets/images/Lvl5Image.png`)
+  lvl6Image = loadImage(`assets/images/Lvl6Image.png`)
+
+  winImage = loadImage(`assets/images/winImage.gif`)
 }
 
 
