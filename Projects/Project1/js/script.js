@@ -4,7 +4,16 @@
 Who wants to be Raymond Holt? - Project 1
 Sarah Hontoy-Major
 
-This is my project 1, who wants to be Raymond Holt? the televised questionnaire show.
+Inspired by televised show (who wants to be a millionaire and Qui veut prendre sa place? (france)), this games brings you through several levels
+where you have to fill in some of the most iconic Raymond Holt quotes from the Brooklyn 99 sitcom either by voice or simple mouse/keyboard interaction.
+
+Every level gives you the choice of having access to 4, 2 or no possible answer to chose from.
+This should be accompanied with a point system that gives player a greater amount of points if they chose 'cash' (makes a guess without seeing possible answers) rather than square
+(4 choices, 25% chance of getting it randomly) or even  double (2 choices, 50% chance of getting it randomly), but I wanted to create a simple game that players can't lose. Because p o s i t i v i t y.
+
+If player choses 'double' or 'square', buttons will appear with possible answers to chose from. Player can either click them or say the answer out loud. If it is the correct one, player will proceed to next level.
+If player choses 'cash', 1 empty button will appear where the player can either write down the answer or say it out loud.
+  If it is the correct one, the answer will appear (if not already displayed) in the button and player will proceed to next level
 ******************/
 
 //===Declare variables===
@@ -108,7 +117,7 @@ function guessAnswer(guess) {
   currentAnswer = currentState.annyangCommand
   currentGuess = guess.toLowerCase();
 
-  //Intentionally left these 2 console.log because I am guessing it will be easier to go through the game/evaluate it if quick access to currentAnswer and currentGuess are available. 
+  //Intentionally left these 2 console.log because I am guessing it will be easier to go through the game/evaluate it if quick access to currentAnswer and currentGuess are available.
   console.log(currentGuess);
   console.log(currentAnswer);
 
