@@ -1,6 +1,8 @@
 class Lvl {
   constructor() {
     // ==== question with image ====
+
+    //Parameters for the question's string
     this.questionPositionX = width / 2;
     this.questionPositionY = (height / 5) * 3.5;
     this.questionString = undefined;
@@ -12,7 +14,7 @@ class Lvl {
     };
     this.questionTextSize = 32;
 
-    //IMAGE/GIF
+    //Parameters for the question's image
     this.image = undefined;
     this.imagePositionX = width / 2;
     this.imagePositionY = height / 3;
@@ -78,14 +80,14 @@ class Lvl {
 
     // ==== (Possible) Answers ====
 
-    //String defined in child class; x,y position is defined by the choice of double or square answers.
+    //Strings defined in child class - lvl specific
     this.answerA = undefined;
     this.answerB = undefined;
     this.answerC = undefined;
     this.answerD = undefined;
 
 
-    // Possible answer defined by voice input via annyang
+    // Possible answer defined by voice input via annyang (in child class) - lvl specific
     this.annyangCommand = undefined;
 
     //Defined in child class
@@ -93,10 +95,10 @@ class Lvl {
     this.losingDoubleButton = undefined;
     this.winningSquareButton = undefined;
 
-    //To display win button whether it's
+    //Winning answer defined in child class - lvl specific (to know which one leads to this.won)
     this.winningButton = undefined;
 
-    // If player chooses `double`, two choices will appear with a given string, x and y
+    // If player chooses `double`, two choices will appear with a given string, x and y - general lvl
     this.doubleButton = {
       on: false,
       a: {
@@ -111,7 +113,7 @@ class Lvl {
       },
     };
 
-    //If player chooses 'square', four choices will appear with a given string, x and y
+    //If player chooses 'square', four choices will appear with a given string, x and y - general lvl
     this.squareButton = {
       on: false,
       a: {
@@ -143,7 +145,7 @@ class Lvl {
       y: (height / 10) * 8.5,
     }
 
-    //universal to all answers' buttons (double or square) : size, color
+    //universal to all answers' buttons (double or square) : size, color - general lvl
     this.answerButtons = {
       textSize: 25,
       width: 350,
@@ -171,10 +173,10 @@ class Lvl {
       },
     };
 
-    //Array of possible 'double' answers (to display, fill, etc)
+    //Array of possible 'double' answers (to display, fill, etc) - general lvl
     this.doubleButtons = [this.doubleButton.a, this.doubleButton.b];
 
-    //Array of possible 'square' answers (to display, fill, etc)
+    //Array of possible 'square' answers (to display, fill, etc) - general lvl
     this.squareButtons = [
       this.squareButton.a,
       this.squareButton.b,
@@ -182,9 +184,13 @@ class Lvl {
       this.squareButton.d,
     ];
 
-    //=== If you lose once, you will be able to skip to the next level because let's not make life harder than it is ===
+    // ====== state of the Lvl ======
+    this.won = false;
     this.lost = false;
 
+
+    //=== If you lose once, you will be able to skip to the next level because let's not make life harder than it is ===
+    //Flickering skip arrow image
     this.skip = {
       image: skipImg0,
       size: 75,
@@ -192,12 +198,8 @@ class Lvl {
       y: height / 3,
       flickerSpeed: 20,
     }
-    //array of possible skip images
+    //array of possible skip images (will flicker between all three)
     this.skipImgs = [skipImg0, skipImg1, skipImg2];
-
-    // ====== state of the Lvl ======
-
-    this.won = false;
 
     //when won, the game will wait this.winTimer seconds before proceeding to the next lvl
     this.winTimer = 2;
@@ -211,7 +213,7 @@ class Lvl {
     };
   }
 
-  // ========== update ===========
+  // ========== update runs every frame when this is currentState ===========
   update() {
     this.setBackground();
     this.displayImage();
@@ -224,6 +226,7 @@ class Lvl {
     this.checkLose();
   }
 
+  //sets background to purple-ish
   setBackground() {
     background(
       this.backgroundFill.r,
@@ -232,6 +235,7 @@ class Lvl {
     );
   }
 
+  //Display the question's image
   displayImage() {
     push();
     translate(this.imagePositionX, this.imagePositionY);
@@ -241,6 +245,7 @@ class Lvl {
     pop();
   }
 
+  //display the question's string
   displayQuestion() {
     push();
     textAlign(CENTER);
@@ -256,13 +261,17 @@ class Lvl {
     pop();
   }
 
+  //display the three possible answer set up : double (2 choices), square (4 choices), cash (no choice). Clicking either will lead you to its own method.
   displayAnswerChoices() {
+    //only loops when answerChoices is on
     if (this.answerChoice.on) {
+      //resets game state for every new level
       this.lost = false;
       this.won = false;
       this.doubleButton.on = false;
       this.squareButton.on = false;
       this.cashButton.on = false;
+      //Loops the answerChoices array to display 3x rectangle buttons (double, square, cash) with a fill(different depending if hovered over or not), a stroke, and a colored string
       for (let i = 0; i < this.answerChoices.length; i++) {
         //button (fill color changes if hovering over)
         push();
@@ -323,8 +332,11 @@ class Lvl {
     }
   }
 
+  //If 'double' is chosen, will display 2 possible answers, one 'winningAnswer' and another possibleAnswer
   displayDoubleAnswers() {
+    //Only loops if doubleButton is on
     if (this.doubleButton.on === true) {
+      // loops doubleButtons' length to display 2x rectangle buttons (button.a, button.b) with a fill(different depending if hovered over or not), a stroke, and a colored string
       for (let i = 0; i < this.doubleButtons.length; i++) {
         push();
         if (
@@ -363,6 +375,7 @@ class Lvl {
 
         push();
         //String
+        //If it is the winning button, give it the winning string, otherwise give it a losing string/answer
         if (this.doubleButtons[i] == this.winningDoubleButton) {
           this.doubleButtons[i].string = this.winningAnswer
         } else {
@@ -387,7 +400,9 @@ class Lvl {
   }
 
   displaySquareAnswers() {
+    //Only loops if squareButton is on
     if (this.squareButton.on === true) {
+      // loops squareButtons' length to display 4x rectangle buttons (button.a, button.b, button.c, button.d) with a fill(different depending if hovered over or not), a stroke, and a colored string
       for (let i = 0; i < this.squareButtons.length; i++) {
         push();
         if (
@@ -451,7 +466,9 @@ class Lvl {
   }
 
   displayCashAnswer() {
+    //only loops if cashButton is on
     if (this.cashButton.on) {
+      //Display an empty 'button' where you can type in (and use backspace to erase) the answer or say out loud.
       push()
       fill(
         this.answerButtons.fill.r,
@@ -490,7 +507,7 @@ class Lvl {
       );
       pop();
 
-      //display player input
+      //display player input, bring everything to lower case to avoid capitalization issues
       this.lowerCaseWinningAnswer = this.winningAnswer.toLowerCase();
       this.lowerCaseCashAnswer = this.cashButton.string.toLowerCase();
       if (this.lowerCaseCashAnswer === this.lowerCaseWinningAnswer) {
@@ -499,7 +516,6 @@ class Lvl {
     }
   }
   //==== Display Cash answer input ====
-
   //From Pippin's 'magic word' example : https://github.com/pippinbarr/cart253-2020/blob/master/examples/text/magic-word/js/script.js
   keyTyped() {
     if (this.cashButton.on) {
@@ -519,8 +535,11 @@ class Lvl {
   }
 
   checkWin() {
+    //Checks if player has won (either by clicking answer in 'double'/'square', writing it in 'cash', or saying it out loud)
     if (this.won) {
+      //If winTimer (2 seconds) is not up, will draw the winning Button over itself with a pink-ish fill (same as hover color)
       if (this.currentWinTimer < this.winTimer) {
+        //Associates winningButotn with whatever answerChoices the player has currently chosen
         if (this.doubleButton.on) {
           this.winningButton = this.winningDoubleButton
         } else if (this.squareButton.on) {
@@ -570,18 +589,20 @@ class Lvl {
         if (frameCount % 60 === 0) {
           this.currentWinTimer++
         }
-      } else if (this.currentWinTimer >= this.winTimer) {
+      }
+      //Waits for this.winTimer (2 seconds) before moving to the next level
+      else if (this.currentWinTimer >= this.winTimer) {
         this.nextLvl();
       }
     }
-
-
-
-
   }
 
+
+  //If you mispronounced the answer or did not click the correct one, you will be able to skip to the next level because this is not meant to be a hard game
   checkLose() {
+    //only loops if you have lost (at least once)
     if (this.lost) {
+      //every flickerSpeed, skip Image will change from the array of possible skip Images, giving a flickering effect.
       if (frameCount % this.skip.flickerSpeed === 0) {
         this.skip.image = random(this.skipImgs);
       }
@@ -592,36 +613,13 @@ class Lvl {
     }
   }
 
-  nextLvl() {
 
-  }
-
-
-
-
+  // ========= all events created by pressing mouse ===========
   mousePressed() {
 
-    if (this.squareButton.on) {
-      for (let i = 0; i < this.squareButtons.length; i++) {
-        if (
-          mouseX > this.squareButtons[i].x - this.answerButtons.width / 2 &&
-          mouseX < this.squareButtons[i].x + this.answerButtons.width / 2 &&
-          mouseY > this.squareButtons[i].y - this.answerButtons.height / 2 &&
-          mouseY < this.squareButtons[i].y + this.answerButtons.height / 2
-        ) {
-          if (
-            this.squareButtons[i].x === this.winningSquareButton.x &&
-            this.squareButtons[i].y === this.winningSquareButton.y
-          ) {
-            this.won = true;
-          } else {
-            this.lost = true;
-          }
-        }
-      }
-    }
-
+    //Only loops if doubleButton is on
     if (this.doubleButton.on) {
+      //will loop doubleButtons' array and, if player clicked the winningButton = win the lvl, otherwise = lose the lvl.
       for (let i = 0; i < this.doubleButtons.length; i++) {
         if (
           mouseX > this.doubleButtons[i].x - this.answerButtons.width / 2 &&
@@ -641,7 +639,32 @@ class Lvl {
       }
     }
 
+
+    //Only loops if square Button is on
+    if (this.squareButton.on) {
+      //will loop squareButtons' array and, if player clicked the winningButton = win the lvl, otherwise = lose the lvl.
+      for (let i = 0; i < this.squareButtons.length; i++) {
+        if (
+          mouseX > this.squareButtons[i].x - this.answerButtons.width / 2 &&
+          mouseX < this.squareButtons[i].x + this.answerButtons.width / 2 &&
+          mouseY > this.squareButtons[i].y - this.answerButtons.height / 2 &&
+          mouseY < this.squareButtons[i].y + this.answerButtons.height / 2
+        ) {
+          if (
+            this.squareButtons[i].x === this.winningSquareButton.x &&
+            this.squareButtons[i].y === this.winningSquareButton.y
+          ) {
+            this.won = true;
+          } else {
+            this.lost = true;
+          }
+        }
+      }
+    }
+
+    //Only loops if answer Choices is on
     if (this.answerChoice.on) {
+      //will loop answer Choices' array and will turn on whatever choice they clicked on
       for (let i = 0; i < this.answerChoices.length; i++) {
         if (
           mouseX >
@@ -664,7 +687,10 @@ class Lvl {
         }
       }
     }
+
+    //only loops if player lost (at least once)
     if (this.lost) {
+      //if skip image is clicked, will lead to next Lvl
       if (
         mouseX > this.skip.x - this.skip.size / 2 &&
         mouseX < this.skip.x + this.skip.size / 2 &&

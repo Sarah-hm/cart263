@@ -2,6 +2,8 @@
 // Last page, you won yay
 class Win {
   constructor() {
+
+    //===Image parameters===
     this.image = {
       file: winImage,
       x: width / 2,
@@ -9,6 +11,7 @@ class Win {
       scale: 1,
     }
 
+    //===text paramters===
     this.text = {
       string: `So you really are Raymond Holt after all.
 
@@ -24,7 +27,6 @@ Have a good day. Dismissed.`,
       },
     }
 
-
     //===Background color===
     this.backgroundFill = {
       r: 59,
@@ -33,13 +35,14 @@ Have a good day. Dismissed.`,
     };
 
   }
-
+  // ========== update runs every frame when this is currentState ===========
   update() {
     this.setBackground();
     this.displayImage();
     this.displayText();
   }
 
+  //set colored background
   setBackground() {
     background(
       this.backgroundFill.r,
@@ -48,6 +51,7 @@ Have a good day. Dismissed.`,
     );
   }
 
+  //display a gif of Raymond Holt saying 'yas queen'
   displayImage() {
     push();
     translate(this.image.x, this.image.y);
@@ -57,6 +61,7 @@ Have a good day. Dismissed.`,
     pop();
   }
 
+  //display winning text
   displayText() {
     push();
     textAlign(CENTER, CENTER);
@@ -66,7 +71,9 @@ Have a good day. Dismissed.`,
     pop();
   }
 
+  //if mouse is pressed, player returns to homepage
   mousePressed() {
+    this.themeSongHasPlayed = false;
     currentState = new Homepage
   }
 }

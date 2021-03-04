@@ -7,7 +7,7 @@ Sarah Hontoy-Major
 This is my project 1, who wants to be Raymond Holt? the televised questionnaire show.
 ******************/
 
-//Declare variables
+//===Declare variables===
 
 let currentState = undefined;
 let currentAnswer = ``;
@@ -30,24 +30,25 @@ let answerChoicesImg = undefined;
 
 let themeSong = undefined;
 
+//=== General lvl variables ===
+
 let skipImg0 = undefined;
 let skipImg1 = undefined;
 let skipImg2 = undefined;
 
-//Lvl1 variables
+//=== lvl specific variables ===
 let lvl1Image = undefined;
 let lvl2Image = undefined;
 let lvl3Image = undefined;
 let lvl4Image = undefined;
 let lvl5Image = undefined;
 let lvl6Image = undefined;
-
 let winImage = undefined;
 
 // preload()
 // Description of preload
 function preload() {
-  //homepage
+  //homepage file preload
   titleImg0 = loadImage(`assets/images/homepage/titleImg0.png`);
   titleImg1 = loadImage(`assets/images/homepage/titleImg1.png`);
   titleImg2 = loadImage(`assets/images/homepage/titleImg2.png`);
@@ -64,18 +65,18 @@ function preload() {
 
   themeSong = loadSound(`assets/sounds/brooklyn-nine-nine-theme-song.mp3`)
 
+  //general lvl file preload
   skipImg0 = loadImage(`assets/images/skipImg0.png`);
   skipImg1 = loadImage(`assets/images/skipImg1.png`);
   skipImg2 = loadImage(`assets/images/skipImg2.png`)
 
-  //lvl1
+  //lvl specficic file preload
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
   lvl2Image = loadImage(`assets/images/Lvl2Image.png`)
   lvl3Image = loadImage(`assets/images/Lvl3Image.png`)
   lvl4Image = loadImage(`assets/images/Lvl4Image.png`)
   lvl5Image = loadImage(`assets/images/Lvl5Image.png`)
   lvl6Image = loadImage(`assets/images/Lvl6Image.png`)
-
   winImage = loadImage(`assets/images/winImage.gif`)
 }
 
@@ -85,8 +86,12 @@ function preload() {
 function setup() {
   createCanvas(900, 600)
 
+  //Starting current State is homepage. Can be homepage, Lvl1 through Lvl6 and Win
   currentState = new Homepage();
 
+
+  //Start annyang or alerts the player that they should enable mic and/or switch to google chrome
+  //Annyang listens for everything as a guessAnswer
   if (annyang) {
     let command = {
       '*guess': guessAnswer
@@ -98,10 +103,12 @@ function setup() {
   }
 }
 
-
+//If the annyang input the player guessed is the same as the current Answer (of the current State), player wins. If it's wrong, player loses and can skip to next level.
 function guessAnswer(guess) {
   currentAnswer = currentState.annyangCommand
   currentGuess = guess.toLowerCase();
+
+  //Intentionally left these 2 console.log because I am guessing it will be easier to go through the game/evaluate it if quick access to currentAnswer and currentGuess are available. 
   console.log(currentGuess);
   console.log(currentAnswer);
 
@@ -118,16 +125,17 @@ function guessAnswer(guess) {
 
 
 // draw()
-// Description of draw()
+//updates the currentState every frame.
 function draw() {
-  background(0);
   currentState.update();
 }
 
+//Updates the appropriate event in currentState's class
 function mousePressed() {
   currentState.mousePressed();
 }
 
+//Keytyped and keyPressed only used in instance of 'cash' answer
 function keyTyped() {
   currentState.keyTyped()
 }

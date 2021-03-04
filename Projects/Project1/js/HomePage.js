@@ -19,22 +19,22 @@ class Homepage {
     // ==== Start button ====
     this.startImg = startImg0;
 
-    //title Images to randomly choose from
+    //start Images to randomly choose from
     this.startImg0 = startImg0;
     this.startImg1 = startImg1;
     this.startImg2 = startImg2;
 
-    //Position and Size of title img
+    //Position and Size of start button/image
     this.startButtonWidth = 170;
     this.startButtonHeight = 250;
     this.startButtonX = width - this.startButtonWidth
     this.startButtonY = height - this.startButtonHeight
 
-    //Timing appearance
+    //Timing appearance of start button
     this.startButtonCurrentTimer = 0;
     this.startButtonAppearanceTime = 1;
 
-    //Flickering speed between img (title + start)
+    //Flickering speed between imgs (title + start button)
     this.titleFlickerSpeed = 10;
 
     //==== Theme Song ====
@@ -59,7 +59,7 @@ class Homepage {
     this.RHImg1Height = 351;
     this.RHImg1PositionX = 0 - this.RHImg1Width / 2;
     this.RHImg1PositionY = height - this.RHImg1Height / 2 + 30;
-    //RHImg0 movement
+    //RHImg1 movement
     this.RHImg1FinalPositionX = width / 5 * 1.5;
     this.RHImg1FinalPositionY = height - this.RHImg1Height / 2 + 30;
     this.RHImg1velocity = 5;
@@ -70,7 +70,7 @@ class Homepage {
     this.RHImg2Height = 376;
     this.RHImg2PositionX = width + this.RHImg2Width / 2;
     this.RHImg2PositionY = height - this.RHImg2Height / 2 + 20;
-    //RHImg0 movement
+    //RHImg2 movement
     this.RHImg2FinalPositionX = width / 5 * 3.3;
     this.RHImg2FinalPositionY = height - this.RHImg2Height / 2 + 20;
     this.RHImg2velocity = -5;
@@ -91,56 +91,8 @@ class Homepage {
       b: 21
     }
 
-    //Full instructions (when 'instructions' button is open)
-    this.fullInstructions = {
-      upperString: {
-        string: `Can you prove you are Raymond Holt?
-  Fill in these iconic Raymond Holt quotes either by selecting, writing, or saying the
-  answers out loud.
-  Careful, it might not recognize your voice if you are being too expressive.
-After all, you're Raymond Holt.
-  Right?`,
-        x: width / 2,
-        y: height / 5
-      },
-      lowerString: {
-        string: `Select whether you would like two, four or no possible answers to choose from on each level.
-  'double' gives you 2 possibilities to click or say out loud;
-  'square' gives you 4 possibilities to click or say out loud;
-  'cash' gives you the possibility of writing the answer down or saying it out loud
 
-  Lose once, and you will be able to skip the level.
-  There is no point system because we don't need to bring that kind of negativity in 2021.`,
-        x: width / 2,
-        y: height / 5 * 4
-      },
-      answerChoices: {
-        image: {
-          file: answerChoicesImg,
-          scale: 0.3
-        },
-        x: width / 2,
-        y: height / 2,
-        rect: {
-          width: 600,
-          height: 150,
-          roundCorner: 20,
-          fill: {
-            r: 59,
-            g: 61,
-            b: 126
-          }
-        }
-      },
-      textSize: 20,
-      textFill: {
-        r: 193,
-        g: 225,
-        b: 210,
-      }
-    }
-
-    //instructions button variables
+    //instructions button paraments (width, height, corner position when closed, fill color)
     this.instructionsButtonWidth = 200;
     this.instructionsButtonHeight = 50;
     this.instructionsButtonUpperCornerX = this.instructionsPositionX + this.instructionsButtonWidth / 2;
@@ -159,8 +111,7 @@ After all, you're Raymond Holt.
     this.buttonMinimumAlpha = 0;
 
 
-
-    //Opening instructions
+    //Opening instructions parameters
     this.instructionsButtonOpened = false;
     this.instructionsButtonResizingValue = 50;
     this.instructionsButtonMaximumBottomCornerX = 50;
@@ -168,8 +119,62 @@ After all, you're Raymond Holt.
     this.instructionsButtonMinimumBottomCornerX = this.instructionsPositionX - this.instructionsButtonWidth / 2;
     this.instructionsButtonMinimumBottomCornerY = this.instructionsPositionY + this.instructionsButtonHeight / 2;
 
+    //============Full instructions (when 'instructions' button is open)=========
+    this.fullInstructions = {
+      //upper string parameters :
+      upperString: {
+        string: `Can you prove you are Raymond Holt?
+  Fill in these iconic Raymond Holt quotes either by selecting, writing, or saying the
+  answers out loud.
+  Careful, it might not recognize your voice if you are being too expressive.
+  After all, you're Raymond Holt.
+  Right?`,
+        x: width / 2,
+        y: height / 5
+      },
 
-    //===== (fake) unmute button =====
+      //lower string parameters:
+      lowerString: {
+        string: `Select whether you would like two, four or no possible answers to choose from on each level.
+  'double' gives you 2 possibilities to click or say out loud;
+  'square' gives you 4 possibilities to click or say out loud;
+  'cash' gives you the possibility of writing the answer down or saying it out loud
+
+  Lose once, and you will be able to skip the level.
+  There is no point system because we don't need to bring that kind of negativity in 2021.`,
+        x: width / 2,
+        y: height / 5 * 4
+      },
+
+      //general parameters for either strings
+      textSize: 20,
+      textFill: {
+        r: 193,
+        g: 225,
+        b: 210,
+      },
+      //parameters to display possible answer set ups in full instructions
+      answerChoices: {
+        image: {
+          file: answerChoicesImg,
+          scale: 0.3
+        },
+        x: width / 2,
+        y: height / 2,
+        rect: {
+          width: 600,
+          height: 150,
+          roundCorner: 20,
+          fill: {
+            r: 59,
+            g: 61,
+            b: 126
+          }
+        }
+      }
+    }
+
+    //===== unmute button =====
     this.unmuteButtonOn = true;
     this.unmuteButtonX = width / 15;
     this.unmuteButtonY = height / 15;
@@ -197,6 +202,7 @@ After all, you're Raymond Holt.
     }
   }
 
+  // ========== update runs every frame when this is currentState ===========
   update() {
     this.setBackground();
     this.displayUnmuteButton();
@@ -208,14 +214,16 @@ After all, you're Raymond Holt.
     this.instructionsButtonResize()
   }
 
+  //set simple colored background
   setBackground() {
     background(this.background.r, this.background.g, this.background.b);
   }
 
+  //Display Unmute button on the top left corner
   displayUnmuteButton() {
-    //It's fake. It doesn't do anything but makes the user interact with the program at least once to make the music play. If it's lazy and it works, it's not lazy. THANK YOU.
+    //displays only if unmute button if on (turns off once you mousePressed on it)
     if (this.unmuteButtonOn) {
-      //background button
+      //display unmute  button
       push()
       rectMode(CENTER);
       noStroke();
@@ -224,7 +232,7 @@ After all, you're Raymond Holt.
       rect(this.unmuteButtonX, this.unmuteButtonY, this.unmuteButtonWidth, this.unmuteButtonHeight, this.instructionsButtonRoundedCorner)
       pop()
 
-      //string
+      //displays unmute string
       push()
       textAlign(CENTER, CENTER);
       textSize(this.unmuteTextSize);
@@ -234,10 +242,10 @@ After all, you're Raymond Holt.
     }
   }
 
-
+  //Displays only the image on Raymond Holt that is behind the main title (t-shirt Raymond)
   displayBackRaymondHolt() {
     ////RHImg2 (t-shirt Raymond, right)
-    //move RHImg2
+    //move RHImg2 to the left until it hits its final position X
     if (this.RHImg2PositionX > this.RHImg2FinalPositionX) {
       this.RHImg2PositionX += this.RHImg2velocity
     }
@@ -249,20 +257,24 @@ After all, you're Raymond Holt.
 
   }
 
+  //Displays flickering title between backgroud and foreground images of Raymond Holt
   displayTitle() {
+    //Changes between three images of title every FlickerSpeed
     if (frameCount % this.titleFlickerSpeed === 0) {
       let titleImages = [this.titleImg0, this.titleImg1, this.titleImg2]
       this.titleImg = random(titleImages);
     }
+    //display title image
     push()
     imageMode(CENTER);
     image(this.titleImg, this.titleImgX, this.titleImgY, this.titleImgWidth, this.titleImgHeight);
     pop()
   }
 
+  //Display foreground Raymond Holt images
   displayRaymondHolt() {
     ////RHImg1 (two left pictures)
-    //move RHImg1
+    //move RHImg1 to the right until it hits its final position X
     if (this.RHImg1PositionX < this.RHImg1FinalPositionX) {
       this.RHImg1PositionX += this.RHImg1velocity
     }
@@ -273,7 +285,7 @@ After all, you're Raymond Holt.
     pop()
 
     ////RHImg0 (pointing Raymond)
-    //move RHImg0
+    //move RHImg0 to the top until it hits its final position Y
     if (this.RHImg0PositionY > this.RHImg0FinalPositionY) {
       this.RHImg0PositionY -= this.RHImg0velocity
     }
@@ -284,11 +296,13 @@ After all, you're Raymond Holt.
     pop()
   }
 
-
+  //Display flickering start button
   displayStartButton() {
+    //Start button appears after the timer is completed
     if (this.startButtonCurrentTimer < this.startButtonAppearanceTime && frameCount % 60 === 0) {
       this.startButtonCurrentTimer++
     }
+    //changes between thre possible images everything FlickerSpeed
     if (this.startButtonCurrentTimer >= this.startButtonAppearanceTime) {
       if (frameCount % this.titleFlickerSpeed === 0) {
         let startImages = [this.startImg0, this.startImg1, this.startImg2]
@@ -301,7 +315,7 @@ After all, you're Raymond Holt.
     }
   }
 
-
+  //display instructions button after the timer is up.
   displayInstructions() {
     //wait a few seconds for the instruction button to appear
     if (this.instructionsCurrentTimer < this.instructionsAppearanceTime && frameCount % 60 === 0) {
@@ -347,23 +361,25 @@ After all, you're Raymond Holt.
     }
   }
 
-
+  //Instruction button will resize upon clicking on it until it hits in maximum/minimum Bottom Corner (x,y),
   instructionsButtonResize() {
     if (this.instructionsButtonOpened) {
-      //Enlarge button until it reaches the Maximum value chosen
+      //If instructions Button is opened, it will resize until it reaches the Maximum value chosen
       if (this.instructionsButtonBottomCornerX > this.instructionsButtonMaximumBottomCornerX)
         this.instructionsButtonBottomCornerX -= this.instructionsButtonResizingValue;
       if (this.instructionsButtonBottomCornerY < this.instructionsButtonMaximumBottomCornerY) {
         this.instructionsButtonBottomCornerY += this.instructionsButtonResizingValue;
       }
 
-      //Make instructions appear getting to the maximum size of the 'button'
+      //Make instructions appear when the instruction box gets to its maximum size
       if (this.instructionsButtonBottomCornerX <= this.instructionsButtonMaximumBottomCornerX && this.instructionsButtonBottomCornerY >= this.instructionsButtonMaximumBottomCornerY) {
         this.displayFullInstructions()
       }
       //Change 'instructions' for a X to close
       this.instructionsString = `              X`;
-    } else if (!this.instructionsButtonOpened) {
+    }
+    //if instructions Button is not opened, and will resize until it hits its minimum resize value
+    else if (!this.instructionsButtonOpened) {
       if (this.instructionsButtonBottomCornerX < this.instructionsButtonMinimumBottomCornerX) {
         this.instructionsButtonBottomCornerX += this.instructionsButtonResizingValue;
       }
@@ -372,9 +388,9 @@ After all, you're Raymond Holt.
       }
       this.instructionsString = `Instructions`
     }
-
   }
 
+  //Is only displayed if the instructions' button has reached its maximum size
   displayFullInstructions() {
     //strings
     push()
@@ -405,9 +421,9 @@ After all, you're Raymond Holt.
     pop()
   }
 
-
+  // ========= all events created by pressing mouse ===========
   mousePressed() {
-    //Clicking on instructions will make the instructions background button expand to show all instructions
+    //Clicking on instructions will make the instructions' button expand to show all instructions
     if (
       mouseX > this.instructionsPositionX - this.instructionsButtonWidth / 2 &&
       mouseX < this.instructionsPositionX + this.instructionsButtonWidth / 2 &&
