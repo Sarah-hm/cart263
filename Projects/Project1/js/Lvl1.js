@@ -12,7 +12,7 @@ class Lvl1 extends Lvl {
 
     this.answerB = `just a dog `;
 
-    this.answerC = `just a common b*tch`;
+    this.answerC = `just a common bitch`;
 
     this.answerD = `a common canine`;
 
@@ -20,14 +20,9 @@ class Lvl1 extends Lvl {
     this.losingAnswers = [this.answerA, this.answerB, this.answerD];
 
     this.winningDoubleButton = this.doubleButton.b;
-    this.losingDoubleButton = this.doubleButton.a;
 
     this.winningSquareButton = this.squareButton.c;
-    this.losingSquareButton = [
-      this.squareButton.a,
-      this.squareButton.b,
-      this.squareButton.d,
-    ];
+
   }
 
   update() {
@@ -54,9 +49,19 @@ class Lvl1 extends Lvl {
 
   displayCashInput() {}
 
+  nextLvl() {
+    currentState = new Lvl2;
+  }
+
   mousePressed() {
     super.mousePressed();
+  }
 
+  keyTyped() {
+    super.keyTyped();
+  }
 
+  keyPressed() {
+    super.keyPressed();
   }
 }

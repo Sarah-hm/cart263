@@ -16,8 +16,7 @@ class Lvl {
     this.image = undefined;
     this.imagePositionX = width / 2;
     this.imagePositionY = height / 3;
-    this.imageWidth = 600;
-    this.imageHeight = 333;
+
 
 
     // ==== answer set up choice ===
@@ -87,6 +86,14 @@ class Lvl {
     // Possible answer defined by voice input via annyang
     this.annyangCommand = undefined;
 
+    //Defined in child class
+    this.winningDoubleButton = undefined;
+    this.losingDoubleButton = undefined;
+    this.winningSquareButton = undefined;
+
+    //To display win button whether it's
+    this.winningButton = undefined;
+
     // If player chooses `double`, two choices will appear with a given string, x and y
     this.doubleButton = {
       on: false,
@@ -127,6 +134,12 @@ class Lvl {
       },
     };
 
+    this.cashButton = {
+      on: false,
+      string: ``,
+      x: width / 2,
+      y: (height / 10) * 8.5,
+    }
 
     //universal to all answers' buttons (double or square) : size, color
     this.answerButtons = {
@@ -166,9 +179,21 @@ class Lvl {
       this.squareButton.d,
     ];
 
-    // ====== state of the Lvl 1 ======
-
+    //=== If you lose once, you will be able to skip to the next level because let's not make life harder than it is ===
     this.lost = false;
+
+    this.skip = {
+      image: skipImg0,
+      size: 75,
+      x: width / 10 * 9,
+      y: height / 3,
+      flickerSpeed: 20,
+    }
+    //array of possible skip images
+    this.skipImgs = [skipImg0, skipImg1, skipImg2];
+
+    // ====== state of the Lvl ======
+
     this.won = false;
 
     //when won, the game will wait this.winTimer seconds before proceeding to the next lvl
@@ -191,8 +216,9 @@ class Lvl {
     this.displayAnswerChoices();
     this.displayDoubleAnswers();
     this.displaySquareAnswers();
-    this.displayCashInput();
+    this.displayCashAnswer();
     this.checkWin();
+    this.checkLose();
   }
 
   setBackground() {
@@ -403,23 +429,15 @@ class Lvl {
     }
   }
 
-  displayCashInput() {
-    if (this.cashAnswer.on === true) {}
-  }
-
-  win() {
-    this.won = true;
-  }
-
-  checkWin() {
-    if (this.won === true && this.doubleButton.on) { //redraw rectangle over it with the proper color? not the most efficient coding but... If it works, it works.
+  displayCashAnswer() {
+    if (this.cashButton.on) {
       push()
-      rectMode(CENTER)
       fill(
-        this.answerButtons.fillHover.r,
-        this.answerButtons.fillHover.g,
-        this.answerButtons.fillHover.b
+        this.answerButtons.fill.r,
+        this.answerButtons.fill.g,
+        this.answerButtons.fill.b
       );
+      rectMode(CENTER);
       strokeWeight(this.answerChoice.strokeWeight);
       stroke(
         this.answerChoice.strokeFill.r,
@@ -427,12 +445,14 @@ class Lvl {
         this.answerChoice.strokeFill.b
       );
       rect(
-        this.winningDoubleButton.x, this.winningDoubleButton.y,
+        this.cashButton.x,
+        this.cashButton.y,
         this.answerButtons.width,
         this.answerButtons.height,
         this.answerButtons.roundCorner
       );
-      pop()
+      pop();
+
       //text
       push();
       fill(
@@ -443,19 +463,111 @@ class Lvl {
       textAlign(CENTER, CENTER);
       textSize(this.questionTextSize);
       text(
-        this.winningDoubleButton.string,
-        this.winningDoubleButton.x,
-        this.winningDoubleButton.y
+        this.cashButton.string,
+        this.cashButton.x,
+        this.cashButton.y
       );
       pop();
 
+      //display player input
+      this.lowerCaseCashAnswer = this.cashButton.string.toLowerCase();
 
+      if (this.lowerCaseCashAnswer === this.winningAnswer) {
+        this.won = true;
+      }
+    }
+  }
+  //==== Display Cash answer input ====
+
+  //From Pippin's 'magic word' example : https://github.com/pippinbarr/cart253-2020/blob/master/examples/text/magic-word/js/script.js
+  keyTyped() {
+    if (this.cashButton.on) {
+      this.cashButton.string += key
     }
   }
 
-  lose() {
+  keyPressed() {
+    if (keyCode === BACKSPACE) {
+      this.cashButton.string = ``
+    }
+  }
+
+  //win coming from annyang input, redirects to checkWin
+  win() {
+    this.won = true;
+  }
+
+  checkWin() {
+    if (this.won) {
+      if (this.currentWinTimer < this.winTimer) {
+        if (this.doubleButton.on) {
+          this.winningButton = this.winningDoubleButton
+        } else if (this.squareButton.on) {
+          this.winningButton = this.winningSquareButton
+        } else if (this.cashButton.on) {
+          this.winningButton = this.cashButton
+          this.cashButton.string = this.winningAnswer
+        }
+        //redraw rectangle over it with the proper color? not the most efficient coding but... If it works, it works.
+        push()
+        rectMode(CENTER)
+        fill(
+          this.answerButtons.fillHover.r,
+          this.answerButtons.fillHover.g,
+          this.answerButtons.fillHover.b
+        );
+        strokeWeight(this.answerChoice.strokeWeight);
+        stroke(
+          this.answerChoice.strokeFill.r,
+          this.answerChoice.strokeFill.g,
+          this.answerChoice.strokeFill.b
+        );
+        rect(
+          this.winningButton.x, this.winningButton.y,
+          this.answerButtons.width,
+          this.answerButtons.height,
+          this.answerButtons.roundCorner
+        );
+        pop()
+        //text
+        push();
+        fill(
+          this.answerButtons.textFill.r,
+          this.answerButtons.textFill.g,
+          this.answerButtons.textFill.b
+        );
+        textAlign(CENTER, CENTER);
+        textSize(this.questionTextSize);
+        text(
+          this.winningButton.string,
+          this.winningButton.x,
+          this.winningButton.y
+        );
+        pop();
+
+        //had +1 to timer every 1 second
+        if (frameCount % 60 === 0) {
+          this.currentWinTimer++
+        }
+      } else if (this.currentWinTimer >= this.winTimer) {
+        this.nextLvl();
+      }
+    }
+
+
+
+
+  }
+
+  checkLose() {
     if (this.lost) {
-      image()
+      if (frameCount % this.skip.flickerSpeed === 0) {
+        this.skip.image = random(this.skipImgs);
+      }
+      push()
+      imageMode(CENTER);
+      image(this.skip.image, this.skip.x, this.skip.y, this.skip.size, this.skip.size);
+      pop()
     }
   }
 
@@ -479,7 +591,7 @@ class Lvl {
           } else if (this.answerChoices[i].x === this.squareChoiceButton.x) {
             this.squareButton.on = true;
           } else if (this.answerChoices[i].x === this.cashChoiceButton.x) {
-            this.cashAnswer.on = true;
+            this.cashButton.on = true;
           }
           this.answerChoice.on = false;
         }
@@ -498,9 +610,9 @@ class Lvl {
             this.squareButtons[i].x === this.winningSquareButton.x &&
             this.squareButtons[i].y === this.winningSquareButton.y
           ) {
-            this.win();
+            this.won = true;
           } else {
-            this.lose();
+            this.lost = true;
           }
         }
       }
@@ -518,14 +630,24 @@ class Lvl {
             this.doubleButtons[i].x === this.winningDoubleButton.x &&
             this.doubleButtons[i].y === this.winningDoubleButton.y
           ) {
-            this.win();
+            this.won = true;
           } else {
             this.lost = true;
           }
         }
       }
     }
-
-
+    if (this.lost) {
+      if (
+        mouseX > this.skip.x - this.skip.size / 2 &&
+        mouseX < this.skip.x + this.skip.size / 2 &&
+        mouseY > this.skip.y - this.skip.size / 2 &&
+        mouseY < this.skip.y + this.skip.size / 2
+      ) {
+        this.nextLvl()
+      }
+    }
   }
+
+
 }

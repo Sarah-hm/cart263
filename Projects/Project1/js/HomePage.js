@@ -312,7 +312,6 @@ class Homepage {
       //Make instructions appear getting to the maximum size of the 'button'
       if (this.instructionsButtonBottomCornerX <= this.instructionsButtonMaximumBottomCornerX && this.instructionsButtonBottomCornerY >= this.instructionsButtonMaximumBottomCornerY) {
         this.displayFullInstructions()
-        console.log(this.instructionsBUttonBottomCornerX)
       }
       //Change 'instructions' for a X to close
       this.instructionsString = `              X`;

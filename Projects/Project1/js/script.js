@@ -109,3 +109,11 @@ function draw() {
 function mousePressed() {
   currentState.mousePressed();
 }
+
+function keyTyped() {
+  currentState.keyTyped()
+}
+
+function keyPressed() {
+  currentState.keyPressed()
+}
