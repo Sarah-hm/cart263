@@ -145,6 +145,7 @@ class Lvl {
 
     //universal to all answers' buttons (double or square) : size, color
     this.answerButtons = {
+      textSize: 25,
       width: 350,
       height: 70,
       roundCorner: 20,
@@ -257,6 +258,9 @@ class Lvl {
 
   displayAnswerChoices() {
     if (this.answerChoice.on) {
+      this.doubleButton.on = false;
+      this.squareButton.on = false;
+      this.cashButton.on = false;
       for (let i = 0; i < this.answerChoices.length; i++) {
         //button (fill color changes if hovering over)
         push();
@@ -355,15 +359,21 @@ class Lvl {
         );
         pop();
 
-        //text
         push();
+        //String
+        if (this.doubleButtons[i] == this.winningDoubleButton) {
+          this.doubleButtons[i].string = this.winningAnswer
+        } else {
+          this.doubleButtons[i].string = this.losingAnswers[0];
+        }
+        //text
         fill(
           this.answerButtons.textFill.r,
           this.answerButtons.textFill.g,
           this.answerButtons.textFill.b
         );
         textAlign(CENTER, CENTER);
-        textSize(this.questionTextSize);
+        textSize(this.answerButtons.textSize);
         text(
           this.doubleButtons[i].string,
           this.doubleButtons[i].x,
@@ -427,7 +437,7 @@ class Lvl {
           this.answerButtons.textFill.b
         );
         textAlign(CENTER, CENTER);
-        textSize(this.questionTextSize);
+        textSize(this.answerButtons.textSize);
         text(
           this.squareButtons[i].string,
           this.squareButtons[i].x,
@@ -470,7 +480,7 @@ class Lvl {
         this.answerButtons.textFill.b
       );
       textAlign(CENTER, CENTER);
-      textSize(this.questionTextSize);
+      textSize(this.answerButtons.textSize);
       text(
         this.cashButton.string,
         this.cashButton.x,
@@ -546,7 +556,7 @@ class Lvl {
           this.answerButtons.textFill.b
         );
         textAlign(CENTER, CENTER);
-        textSize(this.questionTextSize);
+        textSize(this.answerButtons.textSize);
         text(
           this.winningButton.string,
           this.winningButton.x,
@@ -580,10 +590,17 @@ class Lvl {
     }
   }
 
+  nextLvl() {
+
+  }
+
+
 
 
   mousePressed() {
     if (this.answerChoice.on) {
+      this.lost = false;
+      this.won = false;
       for (let i = 0; i < this.answerChoices.length; i++) {
         if (
           mouseX >

@@ -17,6 +17,8 @@ class Lvl1 extends Lvl {
     this.answerD = `a common canine`;
 
     this.winningAnswer = this.answerC;
+    this.losingAnswers = [this.answerA, this.answerB, this.answerD]
+
     this.possibleAnswers = [this.answerA, this.answerB, this.answerC, this.answerD]
 
     this.winningDoubleButton = this.doubleButton.b;
@@ -31,12 +33,14 @@ class Lvl1 extends Lvl {
   displayDoubleAnswers() {
     super.displayDoubleAnswers();
     if (this.doubleButton.on === true) {
+
       this.doubleButton.a.string = this.losingAnswers[0];
       this.doubleButton.b.string = this.winningAnswer;
     }
   }
 
   nextLvl() {
+    super.nextLvl();
     currentState = new Lvl2;
   }
 
