@@ -3,9 +3,9 @@ class Lvl2 extends Lvl {
     super();
     this.image = lvl2Image;
 
-    this.questionString = `Why are you not having fun?`;
+    this.questionString = `Why is no one having a good time`;
 
-    this.annyangCommand = "I specifically requested it";
+    this.annyangCommand = "i specifically requested it";
 
     this.answerA = `I want it that way`;
 
