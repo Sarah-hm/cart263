@@ -37,6 +37,8 @@ let skipImg2 = undefined;
 //Lvl1 variables
 let lvl1Image = undefined;
 
+let lvl2Image = undefined;
+
 // preload()
 // Description of preload
 function preload() {
@@ -63,6 +65,8 @@ function preload() {
 
   //lvl1
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
+
+  lvl2Image = loadImage(`assets/images/Lvl2Image.png`)
 }
 
 

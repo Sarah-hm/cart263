@@ -17,9 +17,10 @@ class Lvl1 extends Lvl {
     this.answerD = `a common canine`;
 
     this.winningAnswer = this.answerC;
-    this.possibleAnswers = [this.answerA, this.answerB, this.answerC, this.answerD]
+    this.losingAnswers = [this.answerA, this.answerB, this.answerD];
 
     this.winningDoubleButton = this.doubleButton.b;
+
     this.winningSquareButton = this.squareButton.c;
 
   }
@@ -35,6 +36,18 @@ class Lvl1 extends Lvl {
       this.doubleButton.b.string = this.winningAnswer;
     }
   }
+
+  displaySquareAnswers() {
+    super.displaySquareAnswers();
+    if (this.squareButton.on === true) {
+      this.squareButton.a.string = this.losingAnswers[0];
+      this.squareButton.b.string = this.losingAnswers[1];
+      this.squareButton.c.string = this.winningAnswer;
+      this.squareButton.d.string = this.losingAnswers[2];
+    }
+  }
+
+  displayCashInput() {}
 
   nextLvl() {
     currentState = new Lvl2;

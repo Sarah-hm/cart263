@@ -83,6 +83,8 @@ class Lvl {
     this.answerB = undefined;
     this.answerC = undefined;
     this.answerD = undefined;
+
+
     // Possible answer defined by voice input via annyang
     this.annyangCommand = undefined;
 
@@ -410,8 +412,15 @@ class Lvl {
         );
         pop();
 
-        //text
         push();
+        //==text==
+        //String
+        this.squareButton.a.string = this.possibleAnswers[0];
+        this.squareButton.b.string = this.possibleAnswers[1];
+        this.squareButton.c.string = this.possibleAnswers[2];
+        this.squareButton.d.string = this.possibleAnswers[3];
+        color
+
         fill(
           this.answerButtons.textFill.r,
           this.answerButtons.textFill.g,
