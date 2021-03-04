@@ -39,6 +39,8 @@ let lvl1Image = undefined;
 
 let lvl2Image = undefined;
 
+let lvl3Image = undefined;
+
 // preload()
 // Description of preload
 function preload() {
@@ -67,6 +69,8 @@ function preload() {
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
 
   lvl2Image = loadImage(`assets/images/Lvl2Image.png`)
+
+  lvl3Image = loadImage(`assets/images/Lvl3Image.png`)
 }
 
 
