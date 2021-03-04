@@ -26,6 +26,8 @@ let titleRHImg0 = undefined;
 let titleRHImg1 = undefined;
 let titleRHImg2 = undefined;
 
+let answerChoicesImg = undefined;
+
 let themeSong = undefined;
 
 let skipImg0 = undefined;
@@ -58,6 +60,8 @@ function preload() {
   titleRHImg1 = loadImage(`assets/images/homepage/RaymondHolt1.png`);
   titleRHImg2 = loadImage(`assets/images/homepage/RaymondHolt2.png`);
 
+  answerChoicesImg = loadImage(`assets/images/answerChoicesImg.JPG`)
+
   themeSong = loadSound(`assets/sounds/brooklyn-nine-nine-theme-song.mp3`)
 
   skipImg0 = loadImage(`assets/images/skipImg0.png`);
@@ -81,7 +85,7 @@ function preload() {
 function setup() {
   createCanvas(900, 600)
 
-  currentState = new Win();
+  currentState = new Homepage();
 
   if (annyang) {
     let command = {

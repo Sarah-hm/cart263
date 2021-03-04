@@ -80,7 +80,7 @@ class Homepage {
     this.instructionsCurrentTimer = 0;
     this.instructionsAppearanceTime = 2;
 
-    //Instruction string variables
+    //Instruction BUTTON
     this.instructionsString = `Instructions`;
     this.instructionsPositionX = width / 7 * 6;
     this.instructionsPositionY = height / 12;
@@ -89,6 +89,55 @@ class Homepage {
       r: 248,
       g: 232,
       b: 21
+    }
+
+    //Full instructions (when 'instructions' button is open)
+    this.fullInstructions = {
+      upperString: {
+        string: `Can you prove you are Raymond Holt?
+  Fill in these iconic Raymond Holt quotes either by selecting, writing, or saying the
+  answers out loud.
+  Careful, it might not recognize your voice if you are being too expressive.
+After all, you're Raymond Holt.
+  Right?`,
+        x: width / 2,
+        y: height / 5
+      },
+      lowerString: {
+        string: `Select whether you would like two, four or no possible answers to choose from on each level.
+  'double' gives you 2 possibilities to click or say out loud;
+  'square' gives you 4 possibilities to click or say out loud;
+  'cash' gives you the possibility of writing the answer down or saying it out loud
+
+  Lose once, and you will be able to skip the level.
+  There is no point system because we don't need to bring that kind of negativity in 2021.`,
+        x: width / 2,
+        y: height / 5 * 4
+      },
+      answerChoices: {
+        image: {
+          file: answerChoicesImg,
+          scale: 0.3
+        },
+        x: width / 2,
+        y: height / 2,
+        rect: {
+          width: 600,
+          height: 150,
+          roundCorner: 20,
+          fill: {
+            r: 59,
+            g: 61,
+            b: 126
+          }
+        }
+      },
+      textSize: 20,
+      textFill: {
+        r: 193,
+        g: 225,
+        b: 210,
+      }
     }
 
     //instructions button variables
@@ -327,11 +376,32 @@ class Homepage {
   }
 
   displayFullInstructions() {
+    //strings
     push()
     textAlign(CENTER, CENTER);
-    fill(0);
-    textSize(32)
-    text(`this the full intructions bitch`, width / 2, height / 2)
+    fill(this.fullInstructions.textFill.r, this.fullInstructions.textFill.g, this.fullInstructions.textFill.b);
+    textSize(this.fullInstructions.textSize)
+    text(this.fullInstructions.upperString.string, this.fullInstructions.upperString.x, this.fullInstructions.upperString.y);
+    text(this.fullInstructions.lowerString.string, this.fullInstructions.lowerString.x, this.fullInstructions.lowerString.y)
+    pop()
+
+    //answer choices example
+    push()
+    //background rectangle
+    noStroke();
+    rectMode(CENTER);
+    imageMode(CENTER);
+    fill(this.fullInstructions.answerChoices.rect.fill.r, this.fullInstructions.answerChoices.rect.fill.g, this.fullInstructions.answerChoices.rect.fill.b)
+    rect(this.fullInstructions.answerChoices.x,
+      this.fullInstructions.answerChoices.y,
+      this.fullInstructions.answerChoices.rect.width,
+      this.fullInstructions.answerChoices.rect.height,
+      this.fullInstructions.answerChoices.rect.roundCorner);
+
+    //picture of answer choices buttons
+    translate(this.fullInstructions.answerChoices.x, this.fullInstructions.answerChoices.y)
+    scale(this.fullInstructions.answerChoices.image.scale)
+    image(this.fullInstructions.answerChoices.image.file, 0, 0)
     pop()
   }
 
