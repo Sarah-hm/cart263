@@ -1,3 +1,5 @@
+//Lvl2
+//Why is no one having a good time?... I specifically requested it
 class Lvl2 extends Lvl {
   constructor() {
     super();

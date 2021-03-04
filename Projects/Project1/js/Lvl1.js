@@ -1,3 +1,5 @@
+//Lvl1
+//You're not cheddar, you're... just a common bitch
 class Lvl1 extends Lvl {
   constructor() {
     super();
@@ -5,7 +7,7 @@ class Lvl1 extends Lvl {
 
     this.questionString = `You're not Cheddar, you're ...`;
 
-    //side note: love how annyang censors profanity
+    //side note: love how annyang censors profanity (because annyang censors the last word, writing it expicitily didn't work)
     this.annyangCommand = "just a common b****";
 
     this.answerA = `parmigiano`;
