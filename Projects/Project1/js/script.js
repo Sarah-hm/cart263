@@ -108,6 +108,10 @@ function guessAnswer(guess) {
   if (currentGuess !== ``) {
     if (currentAnswer === currentGuess) {
       currentState.win();
+    } else {
+      if (currentState.cashButton.on) {
+        currentState.lost = true
+      }
     }
   }
 }
