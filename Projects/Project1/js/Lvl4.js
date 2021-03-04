@@ -9,11 +9,12 @@ class Lvl4 extends Lvl {
 
     this.annyangCommand = "who's guarding hades";
 
-    this.answerA = `velvet thunder`;
+    this.answerA = `who killed the victim?`;
 
-    this.answerB = `cheddar lover`;
+    this.answerB = `who called me?`;
 
-    this.answerC = `dry blanket`;
+    this.answerC = `who took your
+place in hell?`;
 
     this.answerD = `who's guarding hades?`;
 

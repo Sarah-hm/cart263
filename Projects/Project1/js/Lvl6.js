@@ -32,7 +32,7 @@ class Lvl6 extends Lvl {
   }
 
   nextLvl() {
-    currentState = new Win;
+    currentState = new Win();
   }
 
   mousePressed() {

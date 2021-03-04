@@ -24,7 +24,7 @@ more interesting place`;
 
     this.possibleAnswers = [this.answerA, this.answerB, this.answerC, this.answerD]
 
-    this.winningDoubleButton = this.doubleButton.b;
+    this.winningDoubleButton = this.doubleButton.a;
     this.winningSquareButton = this.squareButton.c;
 
   }

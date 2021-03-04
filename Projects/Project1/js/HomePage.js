@@ -82,7 +82,6 @@ class Homepage {
 
     //Instruction string variables
     this.instructionsString = `Instructions`;
-    this.instructionsFont = adamGorryLights;
     this.instructionsPositionX = width / 7 * 6;
     this.instructionsPositionY = height / 12;
     this.instructionsTextSize = 32;

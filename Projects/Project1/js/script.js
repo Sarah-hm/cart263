@@ -26,8 +26,6 @@ let titleRHImg0 = undefined;
 let titleRHImg1 = undefined;
 let titleRHImg2 = undefined;
 
-let adamGorryLights = undefined;
-
 let themeSong = undefined;
 
 let skipImg0 = undefined;
@@ -66,8 +64,6 @@ function preload() {
   skipImg1 = loadImage(`assets/images/skipImg1.png`);
   skipImg2 = loadImage(`assets/images/skipImg2.png`)
 
-  // adamGorryLights = loadFont(`assets/fonts/adam_gorry_lights.otf`);
-
   //lvl1
   lvl1Image = loadImage(`assets/images/Lvl1Image.png`)
   lvl2Image = loadImage(`assets/images/Lvl2Image.png`)
@@ -85,7 +81,7 @@ function preload() {
 function setup() {
   createCanvas(900, 600)
 
-  currentState = new Lvl5();
+  currentState = new Win();
 
   if (annyang) {
     let command = {
