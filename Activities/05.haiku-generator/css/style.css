@@ -2,7 +2,7 @@ body {
   font-family: times, serif;
   font-size: 2em;
   font-weight: bold;
-  background-color: antiquewhite;
+  background-color: #ced4be;
   padding: 0;
   margin: 0;
   display: grid; /* Set up the grid and justify/align to center */

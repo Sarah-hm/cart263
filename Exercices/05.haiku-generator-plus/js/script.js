@@ -10,7 +10,7 @@ Generate random haikus
 
 let fiveSyllableLines = [
   `O, to be a tree`,
-  `The car does not know`,
+  `The cat does not know`,
   `We are all forests`,
   `You have done your best`,
   `They are all gone now`
