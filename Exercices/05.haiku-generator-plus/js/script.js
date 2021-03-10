@@ -7,6 +7,15 @@ Sarah Hontoy-Major
 
 Generate random haikus
 ******************/
+let randomSynonyms = [
+  `random`,
+  `unforeseen`,
+  `unintended`,
+  `unexpected`,
+  `incidental`,
+  `unplanned`,
+  `unintentional`
+]
 
 let fiveSyllableLines = [
   `O, to be a tree`,
@@ -24,18 +33,23 @@ let sevenSyllableLines = [
   `They will not come back again`
 ];
 
+let randomSynonym = random(randomSynonyms)
+
 let line1 = random(fiveSyllableLines);
 let line2 = random(sevenSyllableLines);
 let line3 = random(fiveSyllableLines);
 
+let random1H = document.getElementById(`random`);
 let line1P = document.getElementById(`line-1`);
 let line2P = document.getElementById(`line-2`);
 let line3P = document.getElementById(`line-3`);
 
+random1H.innerText = randomSynonym;
 line1P.innerText = line1;
 line2P.innerText = line2;
 line3P.innerText = line3;
 
+random1H.addEventListener(`click`, lineClicked);
 line1P.addEventListener(`click`, lineClicked);
 line2P.addEventListener(`click`, lineClicked);
 line3P.addEventListener(`click`, lineClicked);
@@ -65,8 +79,6 @@ function fadeIn(element, opacity) {
     requestAnimationFrame(function() {
       fadeIn(element, opacity);
     });
-  } else {
-    //nothing yet == something to do when it's entirely faded in
   }
 }
 
@@ -75,6 +87,8 @@ function setNewLine(element) {
     element.innerText = random(fiveSyllableLines)
   } else if (element === line2P) {
     element.innerText = random(sevenSyllableLines)
+  } else if (element === random1H) {
+    element.innerText = random(randomSynonyms)
   }
 }
 
