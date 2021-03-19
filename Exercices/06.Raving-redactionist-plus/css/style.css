@@ -49,3 +49,9 @@ h2 {
   color: red;
   text-decoration: underline;
 }
+
+.hidden-message:hover {
+  color: turquoise;
+  background-color: greenyellow;
+  transform: scale(2);
+}
