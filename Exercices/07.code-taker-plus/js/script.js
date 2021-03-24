@@ -5,11 +5,22 @@ Sarah Hontoy-Major
 
 "use strict";
 
+$(`#introduction-dialog`).dialog({
+  resizable: false,
+  height: "auto",
+  modal: true,
+  buttons: {
+    "Tiguidou": function() {
+      $(this).dialog("close");
+    }
+  }
+});
+
 $(`#solved-dialog`).dialog({
   autoOpen: false,
   buttons: {
     "I know.": function() {
-      $(this).dialog(`close`);
+      $(thiss).dialog(`close`);
     }
   }
 })
