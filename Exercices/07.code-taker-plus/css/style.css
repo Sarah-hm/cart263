@@ -1,13 +1,31 @@
-#poem {
+#changing-room {
+  display: grid;
+  justify-content: center;
+}
+
+#wardrobe {
   font-size: 1.2rem;
 }
 
-#answer {
-  width: 10rem;
-  height: 2rem;
+#pants {
+  transform: scale(0.6);
+  z-index: 1;
+}
+
+#t-shirt {
+  transform: scale(0.6);
+  z-index: 2;
+}
+
+#mannequin {
+  width: 20rem;
+  height: 50rem;
   border: 1px dashed black;
+  background-image: url("../assets/images/mannequin.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .found {
-  color: red;
+  /* background-color: red; */
 }

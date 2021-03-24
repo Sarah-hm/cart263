@@ -25,23 +25,13 @@ $(`#solved-dialog`).dialog({
   }
 })
 
-$(`.secret`).one(`mouseover`, function(event) {
-  $(this).addClass(`found`, 500);
+$(`.clothes`).on(`mouseover`, function(event) {
+  $(this).addClass("found");
   $(this).draggable({
-    helper: `clone`
+    // helper: `clone`
   });
 });
 
-$(`#answer`).droppable({
-  drop: function(even, ui) {
-    let letter = ui.draggable.text();
-    $(this).append(letter);
-    ui.draggable.draggable(`disable`);
-    ui.draggable.removeClass(`found`);
-
-    //Check if they got it
-    if ($(this).text() === `Theremin`) {
-      $(`#solved-dialog`).dialog(`open`);
-    }
-  }
+$(`#mannequin`).droppable({
+  drop: function(even, ui) {}
 });
