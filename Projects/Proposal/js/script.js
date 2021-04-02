@@ -31,8 +31,20 @@ function setup() {
   canvas.parent("#canvas");
 }
 
-function draw() {
 
+//Changes state when appropriate button is clicked
+$(`#enter-store-button`).on(`click`, function(event) {
+  state = `insideStore`
+})
+
+
+//Remove dialog inside the store box when prompted
+$(`#answerButton`).on(`click`, function(event) {
+  $(`#changing-room-dialog`).remove();
+})
+
+
+function draw() {
   checkState();
 }
 
@@ -46,7 +58,6 @@ function checkState() {
 
 function storeFront() {
   background(storeFrontImg);
-  $(`#changing-room`).hide();
 }
 
 function insideStore() {

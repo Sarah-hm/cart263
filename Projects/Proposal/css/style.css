@@ -16,11 +16,15 @@ body {
 }
 
 #canvas {
-  /* I want to make the canvas only a portion of the screen but centered, like the html body. */
+  /* I want to make the canvas a fixed dimension and position (centered) on the screen. */
 }
 
-#canvas {
+#homePage {
   background-image: url("../assets/images/storeFront.png");
+}
+
+#changing-room {
+  background-image: url("../assets/images/changing-room.jpg");
 }
 
 /* Bottom screen dialogues with employee*/
@@ -57,7 +61,8 @@ body {
   justify-content: center;
 }
 
-.dialog a:link {
+.dialog a:link,
+.dialog button {
   padding: 1rem;
   margin: 0.25rem 1rem;
   background: aqua;
@@ -68,7 +73,8 @@ body {
   transition: all ease-in 0.4s;
 }
 
-.dialog a:hover {
+.dialog a:hover,
+.dialog button {
   background-color: beige;
 }
 
