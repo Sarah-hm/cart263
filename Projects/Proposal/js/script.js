@@ -26,3 +26,21 @@ function setup() {
 function draw() {
   background(175);
 }
+
+$(`#intro-dialogue`).dialog({
+  resizable: false,
+  draggable: false,
+  width: '100%',
+  height: "auto",
+  modal: true,
+  position: {
+    my: "left bottom",
+    at: "left bottom",
+    of: "body"
+  },
+  buttons: {
+    "Tiguidou": function() {
+      $(this).dialog("X");
+    }
+  }
+});

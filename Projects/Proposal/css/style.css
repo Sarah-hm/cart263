@@ -18,3 +18,9 @@ body {
 #canvas {
   /* I want to make the canvas only a portion of the screen but centered, like the html body. */
 }
+
+.dialog-footer {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+}
