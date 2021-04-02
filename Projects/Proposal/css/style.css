@@ -19,6 +19,10 @@ body {
   /* I want to make the canvas only a portion of the screen but centered, like the html body. */
 }
 
+#canvas {
+  background-image: url("../assets/images/storeFront.png");
+}
+
 .dialog-footer {
   position: absolute;
   bottom: 10%;
