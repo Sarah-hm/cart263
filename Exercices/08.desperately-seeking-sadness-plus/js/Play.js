@@ -23,12 +23,21 @@ class Play extends Phaser.Scene {
       collideWorldBounds: true,
       dragX: 50,
       dragY: 50,
-      velocityX: 300,
-      velocityY: 150
     });
+
+    this.star = this.physics.add.group({
+      key: 'star',
+      quantity: 50,
+      bounceX: 0.5,
+      bounceY: 0.5,
+      collideWorldBounds: true,
+      velocityX: 200,
+      velocityY: 200,
+    })
     Phaser.Actions.RandomRectangle(this.happiness.getChildren(), this.physics.world.bounds);
 
     this.physics.add.overlap(this.avatar, this.sadness, this.getSad, null, this);
+    this.physics.add.collider(this.avatar, this.happiness);
     this.physics.add.collider(this.avatar, this.happiness);
     this.physics.add.collider(this.happiness, this.happiness);
     this.physics.add.collider(this.sadness, this.happiness);
