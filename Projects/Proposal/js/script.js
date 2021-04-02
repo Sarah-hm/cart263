@@ -32,6 +32,7 @@ function setup() {
 }
 
 function draw() {
+
   checkState();
 }
 
@@ -45,27 +46,7 @@ function checkState() {
 
 function storeFront() {
   background(storeFrontImg);
-
   $(`#changing-room`).hide();
-
-  $(`#intro-dialogue`).dialog({
-    resizable: false,
-    draggable: false,
-    width: "100%",
-    height: "auto",
-    modal: true,
-    position: {
-      my: "left bottom",
-      at: "left bottom",
-      of: "body",
-    },
-    buttons: {
-      "Enter": function() {
-        $(this).dialog(`close`);
-        state = `insideStore`;
-      },
-    },
-  });
 }
 
 function insideStore() {
