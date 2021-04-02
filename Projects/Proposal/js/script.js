@@ -4,17 +4,23 @@ Sarah Hontoy-Major
 
 This is my proposal for project 2.
 */
-let canvas;
+let canvas = undefined;
 
 "use strict";
-//
-// function windowResize() {
-//   resiveCanvas(windowWidth, windowHeight);
-// }
+
+//From coding train sketch as background
+function windowResize() {
+  resiveCanvas(windowWidth, windowHeight);
+}
+
 
 function setup() {
-  createCanvas(400, 400)
-
+  //Put p5 sketch as background of entire html body,
+  // From coding train : https://www.youtube.com/watch?v=OIfEHD3KqCg&ab_channel=TheCodingTrain
+  canvas = createCanvas(windowWidth, windowHeight);
+  canvas.position(0, 0);
+  canvas.style('z-index', '-1')
+  canvas.parent("#canvas")
 }
 
 function draw() {

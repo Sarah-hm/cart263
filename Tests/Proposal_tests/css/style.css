@@ -1,0 +1,48 @@
+body {
+  height: 100vh;
+  background-image: url("../assets/images/changing-room.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#changing-room {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-gap: 20px;
+}
+
+.wardrobe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#pants {
+  grid-column: 1;
+  grid-row: 1;
+  transform: scale(0.6);
+  z-index: 1;
+}
+
+#t-shirt {
+  grid-column: 3;
+  grid-row: 1;
+  transform: scale(0.6);
+  z-index: 2;
+}
+
+#mannequin {
+  margin: 4rem;
+  grid-column: 2;
+  grid-row: 1;
+  width: 15.5rem;
+  height: 50rem;
+  border: 1px dashed black;
+  background-image: url("../assets/images/mannequin.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.found {
+  /* background-color: red; */
+}
