@@ -1,11 +1,22 @@
 /**
-Title of Project
-Author Name
+Proposal for Project 2
+Sarah Hontoy-Major
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+This is my proposal for project 2.
 */
+let canvas;
 
 "use strict";
+//
+// function windowResize() {
+//   resiveCanvas(windowWidth, windowHeight);
+// }
 
-// Code goes here
+function setup() {
+  createCanvas(400, 400)
+
+}
+
+function draw() {
+  background(175);
+}
