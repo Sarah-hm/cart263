@@ -46,3 +46,26 @@ body {
 .found {
   /* background-color: red; */
 }
+
+#intro-dialog {
+  position: absolute;
+  padding: 1rem;
+  bottom: 0.5rem;
+  width: 95vw;
+
+  transition: all 0.4s;
+}
+
+#intro-dialog h1 {
+  padding: 0.5rem;
+  margin: 0;
+  background: aquamarine;
+  border-radius: 0.25em 0.25rem 0 0;
+}
+
+#intro-dialog p {
+  margin: 0;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 0 0 0.25em 0.25rem;
+}

@@ -14,7 +14,7 @@ let insideStoreImg = undefined;
 
 function preload() {
   storeFrontImg = loadImage(`assets/images/storeFront.png`);
-  insideStoreImg = loadImage(`assets/images/insideStore.png`);
+  // insideStoreImg = loadImage(`assets/images/insideStoreImg.png`);
 }
 
 //From coding train sketch as background
@@ -46,6 +46,8 @@ function checkState() {
 function storeFront() {
   background(storeFrontImg);
 
+  $(`#changing-room`).hide();
+
   $(`#intro-dialogue`).dialog({
     resizable: false,
     draggable: false,
@@ -58,14 +60,15 @@ function storeFront() {
       of: "body",
     },
     buttons: {
-      "Tiguidou": function() {
+      "Enter": function() {
         $(this).dialog(`close`);
-        state = `insideStore`
-      }
-    }
+        state = `insideStore`;
+      },
+    },
   });
 }
 
 function insideStore() {
-  background(0)
+  background(0);
+  // $(`#changing-room`).show();
 }
