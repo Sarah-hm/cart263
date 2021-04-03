@@ -44,6 +44,40 @@ $(`#answerButton`).on(`click`, function(event) {
 })
 
 
+$(`.appropriate-choice`).on(`mouseover`, function(event) {
+  $(this).draggable({
+    // helper: `clone`
+  }); //
+});
+
+$(`.clothes`).on(`mouseover`, function(event) {
+  $(this).draggable({
+    revert: "valid",
+    drag: function(event, ui) {
+      console.log(event)
+      //Make only a certain class revert:"valid"
+    }
+  }); //
+});
+
+$(`#mannequin`).droppable({
+  classes: {
+    "ui-droppable-active": "ui-state-active",
+    "ui-droppable-hover": "ui-state-hover"
+  },
+  drop: function(event, ui) {
+
+  }
+
+});
+
+
+
+function checkDroppedGarment() {
+
+  //How to check if something has a specific class (`innapropriate-choice`) and react with something?
+}
+
 function draw() {
   checkState();
 }

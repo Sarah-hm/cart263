@@ -37,5 +37,7 @@ $(`.clothes`).on(`mouseover`, function(event) {
 });
 
 $(`#mannequin`).droppable({
-  drop: function(even, ui) {}
+  drop: function(event, ui) {
+
+  }
 });
