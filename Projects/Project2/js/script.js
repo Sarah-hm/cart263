@@ -13,7 +13,9 @@ let insideStoreImg = undefined;
 ("use strict");
 
 function preload() {
+  dialoguesData = loadJSON(`assets/data/dialogues.json`);
   storeFrontImg = loadImage(`assets/images/storeFront.png`);
+
   // insideStoreImg = loadImage(`assets/images/insideStoreImg.png`);
 }
 
@@ -29,6 +31,15 @@ function setup() {
   canvas.position(0, 0);
   canvas.style("z-index", "-1");
   canvas.parent("#canvas");
+
+
+  let dialogue = new Dialogue();
+
+  //append the current dialogue question to the #question id in the html page
+
+  $(`#question`).append(dialogue.question)
+
+
 }
 
 
@@ -38,9 +49,9 @@ $(`#enter-store-button`).on(`click`, function(event) {
 })
 
 
-//Remove dialog inside the store box when prompted
+//Remove dialogue inside the store box when prompted
 $(`#answerButton`).on(`click`, function(event) {
-  $(`#changing-room-dialog`).remove();
+  $(`#changing-room-dialogue`).remove();
 })
 
 
@@ -79,7 +90,19 @@ function checkDroppedGarment() {
 }
 
 function draw() {
-  checkState();
+
+  // checkState();
+
+
+
+
+  let description = dialogue.question;
+  push()
+  textSize(32);
+  textAlign(CENTER);
+  fill(0);
+  text(description, width / 2, height / 2)
+  pop()
 }
 
 function checkState() {

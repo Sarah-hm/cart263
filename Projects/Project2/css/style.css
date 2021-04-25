@@ -29,55 +29,6 @@ body {
 
 /* Bottom screen dialogues with employee*/
 
-.dialog-box {
-  position: absolute;
-  padding: 1rem;
-  bottom: 0.5rem;
-  width: 95vw;
-  transition: all 0.4s;
-}
-
-.dialog-box h1 {
-  padding: 0.5rem;
-  margin: 0;
-  background: aquamarine;
-  border-radius: 0.25em 0.25rem 0 0;
-}
-
-.dialog {
-  margin: 0;
-  padding: 2rem 2rem;
-  background: white;
-  border-radius: 0 0 0.25em 0.25rem;
-}
-
-.dialog p {
-  padding: 0.5rem 2rem;
-}
-
-/* buttons to choose how to respond to dialogue*/
-.answerChoices {
-  display: flex;
-  justify-content: center;
-}
-
-.dialog a:link,
-.dialog button {
-  padding: 1rem;
-  margin: 0.25rem 1rem;
-  background: aqua;
-  text-decoration: none;
-  font-size: 1rem;
-  color: black;
-  border-radius: 0.25rem;
-  transition: all ease-in 0.4s;
-}
-
-.dialog a:hover,
-.dialog button {
-  background-color: beige;
-}
-
 /* ==== everything changing room ====   */
 
 #changing-room {
