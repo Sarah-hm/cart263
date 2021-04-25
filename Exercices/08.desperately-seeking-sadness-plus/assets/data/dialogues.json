@@ -1,0 +1,13 @@
+{
+  "description": "Dialogue between the player and the game or the employee",
+  "dialogues": {
+    "introDialogue": {
+      "question": "You see a clothing store and are about to enter it. blablabla. Do you want the game version or chill version?",
+      "answers": ["game version", "chill version"]
+    },
+    "introEmployee": {
+      "question": "Hello and welcome to _store_. My name's Sandra and I'll assist you anyway I can today. Can I just say I loooove your style?",
+      "answers": ["thank you", "Hello Sandra! I love yours too!"]
+    }
+  }
+}
