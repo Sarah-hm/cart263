@@ -16,7 +16,7 @@
 #dialogue {
   margin: 0;
   padding: 2rem 2rem;
-  background: white;
+  background: pink;
   border-radius: 0 0 0.25em 0.25rem;
 }
 
@@ -30,7 +30,14 @@
   justify-content: center;
 }
 
-#dialogue a:link,
+.answer-button {
+  background-color: aqua;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  margin: 0.25rem 1rem;
+}
+
+/* #dialogue a:link,
 #dialogue button {
   padding: 1rem;
   margin: 0.25rem 1rem;
@@ -45,4 +52,4 @@
 #dialogue a:hover,
 #dialogue button {
   background-color: beige;
-}
+} */

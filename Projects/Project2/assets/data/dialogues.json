@@ -2,6 +2,7 @@
   "description": "Dialogue between the player and the game or the employee",
   "dialogues": {
     "introDialogue": {
+      "title": "Welcome",
       "question": "You see a clothing store and are about to enter it. blablabla. Do you want the game version or chill version?",
       "answers": ["game version", "chill version"]
     },
