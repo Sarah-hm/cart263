@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      width="device-width,"
+      initial-scale="1.0,"
+      maximum-scale="1.0,"
+      user-scalable="0"
+    />
+
+    <title>Project 2 Proposal</title>
+
+    <!-- CSS stylesheet(s) -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://code.jquery.com/ui/1.10.4/themes/blitzer/jquery-ui.css"
+    />
+
+    <!-- Library script(s) go here -->
+    <script src="js/libraries/p5.min.js"></script>
+    <script src="js/libraries/p5.sound.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <div id="canvas">
+      <div class="dialog-box" id="changing-room-dialog">
+        <div class="title"><h1>Welcome</h1></div>
+        <div class="dialog">
+          <p>
+            You're now inside the store. There will be a number of interactions
+            leading to this point, but you eventually end up in the changing
+            room.
+          </p>
+
+          <div class="answerChoices">
+            <button id="answerButton">Let's try on some clothes</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="changing-room">
+        <section class="wardrobe" id="wr-left">
+          <img
+            class="clothes"
+            class="appropriate-choice"
+            id="pants"
+            src="assets\images\pants.png"
+            alt="pants"
+          />
+        </section>
+
+        <section class="wardrobe" id="wr-right">
+          <img
+            class="clothes"
+            class="innapropriate-choice"
+            id="t-shirt"
+            src="assets\images\t-shirt.png"
+            alt="t-shirt"
+          />
+        </section>
+        <!-- The secret answer area-->
+        <section id="mannequin"></section>
+      </section>
+    </div>
+    <!-- My script(s) -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

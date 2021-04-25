@@ -1,0 +1,124 @@
+/*********************************************
+
+Here is a description of any special CSS used.
+By default that's nothing.
+
+**********************************************/
+
+body {
+  padding: 0;
+  margin: 0;
+  display: flex; /* Set up the grid and justify/align to center */
+  /* justify-content: center;
+  align-content: center; */
+  height: 100vh; /* Body is the height of the viewport */
+  overflow: hidden; /* Hide anything that goes off the window size */
+}
+
+#canvas {
+  /* I want to make the canvas a fixed dimension and position (centered) on the screen. */
+}
+
+#homePage {
+  background-image: url("../assets/images/storeFront.png");
+}
+
+#changing-room {
+  background-image: url("../assets/images/changing-room.jpg");
+}
+
+/* Bottom screen dialogues with employee*/
+
+.dialog-box {
+  position: absolute;
+  padding: 1rem;
+  bottom: 0.5rem;
+  width: 95vw;
+  transition: all 0.4s;
+}
+
+.dialog-box h1 {
+  padding: 0.5rem;
+  margin: 0;
+  background: aquamarine;
+  border-radius: 0.25em 0.25rem 0 0;
+}
+
+.dialog {
+  margin: 0;
+  padding: 2rem 2rem;
+  background: white;
+  border-radius: 0 0 0.25em 0.25rem;
+}
+
+.dialog p {
+  padding: 0.5rem 2rem;
+}
+
+/* buttons to choose how to respond to dialogue*/
+.answerChoices {
+  display: flex;
+  justify-content: center;
+}
+
+.dialog a:link,
+.dialog button {
+  padding: 1rem;
+  margin: 0.25rem 1rem;
+  background: aqua;
+  text-decoration: none;
+  font-size: 1rem;
+  color: black;
+  border-radius: 0.25rem;
+  transition: all ease-in 0.4s;
+}
+
+.dialog a:hover,
+.dialog button {
+  background-color: beige;
+}
+
+/* ==== everything changing room ====   */
+
+#changing-room {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-gap: 20px;
+}
+
+.wardrobe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#pants {
+  grid-column: 1;
+  grid-row: 1;
+  transform: scale(0.6);
+  z-index: 1;
+}
+
+#t-shirt {
+  grid-column: 3;
+  grid-row: 1;
+  transform: scale(0.6);
+  z-index: 2;
+}
+
+#mannequin {
+  margin: 4rem;
+  grid-column: 2;
+  grid-row: 1;
+  width: 15.5rem;
+  height: 50rem;
+  border: 1px dashed black;
+  background-image: url("../assets/images/mannequin.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.found {
+  /* background-color: red; */
+}
