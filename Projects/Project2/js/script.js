@@ -34,17 +34,19 @@ function setup() {
 
 
   let dialogue = new Dialogue();
-
   //append the current dialogue question to the #question id in the html page
-
   $(`#question`).append(dialogue.question)
 
+  for (let i = 0; i < dialogue.answers.length; i++) {
+    $(`#answers`).add(`.answer-button`).append(dialogue.answers[i]);
 
+  }
+  console.log(dialogue.answers.length)
 }
 
 
 //Changes state when appropriate button is clicked
-$(`#enter-store-button`).on(`click`, function(event) {
+$(`.answer-button`).on(`click`, function(event) {
   state = `insideStore`
 })
 
@@ -90,6 +92,8 @@ function checkDroppedGarment() {
 }
 
 function draw() {
+
+
 
   // checkState();
 
