@@ -37,6 +37,10 @@ function setup() {
   $(`h1`).append(dialogue.title);
   $(`#question`).append(dialogue.question);
 
+
+  for (var i = 0; i <= dialogue.answers.length; i++) {
+    $('#answers').append('<input type="button" id="button' + i + '"value="' + i + '"/>');
+  }
   for (let i = 0; i < dialogue.answers.length; i++) {
     $(`#answers`).add(`.answer-button`).append(dialogue.answers[i]);
   }

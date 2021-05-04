@@ -37,6 +37,10 @@
   margin: 0.25rem 1rem;
 }
 
+.button {
+  background-color: red;
+}
+
 /* #dialogue a:link,
 #dialogue button {
   padding: 1rem;
