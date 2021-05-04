@@ -12,22 +12,22 @@ let defaultParameters = {
   canvasWidth: 800,
   canvasHeight: 600,
   bg: {
-    r: 255,
-    g: 0,
-    b: 0
+    r: 189,
+    g: 183,
+    b: 219
   }
 }
 
 let currentState = undefined // can be : StoreFront, InsideStore...
 
 // storeFront class variables
-
+let mallEscalatorsImg = undefined;
 
 /**
 Description of preload
 */
 function preload() {
-
+  mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`)
 }
 
 
@@ -47,5 +47,5 @@ function setup() {
 Description of draw()
 */
 function draw() {
-
+  currentState.update();
 }
