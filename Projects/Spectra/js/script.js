@@ -22,12 +22,16 @@ let currentState = undefined // can be : StoreFront, InsideStore...
 
 // storeFront class variables
 let mallEscalatorsImg = undefined;
+let mallMezzanineImg = undefined;
+let mallStoreFrontImg = undefined;
 
 /**
 Description of preload
 */
 function preload() {
-  mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`)
+  mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
+  mallMezzanineImg = loadImage(`assets/images/mallMezzanineView.png`);
+  mallStoreFrontImg = loadImage(`assets/images/mallStoreFront.png`);
 }
 
 
