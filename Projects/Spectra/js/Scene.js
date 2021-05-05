@@ -9,7 +9,7 @@ class Scene {
     }
   }
 
-  updated() {
+  update() {
     this.setBackground();
     this.playMusic();
   }

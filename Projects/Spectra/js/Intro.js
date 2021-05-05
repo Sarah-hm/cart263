@@ -127,48 +127,67 @@ class Intro extends Scene {
 
   update() {
     super.update();
-    this.animateAndDisplayIntroImgs();
+
+    //Animate first pictures of the mall with interactive animation speed based on mouse position
+    //(in decreasing order because I want want them to appear one behind one another)
+    this.animateAndDisplayThirdFrame();
+    this.animateAndDisplaySecondFrame();
+    this.animateAndDisplayFirstFrame();
+
   }
 
 
+  animateAndDisplayFirstFrame() {
 
-  //Animate first pictures of the mall with interactive animation speed based on mouse position
-  animateAndDisplayIntroImgs() {
+    //======= Display first frame (escalators in a mall)=======
+    //Moves to the left with speed based on mouseX, loses alpha until transparent
+    //If the image isn't at its landing position yet, make it go left with a speed mapped on mouseX's position.Transparency goes from 0 to 100 as it approaches landing position
+    if (
+      this.introImgs.firstFrame.position.x >
+      this.introImgs.firstFrame.landingPosition.x
+    ) {
+      //animation speed map : define inherited variable as mouseX; map it to the width of canvas and the min and max animation speed of the image; move the image
+      this.introImgs.firstFrame.animationMapping.inheritedVariable = mouseX;
+      this.introImgs.firstFrame.animationSpeed = map(
+        this.introImgs.firstFrame.animationMapping.inheritedVariable,
+        this.introImgs.firstFrame.animationMapping.minInheritedValue,
+        this.introImgs.firstFrame.animationMapping.maxInheritedValue,
+        this.introImgs.firstFrame.animationMapping.minMappedValue,
+        this.introImgs.firstFrame.animationMapping.maxMappedValue
+      );
+      this.introImgs.firstFrame.position.x -= this.introImgs.firstFrame.animationSpeed;
 
-    //======= Display third frame (store front)=======
+      //tint map: as the image goes left, the more transparent the image will become (until 0)
+      //Set the inherited variable of the alpha map as the current x position of the image
+      this.introImgs.firstFrame.tintMapping.inheritedVariable = this.introImgs.firstFrame.position.x;
+      //map the image tint's alpha from fully opaque to fully transparent based on first frame's X position (with a maximum of the canvas' width)
+      this.introImgs.firstFrame.tint.alpha = map(
+        this.introImgs.firstFrame.tintMapping.inheritedVariable,
+        this.introImgs.firstFrame.tintMapping.minInheritedValue,
+        this.introImgs.firstFrame.tintMapping.maxInheritedValue,
+        this.introImgs.firstFrame.tintMapping.minMappedValue,
+        this.introImgs.firstFrame.tintMapping.maxMappedValue
+      );
 
-    //Starts moving to the right and gaining alpha when the second frame is starting to zoom in and if the third frame is not already in its landing position.
-    if (this.introImgs.thirdFrame.position.x <= this.introImgs.thirdFrame.landingPosition.x && this.introImgs.secondFrame.size.width > this.introImgs.secondFrame.minSize) {
-      this.introImgs.thirdFrame.position.x += this.introImgs.thirdFrame.animationSpeed
-
-      //map the imagine tint alpha's from the orginal position to the landing position (0% to 100% opacity)
-
-      //Set the inherited variable of the alpha map as the position X of the image
-      this.introImgs.thirdFrame.tintMapping.inheritedVariable = this.introImgs.thirdFrame.position.x;
-
-      this.introImgs.thirdFrame.tint.alpha = map(this.introImgs.thirdFrame.tintMapping.inheritedVariable,
-        this.introImgs.thirdFrame.tintMapping.minInheritedValue,
-        this.introImgs.thirdFrame.tintMapping.maxInheritedValue,
-        this.introImgs.thirdFrame.tintMapping.minMappedValue,
-        this.introImgs.thirdFrame.tintMapping.maxMappedValue)
+      //Display first frame of the top of an escalator
+      push();
+      imageMode(CENTER);
+      tint(
+        this.introImgs.firstFrame.tint.gray,
+        this.introImgs.firstFrame.tint.alpha
+      );
+      image(
+        this.introImgs.firstFrame.img,
+        this.introImgs.firstFrame.position.x,
+        this.introImgs.firstFrame.position.y,
+        this.introImgs.firstFrame.size.width,
+        this.introImgs.firstFrame.size.height
+      );
+      pop();
     }
+  }
 
-    //display the thang
-    push();
-    imageMode(CENTER);
-    tint(
-      this.introImgs.thirdFrame.tint.gray,
-      this.introImgs.thirdFrame.tint.alpha
-    );
-    image(
-      this.introImgs.thirdFrame.img,
-      this.introImgs.thirdFrame.position.x,
-      this.introImgs.thirdFrame.position.y,
-      this.introImgs.thirdFrame.size.width,
-      this.introImgs.thirdFrame.size.height
-    );
-    pop();
-
+  animateAndDisplaySecondFrame() {
     //======= Display second frame (looking over inside a mall from mezzanine)=======
     if (
       this.introImgs.secondFrame.position.x >
@@ -236,52 +255,43 @@ class Intro extends Scene {
       pop();
     }
 
-    //======= Display first frame (escalators in a mall)=======
-    //Moves to the left with speed based on mouseX, loses alpha until transparent
-    //If the image isn't at its landing position yet, make it go left with a speed mapped on mouseX's position.Transparency goes from 0 to 100 as it approaches landing position
-    if (
-      this.introImgs.firstFrame.position.x >
-      this.introImgs.firstFrame.landingPosition.x
-    ) {
-      //animation speed map : define inherited variable as mouseX; map it to the width of canvas and the min and max animation speed of the image; move the image
-      this.introImgs.firstFrame.animationMapping.inheritedVariable = mouseX;
-      this.introImgs.firstFrame.animationSpeed = map(
-        this.introImgs.firstFrame.animationMapping.inheritedVariable,
-        this.introImgs.firstFrame.animationMapping.minInheritedValue,
-        this.introImgs.firstFrame.animationMapping.maxInheritedValue,
-        this.introImgs.firstFrame.animationMapping.minMappedValue,
-        this.introImgs.firstFrame.animationMapping.maxMappedValue
-      );
-      this.introImgs.firstFrame.position.x -= this.introImgs.firstFrame.animationSpeed;
-
-      //tint map: as the image goes left, the more transparent the image will become (until 0)
-      //Set the inherited variable of the alpha map as the current x position of the image
-      this.introImgs.firstFrame.tintMapping.inheritedVariable = this.introImgs.firstFrame.position.x;
-      //map the image tint's alpha from fully opaque to fully transparent based on first frame's X position (with a maximum of the canvas' width)
-      this.introImgs.firstFrame.tint.alpha = map(
-        this.introImgs.firstFrame.tintMapping.inheritedVariable,
-        this.introImgs.firstFrame.tintMapping.minInheritedValue,
-        this.introImgs.firstFrame.tintMapping.maxInheritedValue,
-        this.introImgs.firstFrame.tintMapping.minMappedValue,
-        this.introImgs.firstFrame.tintMapping.maxMappedValue
-      );
-
-      //Display first frame of the top of an escalator
-      push();
-      imageMode(CENTER);
-      tint(
-        this.introImgs.firstFrame.tint.gray,
-        this.introImgs.firstFrame.tint.alpha
-      );
-      image(
-        this.introImgs.firstFrame.img,
-        this.introImgs.firstFrame.position.x,
-        this.introImgs.firstFrame.position.y,
-        this.introImgs.firstFrame.size.width,
-        this.introImgs.firstFrame.size.height
-      );
-      pop();
-    }
   }
+
+  animateAndDisplayThirdFrame() {
+    //======= Display third frame (store front)=======
+
+    //Starts moving to the right and gaining alpha when the second frame is starting to zoom in and if the third frame is not already in its landing position.
+    if (this.introImgs.thirdFrame.position.x <= this.introImgs.thirdFrame.landingPosition.x && this.introImgs.secondFrame.size.width > this.introImgs.secondFrame.minSize) {
+      this.introImgs.thirdFrame.position.x += this.introImgs.thirdFrame.animationSpeed
+
+      //map the imagine tint alpha's from the orginal position to the landing position (0% to 100% opacity)
+
+      //Set the inherited variable of the alpha map as the position X of the image
+      this.introImgs.thirdFrame.tintMapping.inheritedVariable = this.introImgs.thirdFrame.position.x;
+
+      this.introImgs.thirdFrame.tint.alpha = map(this.introImgs.thirdFrame.tintMapping.inheritedVariable,
+        this.introImgs.thirdFrame.tintMapping.minInheritedValue,
+        this.introImgs.thirdFrame.tintMapping.maxInheritedValue,
+        this.introImgs.thirdFrame.tintMapping.minMappedValue,
+        this.introImgs.thirdFrame.tintMapping.maxMappedValue)
+    }
+
+    //display the thang
+    push();
+    imageMode(CENTER);
+    tint(
+      this.introImgs.thirdFrame.tint.gray,
+      this.introImgs.thirdFrame.tint.alpha
+    );
+    image(
+      this.introImgs.thirdFrame.img,
+      this.introImgs.thirdFrame.position.x,
+      this.introImgs.thirdFrame.position.y,
+      this.introImgs.thirdFrame.size.width,
+      this.introImgs.thirdFrame.size.height
+    );
+    pop();
+  }
+
 
 }
