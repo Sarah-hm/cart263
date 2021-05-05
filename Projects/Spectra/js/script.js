@@ -43,7 +43,7 @@ function setup() {
   createCanvas(defaultParameters.canvasWidth, defaultParameters.canvasHeight);
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
-  currentState = new StoreFront();
+  currentState = new Intro();
 }
 
 

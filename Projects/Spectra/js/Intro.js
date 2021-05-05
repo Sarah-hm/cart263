@@ -1,14 +1,9 @@
-class StoreFront {
+class Intro extends Scene {
   constructor() {
-    this.defaultSettings = {
-      bg: {
-        r: 255,
-        g: 255,
-        b: 255,
-      },
-    };
-
+    super();
+    //variables of all intro frames before dialog box
     this.introImgs = {
+      //FIRST FRAME : mall hall and top of escalators
       firstFrame: {
         img: mallEscalatorsImg,
         size: {
@@ -19,11 +14,13 @@ class StoreFront {
           x: width,
           y: height / 2,
         },
+        //Final position after being fully animated
         landingPosition: {
           x: 0,
           y: height / 2,
         },
-        animationSpeed: undefined,
+        animationSpeed: undefined, //will be defined in the map() with user input
+        //Speed of animation is mapped on user Mouse X position, from really slowly to fast-ish
         animationMapping: {
           inheritedVariable: undefined,
           minInheritedValue: 0,
@@ -31,10 +28,12 @@ class StoreFront {
           minMappedValue: 1,
           maxMappedValue: 7,
         },
+        //Opacity
         tint: {
           gray: 255,
-          alpha: undefined,
+          alpha: undefined, //will be defined in the map() with position X input
         },
+        //Opacity mapped by position X changing, until it reaches landing position, therefore 0 opacity
         tintMapping: {
           inheritedVariable: undefined,
           minInheritedValue: width,
@@ -43,34 +42,41 @@ class StoreFront {
           maxMappedValue: 0,
         },
       },
+      //SECOND FRAME: overlooking mall goes from top left corner to bottom right and zooms while disappearing
       secondFrame: {
         img: mallMezzanineImg,
         size: {
           width: 1600,
           height: 1200,
         },
+        //the value that will be added per frame when zoom in starts
         resizeValue: {
           width: 13,
           height: undefined,
         },
+        //mininmum and maximum sizes for mapping and to trigger third frame
         minSize: 1600,
         maxSize: 3000,
         position: {
           x: width,
           y: height,
         },
+        //final position after being fully animated
         landingPosition: {
           x: 0,
           y: 0,
         },
+        //Where and how fast the animate goes
         animationSpeed: {
           x: -2,
           y: undefined,
         },
+        //Opacity
         tint: {
           gray: 255,
           alpha: undefined,
         },
+        //Opacity mapped by zoom effect. More zoom in, the lesser opacity until 0.
         tintMapping: {
           inheritedVariable: undefined,
           //minimum and maximum width the image can have
@@ -80,6 +86,7 @@ class StoreFront {
           maxMappedValue: 0,
         },
       },
+      //THIRD FRAME : store front goes left to right while gaining opacity
       thirdFrame: {
         img: mallStoreFrontImg,
         size: {
@@ -90,15 +97,18 @@ class StoreFront {
           x: 250,
           y: height / 2,
         },
+        //final position after being fully animated
         landingPosition: {
           x: 550,
           y: height / 2,
         },
         animationSpeed: 3,
+        //Opacity
         tint: {
           gray: 255,
           alpha: 0
         },
+        //Opacity mapped by position X untiol it reaches landing position, therefore 255 opacity
         tintMapping: {
           inheritedVariable: undefined,
           //from original X position to landing X position
@@ -110,23 +120,20 @@ class StoreFront {
         }
       }
     };
+    this.introDialog = {
+
+    }
   }
 
   update() {
-    this.setBackground();
-    this.animateIntroImgs();
+    super.update();
+    this.animateAndDisplayIntroImgs();
   }
 
-  setBackground() {
-    background(
-      this.defaultSettings.bg.r,
-      this.defaultSettings.bg.b,
-      this.defaultSettings.bg.g
-    );
-  }
+
 
   //Animate first pictures of the mall with interactive animation speed based on mouse position
-  animateIntroImgs() {
+  animateAndDisplayIntroImgs() {
 
     //======= Display third frame (store front)=======
 
@@ -276,4 +283,5 @@ class StoreFront {
       pop();
     }
   }
+
 }
