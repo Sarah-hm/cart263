@@ -24,13 +24,13 @@ class StoreFront {
           x: 0,
           y: height / 2
         },
-        animationSpeed: 5,
+        animationSpeed: undefined,
         animationMapping: {
           inheritedVariable: mouseX,
           minInheritedValue: 0,
           maxInheritedValue: width,
-          minMappedValue: 5,
-          maxMappedValue: 50
+          minMappedValue: 1,
+          maxMappedValue: 10
         },
         tint: {
           gray: 255,
@@ -56,25 +56,23 @@ class StoreFront {
     background(this.defaultSettings.bg.r, this.defaultSettings.bg.b, this.defaultSettings.bg.g);
   }
 
+  //Animate first pictures of the mall with interactive animation speed based on mouse position
   animateIntroImgs() {
-    //Display first frame (escalators in a mall)
+    //======= Display first frame (escalators in a mall)=======
 
-    //Move to the left based on last frame's position
-
-
-
+    //Moves to the left with speed based on mouseX, loses alpha until transparent
 
     //If the image isn't at its landing position yet, make it go left with a speed mapped on mouseX's position.Transparency goes from 0 to 100 as it approaches landing position
     if (this.introImgs.firstFrame.position.x > this.introImgs.firstFrame.landingPosition.x) {
-      //animation speed map
+      //animation speed map : define inherited variable as mouseX; map it to the width of canvas and the min and max animation speed of the image; move the image
+      this.introImgs.firstFrame.animationMapping.inheritedVariable = mouseX;
       this.introImgs.firstFrame.animationSpeed = map(this.introImgs.firstFrame.animationMapping.inheritedVariable, this.introImgs.firstFrame.animationMapping.minInheritedValue, this.introImgs.firstFrame.animationMapping.maxInheritedValue, this.introImgs.firstFrame.animationMapping.minMappedValue, this.introImgs.firstFrame.animationMapping.maxMappedValue);
       this.introImgs.firstFrame.position.x -= this.introImgs.firstFrame.animationSpeed
 
-
-
-      //tint map
-      //Set the inherited variable of the tint mapping object at the current x position of the image
+      //tint map: as the image goes left, the more transparent the image will become (until 0)
+      //Set the inherited variable of the alpha map as the current x position of the image
       this.introImgs.firstFrame.tintMapping.inheritedVariable = this.introImgs.firstFrame.position.x;
+      //map the image tint's alpha from fully opaque to fully transparent based on first frame's X position (with a maximum of the canvas' width)
       this.introImgs.firstFrame.tint.alpha = map(this.introImgs.firstFrame.tintMapping.inheritedVariable, this.introImgs.firstFrame.tintMapping.minInheritedValue, this.introImgs.firstFrame.tintMapping.maxInheritedValue, this.introImgs.firstFrame.tintMapping.minMappedValue, this.introImgs.firstFrame.tintMapping.maxMappedValue);
     }
 
