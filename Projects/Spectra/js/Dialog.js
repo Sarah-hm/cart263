@@ -89,28 +89,44 @@ class Dialog extends Scene {
 
       // Buttons and answers variables
       answerButton: {
-        backgroundStroke: {
-          rectMode: CENTER,
-          size: {
-            width: width,
-            height: 10
-          },
-          position: {
-            //x defined under specific answer a or b
-            y: height / 10 * 9.5
-          },
-          color: {
-            r: 230,
-            g: 36,
-            b: 133
-          }
+        rectMode: CENTER,
+        textSize: 14,
+        strokeWeight: 3,
+        cornerRoundness: 10,
+        size: {
+          width: width,
+          height: 10
+        },
+        position: {
+          //x defined under specific answer a or b
+          y: height / 10 * 9.5
+        },
+        fill: {
+          r: 230,
+          g: 36,
+          b: 133
+        },
+        strokeFill: {
+          r: 0,
+          g: 0,
+          g: 0
+        },
+        hoverFill: {
+          r: 0,
+          g: 0,
+          b: 0
+        },
+        textFill: {
+          r: 0,
+          g: 0,
+          b: 0
         },
         a: {
-          x: undefined,
+          x: 100,
           string: undefined
         },
         b: {
-          x: undefined,
+          x: 500,
           string: undefined
         }
       }
@@ -212,9 +228,10 @@ class Dialog extends Scene {
     //check if text is displayed. If so, display answer buttons
     if (this.dialogBox.textBox.fullTextDisplayed === true) {
 
-
       //(Taken from my project 1)
       for (let i = 0; i < this.answerChoices.length; i++) {
+
+        console.log(this.answerChoices[i])
         //button (fill color changes if hovering over)
         push();
         if (
@@ -234,40 +251,40 @@ class Dialog extends Scene {
           );
         } else {
           fill(
-            this.dialogBox.answerButton.buttonFill.r,
-            this.dialogBox.answerButton.buttonFill.g,
-            this.dialogBox.answerButton.buttonFill.b
+            this.dialogBox.answerButton.fill.r,
+            this.dialogBox.answerButton.fill.g,
+            this.dialogBox.answerButton.fill.b
           );
         }
         rectMode(CENTER);
-        strokeWeight(this.answerButton.strokeWeight);
+        strokeWeight(this.dialogBox.answerButton.strokeWeight);
         stroke(
-          this.answerButton.strokeFill.r,
-          this.answerButton.strokeFill.g,
-          this.answerButton.strokeFill.b
+          this.dialogBox.answerButton.strokeFill.r,
+          this.dialogBox.answerButton.strokeFill.g,
+          this.dialogBox.answerButton.strokeFill.b
         );
         rect(
           this.answerChoices[i].x,
-          this.answerButton.y,
-          this.answerButton.width,
-          this.answerButton.height,
-          this.answerButton.roundCorner
+          this.dialogBox.answerButton.y,
+          this.dialogBox.answerButton.size.width,
+          this.dialogBox.answerButton.size.height,
+          this.dialogBox.answerButton.cornerRoundness
         );
         pop();
 
         //text
         push();
         fill(
-          this.answerChoice.textFill.r,
-          this.answerChoice.textFill.g,
-          this.answerChoice.textFill.b
+          this.dialogBox.answerButton.textFill.r,
+          this.dialogBox.answerButton.textFill.g,
+          this.dialogBox.answerButton.textFill.b
         );
         textAlign(CENTER, CENTER);
-        textSize(this.questionTextSize);
+        textSize(this.dialogBox.answerButton.textSize);
         text(
           this.answerChoices[i].string,
           this.answerChoices[i].x,
-          this.answerChoice.y
+          this.dialogBox.answerButton.position.y
         );
         pop();
       }
