@@ -20,18 +20,30 @@ let defaultParameters = {
 
 let currentState = undefined // can be : StoreFront, InsideStore...
 
-// storeFront class variables
+//All fonts
+let alienEncounterFont = undefined;
+
+// intro scene variables
 let mallEscalatorsImg = undefined;
 let mallMezzanineImg = undefined;
 let mallStoreFrontImg = undefined;
+
+//intro dialog variables
+
 
 /**
 Description of preload
 */
 function preload() {
+  //all fonts
+  alienEncounterFont = loadFont(`assets/fonts/SFAlienEncounters.ttf`)
+
+  //intro imgs
   mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
   mallMezzanineImg = loadImage(`assets/images/mallMezzanineView.png`);
   mallStoreFrontImg = loadImage(`assets/images/mallStoreFront.png`);
+
+
 }
 
 
@@ -43,7 +55,7 @@ function setup() {
   createCanvas(defaultParameters.canvasWidth, defaultParameters.canvasHeight);
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
-  currentState = new Intro();
+  currentState = new IntroDialog();
 }
 
 

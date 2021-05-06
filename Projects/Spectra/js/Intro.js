@@ -68,7 +68,7 @@ class Intro extends Scene {
         },
         //Where and how fast the animate goes
         animationSpeed: {
-          x: -2,
+          x: -5,
           y: undefined,
         },
         //Opacity
@@ -90,8 +90,8 @@ class Intro extends Scene {
       thirdFrame: {
         img: mallStoreFrontImg,
         size: {
-          width: undefined,
-          height: undefined,
+          width: 1100,
+          height: 600,
         },
         position: {
           x: 250,
@@ -133,6 +133,8 @@ class Intro extends Scene {
     this.animateAndDisplayThirdFrame();
     this.animateAndDisplaySecondFrame();
     this.animateAndDisplayFirstFrame();
+
+    this.checkIfAnimationsCompleted();
 
   }
 
@@ -291,6 +293,12 @@ class Intro extends Scene {
       this.introImgs.thirdFrame.size.height
     );
     pop();
+  }
+
+  checkIfAnimationsCompleted() {
+    if (this.introImgs.thirdFrame.position.x === this.introImgs.thirdFrame.landingPosition.x) {
+      currentState = new IntroDialog();
+    }
   }
 
 
