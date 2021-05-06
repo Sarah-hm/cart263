@@ -3,8 +3,8 @@
   "dialogues": {
     "introDialogue": {
       "title": "Welcome",
-      "question": "You see a clothing store and are about to enter it. You'll have to interact with a (dumb) employee and they're gonna say some (dumb) things about gender expression, identity and biological sex. You might want to avoid that for one reason or another. Do you want the aggressive version or chill version?",
-      "answers": ["Aggresive version?", "I definitely want to chill"]
+      "question": "You're about to enter a clothing store. You'll have to interact with micro-aggression regarding gender expression, identity and biological sex. You can also choose to play a chill version of the same game if this feels better.",
+      "answers": ["Lemme see it all", "I definitely want to chill"]
     },
     "introEmployee": {
       "title": "Employee",

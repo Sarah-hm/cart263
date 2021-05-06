@@ -43,8 +43,10 @@ class Dialog extends Scene {
         easing: 0.5,
       },
       textBox: {
+        fullTextDisplayed: false,
         string: undefined,
-        font: alienEncounterFont,
+        font: `courier`,
+        textSize: 14,
         rectMode: CENTER,
         size: {
           width: width - 200,
@@ -53,7 +55,19 @@ class Dialog extends Scene {
         cornerRoundness: 10,
         position: {
           x: width / 2,
-          y: height + 150
+          y: height + 150,
+        },
+        textOffset: {
+          x: -width / 3,
+          y: -40,
+          x2: width / 5,
+          y2: 100
+        },
+        textPosition: {
+          x: undefined,
+          y: undefined,
+          x2: undefined,
+          y2: undefined
         },
         landingPosition: {
           x: width / 2,
@@ -65,24 +79,72 @@ class Dialog extends Scene {
           b: 243
         },
         textColor: {
-          r: 230,
-          g: 36,
-          b: 133
+          r: 0,
+          g: 0,
+          b: 0
         },
         slideInSpeed: -5,
         easing: 0.5,
+      },
+
+      // Buttons and answers variables
+      answerButton: {
+        backgroundStroke: {
+          rectMode: CENTER,
+          size: {
+            width: width,
+            height: 10
+          },
+          position: {
+            //x defined under specific answer a or b
+            y: height / 10 * 9.5
+          },
+          color: {
+            r: 230,
+            g: 36,
+            b: 133
+          }
+        },
+        a: {
+          x: undefined,
+          string: undefined
+        },
+        b: {
+          x: undefined,
+          string: undefined
+        }
       }
+    }
+
+
+    this.answerChoices = [this.dialogBox.answerButton.a, this.dialogBox.answerButton.b]
+
+    this.typewriter = {
+      fullText: ``,
+      displayText: ``,
+      nextChar: 0,
+      speed: 50,
+      interval: undefined,
     }
   }
 
   update() {
     super.update();
+    this.setBackgroundImg();
+    this.animateAndDisplayDialogBox();
+    this.animateAndDisplayDialogQuestion();
+    this.animateAndDisplayAnswers();
+  }
+
+  setBackgroundImg() {
+    push();
+    imageMode(CENTER);
+    image(this.backgroundImg.img, this.backgroundImg.position.x, this.backgroundImg.position.y, this.backgroundImg.size.width, this.backgroundImg.size.height);
+    pop();
   }
 
   animateAndDisplayDialogBox() {
-
     //animation text box
-
     if (this.dialogBox.textBox.position.y > this.dialogBox.textBox.landingPosition.y) {
       this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideInSpeed
     }
@@ -96,12 +158,8 @@ class Dialog extends Scene {
     pop()
 
     //animate title Box and title string
-
     if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
       this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
-
-
-
     }
 
     //display title box
@@ -112,21 +170,123 @@ class Dialog extends Scene {
     rect(this.dialogBox.titleBox.position.x, this.dialogBox.titleBox.position.y, this.dialogBox.titleBox.size.width, this.dialogBox.titleBox.size.height, this.dialogBox.titleBox.cornerRoundness)
     pop()
 
-    //display title
-
-    push()
+    //calculate position of text based on position of title box and text offset
     this.dialogBox.titleBox.textPosition.x = this.dialogBox.titleBox.position.x + this.dialogBox.titleBox.textOffset.x;
     this.dialogBox.titleBox.textPosition.y = this.dialogBox.titleBox.position.y + this.dialogBox.titleBox.textOffset.y;
+
+    //display title
+    push()
     textAlign(LEFT, BOTTOM);
     textFont(this.dialogBox.titleBox.font);
     textSize(this.dialogBox.titleBox.textSize)
     fill(this.dialogBox.titleBox.textColor.r, this.dialogBox.titleBox.textColor.g, this.dialogBox.titleBox.textColor.b);
     text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.textPosition.x, this.dialogBox.titleBox.textPosition.y);
     pop()
+  }
+
+
+  animateAndDisplayDialogQuestion() {
+    if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y) {
+      //typewriter effect to be added
+
+      //calculate position of text based on position of title box and text offset
+      this.dialogBox.textBox.textPosition.x = this.dialogBox.textBox.position.x + this.dialogBox.textBox.textOffset.x;
+      this.dialogBox.textBox.textPosition.y = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y;
+      this.dialogBox.textBox.textPosition.x2 = this.dialogBox.textBox.position.x + this.dialogBox.textBox.textOffset.x2;
+      this.dialogBox.textBox.textPosition.y2 = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y2;
+
+      this.dialogBox.textBox.fullTextDisplayed = true;
+
+      //display text
+      push();
+      textAlign(LEFT);
+      textFont(this.dialogBox.textBox.font);
+      textSize(this.dialogBox.textBox.textSize)
+      fill(this.dialogBox.textBox.textColor.r, this.dialogBox.textBox.textColor.g, this.dialogBox.textBox.textColor.b);
+      text(this.dialogBox.textBox.string, this.dialogBox.textBox.textPosition.x, this.dialogBox.textBox.textPosition.y, this.dialogBox.textBox.textPosition.x2, this.dialogBox.textBox.textPosition.y2);
+      pop();
+    }
+  }
+
+  animateAndDisplayAnswers() {
+    //check if text is displayed. If so, display answer buttons
+    if (this.dialogBox.textBox.fullTextDisplayed === true) {
+
+
+      //(Taken from my project 1)
+      for (let i = 0; i < this.answerChoices.length; i++) {
+        //button (fill color changes if hovering over)
+        push();
+        if (
+          mouseX >
+          this.answerChoices[i].x - this.dialogBox.answerButton.size.width / 2 &&
+          mouseX <
+          this.answerChoices[i].x + this.dialogBox.answerButton.size.width / 2 &&
+          mouseY >
+          this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
+          mouseY <
+          this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2
+        ) {
+          fill(
+            this.dialogBox.answerButton.hoverFill.r,
+            this.dialogBox.answerButton.hoverFill.g,
+            this.dialogBox.answerButton.hoverFill.b
+          );
+        } else {
+          fill(
+            this.dialogBox.answerButton.buttonFill.r,
+            this.dialogBox.answerButton.buttonFill.g,
+            this.dialogBox.answerButton.buttonFill.b
+          );
+        }
+        rectMode(CENTER);
+        strokeWeight(this.answerButton.strokeWeight);
+        stroke(
+          this.answerButton.strokeFill.r,
+          this.answerButton.strokeFill.g,
+          this.answerButton.strokeFill.b
+        );
+        rect(
+          this.answerChoices[i].x,
+          this.answerButton.y,
+          this.answerButton.width,
+          this.answerButton.height,
+          this.answerButton.roundCorner
+        );
+        pop();
+
+        //text
+        push();
+        fill(
+          this.answerChoice.textFill.r,
+          this.answerChoice.textFill.g,
+          this.answerChoice.textFill.b
+        );
+        textAlign(CENTER, CENTER);
+        textSize(this.questionTextSize);
+        text(
+          this.answerChoices[i].string,
+          this.answerChoices[i].x,
+          this.answerChoice.y
+        );
+        pop();
+      }
 
 
 
+
+
+
+      //display background stroke ======= REDACTED cause it's fugly.
+      // push();
+      // rectMode(this.dialogBox.answerButton.backgroundStroke.rectMode)
+      // noStroke();
+      // fill(this.dialogBox.answerButton.backgroundStroke.color.r, this.dialogBox.answerButton.backgroundStroke.color.g, this.dialogBox.answerButton.backgroundStroke.color.b)
+      // rect(this.dialogBox.answerButton.backgroundStroke.position.x, this.dialogBox.answerButton.backgroundStroke.position.y, this.dialogBox.answerButton.backgroundStroke.size.width, this.dialogBox.answerButton.backgroundStroke.size.height)
+      // pop();
+    }
 
   }
+
 
 }

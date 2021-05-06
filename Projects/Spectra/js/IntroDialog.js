@@ -19,22 +19,17 @@ class IntroDialog extends Dialog {
     this.dialogBox.textBox.string = dialogsData.dialogues.introDialogue.question
 
     //defines the answer choices
+    // answer 'a'
+    this.dialogBox.answerButton.a.string = dialogsData.dialogues.introDialogue.answers[0]
+
+    //answer 'b'
+    this.dialogBox.answerButton.b.string = dialogsData.dialogues.introDialogue.answers[1]
+
+
   }
 
   update() {
-    // super.update();
-    this.setBackgroundImg();
-    this.animateAndDisplayDialogBox();
+    super.update();
   }
 
-  setBackgroundImg() {
-    push();
-    imageMode(CENTER);
-    image(this.backgroundImg.img, this.backgroundImg.position.x, this.backgroundImg.position.y, this.backgroundImg.size.width, this.backgroundImg.size.height);
-    pop();
-  }
-
-  animateAndDisplayDialogBox() {
-    super.animateAndDisplayDialogBox();
-  }
 }
