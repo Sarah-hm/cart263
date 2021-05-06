@@ -20,6 +20,9 @@ let defaultParameters = {
 
 let currentState = undefined // can be : StoreFront, InsideStore...
 
+//load dialog scripts via JSON
+let dialogsData = undefined;
+
 //All fonts
 let alienEncounterFont = undefined;
 
@@ -35,6 +38,9 @@ let mallStoreFrontImg = undefined;
 Description of preload
 */
 function preload() {
+  //JSON data
+  dialogsData = loadJSON(`assets/data/dialogues.json`)
+
   //all fonts
   alienEncounterFont = loadFont(`assets/fonts/SFAlienEncounters.ttf`)
 

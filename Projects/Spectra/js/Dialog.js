@@ -4,8 +4,9 @@ class Dialog extends Scene {
 
     this.dialogBox = {
       titleBox: {
-        string: `undefined`,
+        string: undefined,
         font: alienEncounterFont,
+        textSize: 30,
         rectMode: CORNER,
         size: {
           width: 300,
@@ -15,6 +16,14 @@ class Dialog extends Scene {
         position: {
           x: width / 10,
           y: height + 50
+        },
+        textOffset: {
+          x: 25,
+          y: 37
+        },
+        textPosition: {
+          x: undefined,
+          y: undefined
         },
         landingPosition: {
           x: width / 10,
@@ -34,7 +43,7 @@ class Dialog extends Scene {
         easing: 0.5,
       },
       textBox: {
-        string: `undefined`,
+        string: undefined,
         font: alienEncounterFont,
         rectMode: CENTER,
         size: {
@@ -90,6 +99,9 @@ class Dialog extends Scene {
 
     if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
       this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
+
+
+
     }
 
     //display title box
@@ -101,9 +113,15 @@ class Dialog extends Scene {
     pop()
 
     //display title
+
     push()
-    textFont(this.dialogBox.titleBox.font)
-    text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.position.x, this.dialogBox.titleBox.position.y)
+    this.dialogBox.titleBox.textPosition.x = this.dialogBox.titleBox.position.x + this.dialogBox.titleBox.textOffset.x;
+    this.dialogBox.titleBox.textPosition.y = this.dialogBox.titleBox.position.y + this.dialogBox.titleBox.textOffset.y;
+    textAlign(LEFT, BOTTOM);
+    textFont(this.dialogBox.titleBox.font);
+    textSize(this.dialogBox.titleBox.textSize)
+    fill(this.dialogBox.titleBox.textColor.r, this.dialogBox.titleBox.textColor.g, this.dialogBox.titleBox.textColor.b);
+    text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.textPosition.x, this.dialogBox.titleBox.textPosition.y);
     pop()
 
 

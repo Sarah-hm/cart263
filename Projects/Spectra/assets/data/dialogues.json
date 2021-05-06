@@ -1,0 +1,69 @@
+{
+  "description": "Dialogue between the player and the game or the employee",
+  "dialogues": {
+    "introDialogue": {
+      "title": "Welcome",
+      "question": "You see a clothing store and are about to enter it. You'll have to interact with a (dumb) employee and they're gonna say some (dumb) things about gender expression, identity and biological sex. You might want to avoid that for one reason or another. Do you want the aggressive version or chill version?",
+      "answers": ["Aggresive version?", "I definitely want to chill"]
+    },
+    "introEmployee": {
+      "title": "Employee",
+      "question": "Hello and welcome to literally any store ever. My name's Sandra and I'll assist you any way I can today. Can I just say I loooove your look?",
+      "answers": ["thank you", "Hello Sandra! I love yours too!"]
+    },
+    "choosingSection": {
+      "title": "Sandra",
+      "question": "We have both a feminine and masculine section to the store. Feel free to browse through it all, we're like *so* open minded. But choose one first.",
+      "answers": [
+        "I'd like to see the feminine section first",
+        "Let me check the masculine collection first"
+      ]
+    },
+    "microaggression1": {
+      "title": "Sandra",
+      "question": "Yes, unfortunately we don't have your size in that. You're just not... the usual body type.",
+      "answers": [
+        "Oh, that's too bad.",
+        "Well you should look into it. Everyone deserves to dress however they want."
+      ]
+    },
+    "microagrresion2": {
+      "title": "Sandra...",
+      "question": "You sure about that, hun? Wouldn't you prefer something a little more fitting for you?",
+      "answers": ["what?...", "I don't think so, no."]
+    },
+    "microaggression3": {
+      "title": "Sandra, unfortunately",
+      "question": "Oh you obviously can't wear that, what would others say? Ha! Ha! Ha!",
+      "answers": [
+        "They're gonna say I look fierce",
+        "well, I frankly don't give a fuck"
+      ]
+    },
+
+    "microaggression4": {
+      "title": "The annoying one",
+      "question": "Are you looking for something for your partner or is this some sort of costume hunt?",
+      "answers": [
+        "okay, at this point you're trolling.",
+        "Partner who? Also, my gender expression and identity is not a costume and none of your goddamn business."
+      ]
+    },
+    "microagrression5": {
+      "title": "this little bitch",
+      "question": "I don't know. I feel like maybe you're pushing too much. It's okay to dress however you like, don't get me wrong, but you should go with something that's made for you. The real you.",
+      "answers": [
+        "something really insulting",
+        "that I can still share in classroom setting"
+      ]
+    },
+    "ending": {
+      "title": "Game Over: you Broke the Fashion Industry",
+      "question": "Congrats. You single handedly destroyed the fashion industry and its gender dichotomy. Now we have to build it from the ground up, which isn't so bad if you ask me. But I've never said that. I still want to get paid on thursday.",
+      "answers": [
+        "yeah, this was weird but I understand more now.",
+        "You're a fucking sell out (it's true)"
+      ]
+    }
+  }
+}

@@ -12,8 +12,13 @@ class IntroDialog extends Dialog {
         y: height / 2
       },
     }
+    //defines the title as 'welcome'
+    this.dialogBox.titleBox.string = dialogsData.dialogues.introDialogue.title
 
+    //Defines the text/question
+    this.dialogBox.textBox.string = dialogsData.dialogues.introDialogue.question
 
+    //defines the answer choices
   }
 
   update() {
