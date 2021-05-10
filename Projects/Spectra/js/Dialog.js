@@ -18,7 +18,7 @@ class Dialog extends Scene {
           y: height + 50
         },
         textOffset: {
-          x: 25,
+          x: 30,
           y: 37
         },
         textPosition: {
@@ -29,12 +29,12 @@ class Dialog extends Scene {
           x: width / 10,
           y: height / 3 * 2
         },
-        backgroundColor: {
+        backgroundFill: {
           r: 191,
           g: 225,
           b: 229
         },
-        textColor: {
+        textFill: {
           r: 230,
           g: 36,
           b: 133
@@ -45,7 +45,7 @@ class Dialog extends Scene {
       textBox: {
         fullTextDisplayed: false,
         string: undefined,
-        font: `courier`,
+        font: atkinsonRegular,
         textSize: 14,
         rectMode: CENTER,
         size: {
@@ -58,7 +58,7 @@ class Dialog extends Scene {
           y: height + 150,
         },
         textOffset: {
-          x: -width / 3,
+          x: -width / 2.8,
           y: -40,
           x2: width / 5,
           y2: 100
@@ -73,12 +73,12 @@ class Dialog extends Scene {
           x: width / 2,
           y: height / 7 * 6
         },
-        backgroundColor: {
+        backgroundFill: {
           r: 143,
           g: 140,
           b: 243
         },
-        textColor: {
+        textFill: {
           r: 0,
           g: 0,
           b: 0
@@ -91,11 +91,12 @@ class Dialog extends Scene {
       answerButton: {
         rectMode: CENTER,
         textSize: 14,
-        strokeWeight: 3,
+        font: atkinsonBold,
+        strokeWeight: 8,
         cornerRoundness: 10,
         size: {
-          width: width,
-          height: 10
+          width: width / 3.2,
+          height: height / 15
         },
         position: {
           //x defined under specific answer a or b
@@ -107,9 +108,9 @@ class Dialog extends Scene {
           b: 133
         },
         strokeFill: {
-          r: 0,
-          g: 0,
-          g: 0
+          r: 143,
+          g: 140,
+          b: 243
         },
         hoverFill: {
           r: 0,
@@ -122,11 +123,11 @@ class Dialog extends Scene {
           b: 0
         },
         a: {
-          x: 100,
+          x: width / 3,
           string: undefined
         },
         b: {
-          x: 500,
+          x: width / 3 * 2,
           string: undefined
         }
       }
@@ -169,7 +170,7 @@ class Dialog extends Scene {
     push()
     rectMode(this.dialogBox.textBox.rectMode);
     noStroke();
-    fill(this.dialogBox.textBox.backgroundColor.r, this.dialogBox.textBox.backgroundColor.g, this.dialogBox.textBox.backgroundColor.b);
+    fill(this.dialogBox.textBox.backgroundFill.r, this.dialogBox.textBox.backgroundFill.g, this.dialogBox.textBox.backgroundFill.b);
     rect(this.dialogBox.textBox.position.x, this.dialogBox.textBox.position.y, this.dialogBox.textBox.size.width, this.dialogBox.textBox.size.height, this.dialogBox.textBox.cornerRoundness)
     pop()
 
@@ -182,7 +183,7 @@ class Dialog extends Scene {
     push()
     rectMode(this.dialogBox.titleBox.rectMode);
     noStroke();
-    fill(this.dialogBox.titleBox.backgroundColor.r, this.dialogBox.titleBox.backgroundColor.g, this.dialogBox.titleBox.backgroundColor.b);
+    fill(this.dialogBox.titleBox.backgroundFill.r, this.dialogBox.titleBox.backgroundFill.g, this.dialogBox.titleBox.backgroundFill.b);
     rect(this.dialogBox.titleBox.position.x, this.dialogBox.titleBox.position.y, this.dialogBox.titleBox.size.width, this.dialogBox.titleBox.size.height, this.dialogBox.titleBox.cornerRoundness)
     pop()
 
@@ -195,7 +196,7 @@ class Dialog extends Scene {
     textAlign(LEFT, BOTTOM);
     textFont(this.dialogBox.titleBox.font);
     textSize(this.dialogBox.titleBox.textSize)
-    fill(this.dialogBox.titleBox.textColor.r, this.dialogBox.titleBox.textColor.g, this.dialogBox.titleBox.textColor.b);
+    fill(this.dialogBox.titleBox.textFill.r, this.dialogBox.titleBox.textFill.g, this.dialogBox.titleBox.textFill.b);
     text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.textPosition.x, this.dialogBox.titleBox.textPosition.y);
     pop()
   }
@@ -218,7 +219,7 @@ class Dialog extends Scene {
       textAlign(LEFT);
       textFont(this.dialogBox.textBox.font);
       textSize(this.dialogBox.textBox.textSize)
-      fill(this.dialogBox.textBox.textColor.r, this.dialogBox.textBox.textColor.g, this.dialogBox.textBox.textColor.b);
+      fill(this.dialogBox.textBox.textFill.r, this.dialogBox.textBox.textFill.g, this.dialogBox.textBox.textFill.b);
       text(this.dialogBox.textBox.string, this.dialogBox.textBox.textPosition.x, this.dialogBox.textBox.textPosition.y, this.dialogBox.textBox.textPosition.x2, this.dialogBox.textBox.textPosition.y2);
       pop();
     }
@@ -231,8 +232,8 @@ class Dialog extends Scene {
       //(Taken from my project 1)
       for (let i = 0; i < this.answerChoices.length; i++) {
 
-        console.log(this.answerChoices[i])
-        //button (fill color changes if hovering over)
+
+        //button (color fill changes if hovering over with mouse)
         push();
         if (
           mouseX >
@@ -265,7 +266,7 @@ class Dialog extends Scene {
         );
         rect(
           this.answerChoices[i].x,
-          this.dialogBox.answerButton.y,
+          this.dialogBox.answerButton.position.y,
           this.dialogBox.answerButton.size.width,
           this.dialogBox.answerButton.size.height,
           this.dialogBox.answerButton.cornerRoundness
@@ -281,6 +282,7 @@ class Dialog extends Scene {
         );
         textAlign(CENTER, CENTER);
         textSize(this.dialogBox.answerButton.textSize);
+        textFont(this.dialogBox.answerButton.font);
         text(
           this.answerChoices[i].string,
           this.answerChoices[i].x,
@@ -288,21 +290,43 @@ class Dialog extends Scene {
         );
         pop();
       }
-
-
-
-
-
-
       //display background stroke ======= REDACTED cause it's fugly.
       // push();
       // rectMode(this.dialogBox.answerButton.backgroundStroke.rectMode)
       // noStroke();
-      // fill(this.dialogBox.answerButton.backgroundStroke.color.r, this.dialogBox.answerButton.backgroundStroke.color.g, this.dialogBox.answerButton.backgroundStroke.color.b)
+      // fill(this.dialogBox.answerButton.backgroundStroke.fill.r, this.dialogBox.answerButton.backgroundStroke.fill.g, this.dialogBox.answerButton.backgroundStroke.fill.b)
       // rect(this.dialogBox.answerButton.backgroundStroke.position.x, this.dialogBox.answerButton.backgroundStroke.position.y, this.dialogBox.answerButton.backgroundStroke.size.width, this.dialogBox.answerButton.backgroundStroke.size.height)
       // pop();
     }
+  }
 
+  toggleButtonA() {
+
+  }
+
+  toggleButtonB() {
+
+  }
+
+  mousePressed() {
+    //if pressed button a, give function to toggle to reaction (new scene)
+    if (mouseX > this.dialogBox.answerButton.a.x - this.dialogBox.answerButton.size.width / 2 &&
+      mouseX < this.dialogBox.answerButton.a.x + this.dialogBox.answerButton.size.width / 2 &&
+      mouseY >
+      this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
+      mouseY <
+      this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2) {
+      this.toggleButtonA();
+    }
+    //Otherwise, if pressed button b, give function to toggle to new reaction (new scene)
+    else if (mouseX > this.dialogBox.answerButton.b.x - this.dialogBox.answerButton.size.width / 2 &&
+      mouseX < this.dialogBox.answerButton.b.x + this.dialogBox.answerButton.size.width / 2 &&
+      mouseY >
+      this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
+      mouseY <
+      this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2) {
+      this.toggleButtonB();
+    }
   }
 
 

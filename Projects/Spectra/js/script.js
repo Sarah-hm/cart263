@@ -25,6 +25,10 @@ let dialogsData = undefined;
 
 //All fonts
 let alienEncounterFont = undefined;
+let atkinsonBold = undefined;
+let atkinsonBoldItalic = undefined;
+let atkinsonItalic = undefined;
+let atkinsonRegular = undefined;
 
 // intro scene variables
 let mallEscalatorsImg = undefined;
@@ -42,7 +46,13 @@ function preload() {
   dialogsData = loadJSON(`assets/data/dialogues.json`)
 
   //all fonts
-  alienEncounterFont = loadFont(`assets/fonts/SFAlienEncounters.ttf`)
+  alienEncounterFont = loadFont(`assets/fonts/SFAlienEncounters.ttf`);
+  atkinsonBold = loadFont(`assets/fonts/Atkinson-Hyperlegible-Bold-102.ttf`);
+  atkinsonBoldItalic = loadFont(`assets/fonts/Atkinson-Hyperlegible-BoldItalic-102.ttf`);
+  atkinsonItalic = loadFont(`assets/fonts/Atkinson-Hyperlegible-Italic-102.ttf`);
+  atkinsonRegular = loadFont(`assets/fonts/Atkinson-Hyperlegible-Regular-102.ttf`);
+
+
 
   //intro imgs
   mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
@@ -61,7 +71,7 @@ function setup() {
   createCanvas(defaultParameters.canvasWidth, defaultParameters.canvasHeight);
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
-  currentState = new IntroDialog(); //can be Intro, IntroDialog, 
+  currentState = new IntroDialog(); //can be Intro, IntroDialog,
 }
 
 
@@ -70,4 +80,8 @@ Description of draw()
 */
 function draw() {
   currentState.update();
+}
+
+function mousePressed() {
+  currentState.mousePressed();
 }
