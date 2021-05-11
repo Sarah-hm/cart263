@@ -3,6 +3,8 @@ class Dialog extends Scene {
     super();
 
     this.dialogBox = {
+      closing: false,
+      closed: false,
       titleBox: {
         string: undefined,
         font: alienEncounterFont,
@@ -29,6 +31,10 @@ class Dialog extends Scene {
           x: width / 10,
           y: height / 3 * 2
         },
+        exitPosition: {
+          x: width / 10,
+          y: height + 50
+        },
         backgroundFill: {
           r: 191,
           g: 225,
@@ -40,6 +46,7 @@ class Dialog extends Scene {
           b: 133
         },
         slideInSpeed: -5,
+        slideOutSpeed: 5,
         easing: 0.5,
       },
       textBox: {
@@ -73,6 +80,10 @@ class Dialog extends Scene {
           x: width / 2,
           y: height / 7 * 6
         },
+        exitPosition: {
+          x: width / 2,
+          y: height + 150
+        },
         backgroundFill: {
           r: 143,
           g: 140,
@@ -84,6 +95,7 @@ class Dialog extends Scene {
           b: 0
         },
         slideInSpeed: -5,
+        slideOutSpeed: 5,
         easing: 0.5,
       },
 
@@ -101,6 +113,10 @@ class Dialog extends Scene {
         position: {
           //x defined under specific answer a or b
           y: height / 10 * 9.5
+        },
+        exitPosition: {
+          //xdefined under specific answer a or b (always the same)
+          y: height + 180
         },
         fill: {
           r: 230,
@@ -124,11 +140,13 @@ class Dialog extends Scene {
         },
         a: {
           x: width / 3,
-          string: undefined
+          string: undefined,
+          toggle: false
         },
         b: {
           x: width / 3 * 2,
-          string: undefined
+          string: undefined,
+          toggle: false
         }
       }
     }
@@ -151,6 +169,7 @@ class Dialog extends Scene {
     this.animateAndDisplayDialogBox();
     this.animateAndDisplayDialogQuestion();
     this.animateAndDisplayAnswers();
+    this.closeDialog();
   }
 
   setBackgroundImg() {
@@ -290,22 +309,39 @@ class Dialog extends Scene {
         );
         pop();
       }
-      //display background stroke ======= REDACTED cause it's fugly.
-      // push();
-      // rectMode(this.dialogBox.answerButton.backgroundStroke.rectMode)
-      // noStroke();
-      // fill(this.dialogBox.answerButton.backgroundStroke.fill.r, this.dialogBox.answerButton.backgroundStroke.fill.g, this.dialogBox.answerButton.backgroundStroke.fill.b)
-      // rect(this.dialogBox.answerButton.backgroundStroke.position.x, this.dialogBox.answerButton.backgroundStroke.position.y, this.dialogBox.answerButton.backgroundStroke.size.width, this.dialogBox.answerButton.backgroundStroke.size.height)
-      // pop();
     }
   }
 
-  toggleButtonA() {
+  toggleButtonA() {}
 
-  }
+  toggleButtonB() {}
 
-  toggleButtonB() {
+  closeDialog() {
+    if (this.dialogBox.closing) {
+      //If title box is not completely off the canvas, it should continue to go down
+      if (this.dialogBox.titleBox.position.y < this.dialogBox.titleBox.exitPosition.y) {
+        this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed
+      }
+      //
+      if (this.dialogBox.textBox.position.y < this.dialogBox.textBox.exitPosition.y) {
+        this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideOutSpeed
+      }
 
+      //to be added only when the animation is completed (all are at exitPosition)
+      this.dialogBox.closed = true;
+    }
+
+    // if all dialog (title, text, buttons) are off the canvas, the reaction of the button (a or b) should be toggled
+    if (this.dialogBox.closed) {
+      //button a toggle
+      if (this.dialogBox.answerButton.a.toggle === true) {
+        this.toggleButtonA();
+      }
+      //button b toggle
+      else if (this.dialogBox.answerButton.b.toggle === true) {
+        this.toggleButtonB();
+      }
+    }
   }
 
   mousePressed() {
@@ -316,7 +352,8 @@ class Dialog extends Scene {
       this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
       mouseY <
       this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2) {
-      this.toggleButtonA();
+      this.dialogBox.answerButton.a.toggle = true;
+      this.dialogBox.closing = true;
     }
     //Otherwise, if pressed button b, give function to toggle to new reaction (new scene)
     else if (mouseX > this.dialogBox.answerButton.b.x - this.dialogBox.answerButton.size.width / 2 &&
@@ -325,7 +362,8 @@ class Dialog extends Scene {
       this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
       mouseY <
       this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2) {
-      this.toggleButtonB();
+      this.dialogBox.answerButton.b.toggle = true;
+      this.dialogBox.closing = true;
     }
   }
 

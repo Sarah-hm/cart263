@@ -1,4 +1,4 @@
-class IntroDialog extends Dialog {
+class IntroEmployee extends Dialog {
   constructor() {
     super();
     this.backgroundImg = {
@@ -13,17 +13,17 @@ class IntroDialog extends Dialog {
       },
     }
     //defines the title as 'welcome'
-    this.dialogBox.titleBox.string = dialogsData.dialogues.introDialogue.title
+    this.dialogBox.titleBox.string = dialogsData.dialogues.introEmployee.title
 
     //Defines the text/question
-    this.dialogBox.textBox.string = dialogsData.dialogues.introDialogue.question
+    this.dialogBox.textBox.string = dialogsData.dialogues.introEmployee.question
 
     //defines the answer choices
     // answer 'a'
-    this.dialogBox.answerButton.a.string = dialogsData.dialogues.introDialogue.answers[0]
+    this.dialogBox.answerButton.a.string = dialogsData.dialogues.introEmployee.answers[0]
 
     //answer 'b'
-    this.dialogBox.answerButton.b.string = dialogsData.dialogues.introDialogue.answers[1]
+    this.dialogBox.answerButton.b.string = dialogsData.dialogues.introEmployee.answers[1]
 
 
   }
@@ -34,10 +34,11 @@ class IntroDialog extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
-    currentState = new IntroEmployee();
+    currentState = new ChoosingSection();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
+    currentState = new ChoosingSection();
   }
 }

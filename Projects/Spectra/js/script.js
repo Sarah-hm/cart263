@@ -18,7 +18,7 @@ let defaultParameters = {
   }
 }
 
-let currentState = undefined // can be : StoreFront, InsideStore...
+let currentState = undefined // scenes can be: Intro, Intro Dialog, Intro Employee, Choosing Section
 
 //load dialog scripts via JSON
 let dialogsData = undefined;
