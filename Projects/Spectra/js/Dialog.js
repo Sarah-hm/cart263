@@ -2,154 +2,168 @@ class Dialog extends Scene {
   constructor() {
     super();
 
-    this.dialogBox = {
-      closing: false,
-      closed: false,
-      titleBox: {
-        string: undefined,
-        font: alienEncounterFont,
-        textSize: 30,
-        rectMode: CORNER,
-        size: {
-          width: 300,
-          height: 50
-        },
-        cornerRoundness: 10,
-        position: {
-          x: width / 10,
-          y: height + 50
-        },
-        textOffset: {
-          x: 30,
-          y: 37
-        },
-        textPosition: {
-          x: undefined,
-          y: undefined
-        },
-        landingPosition: {
-          x: width / 10,
-          y: height / 3 * 2
-        },
-        exitPosition: {
-          x: width / 10,
-          y: height + 50
-        },
-        backgroundFill: {
-          r: 191,
-          g: 225,
-          b: 229
-        },
-        textFill: {
-          r: 230,
-          g: 36,
-          b: 133
-        },
-        slideInSpeed: -5,
-        slideOutSpeed: 5,
-        easing: 0.5,
-      },
-      textBox: {
-        fullTextDisplayed: false,
-        string: undefined,
-        font: atkinsonRegular,
-        textSize: 14,
-        rectMode: CENTER,
-        size: {
-          width: width - 200,
-          height: 150
-        },
-        cornerRoundness: 10,
-        position: {
-          x: width / 2,
-          y: height + 150,
-        },
-        textOffset: {
-          x: -width / 2.8,
-          y: -40,
-          x2: width / 5,
-          y2: 100
-        },
-        textPosition: {
-          x: undefined,
-          y: undefined,
-          x2: undefined,
-          y2: undefined
-        },
-        landingPosition: {
-          x: width / 2,
-          y: height / 7 * 6
-        },
-        exitPosition: {
-          x: width / 2,
-          y: height + 150
-        },
-        backgroundFill: {
-          r: 143,
-          g: 140,
-          b: 243
-        },
-        textFill: {
-          r: 0,
-          g: 0,
-          b: 0
-        },
-        slideInSpeed: -5,
-        slideOutSpeed: 5,
-        easing: 0.5,
+    //defines what will be needed/toggled in given scene, all defined in child objects and toggle different methods.
+    this.scene = {
+        //defines if there will be a dialog box in the scene
+        dialogBox: undefined,
+        //defines if there will possible answer buttons in the scene
+        answerButtons: undefined,
+        //defines if there will be a speaker (an image of who the player is talking with) in the scene
+        speaker: undefined,
+        //Defines if the dialog box (and everything in it) will animate in the canvas, at the start of a communication
+        fadeIn: undefined,
+        //Defines if the dialog box (and everything in it) will animate out of the canvas, at the end of a communication
+        fadeOut: undefined
       },
 
-      // Buttons and answers variables
-      answerButton: {
-        rectMode: CENTER,
-        textSize: 14,
-        font: atkinsonBold,
-        strokeWeight: 8,
-        cornerRoundness: 10,
-        size: {
-          width: width / 3.2,
-          height: height / 15
-        },
-        position: {
-          //x defined under specific answer a or b
-          y: height / 10 * 9.5
-        },
-        exitPosition: {
-          //xdefined under specific answer a or b (always the same)
-          y: height + 180
-        },
-        fill: {
-          r: 230,
-          g: 36,
-          b: 133
-        },
-        strokeFill: {
-          r: 143,
-          g: 140,
-          b: 243
-        },
-        hoverFill: {
-          r: 0,
-          g: 0,
-          b: 0
-        },
-        textFill: {
-          r: 0,
-          g: 0,
-          b: 0
-        },
-        a: {
-          x: width / 3,
+      this.dialogBox = {
+        closing: false,
+        closed: false,
+        titleBox: {
           string: undefined,
-          toggle: false
+          font: alienEncounterFont,
+          textSize: 30,
+          rectMode: CORNER,
+          size: {
+            width: 300,
+            height: 50
+          },
+          cornerRoundness: 10,
+          position: {
+            x: width / 10,
+            y: height + 50
+          },
+          textOffset: {
+            x: 30,
+            y: 37
+          },
+          textPosition: {
+            x: undefined,
+            y: undefined
+          },
+          landingPosition: {
+            x: width / 10,
+            y: height / 3 * 2
+          },
+          exitPosition: {
+            x: width / 10,
+            y: height + 50
+          },
+          backgroundFill: {
+            r: 191,
+            g: 225,
+            b: 229
+          },
+          textFill: {
+            r: 230,
+            g: 36,
+            b: 133
+          },
+          slideInSpeed: -5,
+          slideOutSpeed: 5,
+          easing: 0.5,
         },
-        b: {
-          x: width / 3 * 2,
+        textBox: {
+          fullTextDisplayed: false,
           string: undefined,
-          toggle: false
+          font: atkinsonRegular,
+          textSize: 14,
+          rectMode: CENTER,
+          size: {
+            width: width - 200,
+            height: 150
+          },
+          cornerRoundness: 10,
+          position: {
+            x: width / 2,
+            y: height + 150,
+          },
+          textOffset: {
+            x: -width / 2.8,
+            y: -40,
+            x2: width / 5,
+            y2: 100
+          },
+          textPosition: {
+            x: undefined,
+            y: undefined,
+            x2: undefined,
+            y2: undefined
+          },
+          landingPosition: {
+            x: width / 2,
+            y: height / 7 * 6
+          },
+          exitPosition: {
+            x: width / 2,
+            y: height + 150
+          },
+          backgroundFill: {
+            r: 143,
+            g: 140,
+            b: 243
+          },
+          textFill: {
+            r: 0,
+            g: 0,
+            b: 0
+          },
+          slideInSpeed: -5,
+          slideOutSpeed: 5,
+          easing: 0.5,
+        },
+
+        // Buttons and answers variables
+        answerButton: {
+          rectMode: CENTER,
+          textSize: 14,
+          font: atkinsonBold,
+          strokeWeight: 8,
+          cornerRoundness: 10,
+          size: {
+            width: width / 3.2,
+            height: height / 15
+          },
+          position: {
+            //x defined under specific answer a or b
+            y: height / 10 * 9.5
+          },
+          exitPosition: {
+            //xdefined under specific answer a or b (always the same)
+            y: height + 180
+          },
+          fill: {
+            r: 230,
+            g: 36,
+            b: 133
+          },
+          strokeFill: {
+            r: 143,
+            g: 140,
+            b: 243
+          },
+          hoverFill: {
+            r: 0,
+            g: 0,
+            b: 0
+          },
+          textFill: {
+            r: 0,
+            g: 0,
+            b: 0
+          },
+          a: {
+            x: width / 3,
+            string: undefined,
+            toggle: false
+          },
+          b: {
+            x: width / 3 * 2,
+            string: undefined,
+            toggle: false
+          }
         }
       }
-    }
 
 
     this.answerChoices = [this.dialogBox.answerButton.a, this.dialogBox.answerButton.b]
@@ -165,11 +179,17 @@ class Dialog extends Scene {
 
   update() {
     super.update();
+    this.setSceneParameters();
     this.setBackgroundImg();
-    this.animateAndDisplayDialogBox();
+    this.fadeInDialogBox();
+    this.displayDialogBox();
     this.animateAndDisplayDialogQuestion();
     this.animateAndDisplayAnswers();
     this.closeDialog();
+  }
+
+  setSceneParameters() {
+
   }
 
   setBackgroundImg() {
@@ -179,45 +199,62 @@ class Dialog extends Scene {
     pop();
   }
 
-  animateAndDisplayDialogBox() {
-    //animation text box
-    if (this.dialogBox.textBox.position.y > this.dialogBox.textBox.landingPosition.y) {
-      this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideInSpeed
+  fadeInDialogBox() {
+    if (this.scene.fadeIn) {
+
+      //animate title Box and title string
+      if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
+        this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
+      }
+
+      //animation text box
+      if (this.dialogBox.textBox.position.y > this.dialogBox.textBox.landingPosition.y) {
+        this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideInSpeed
+      }
     }
+  }
 
-    //display text box
-    push()
-    rectMode(this.dialogBox.textBox.rectMode);
-    noStroke();
-    fill(this.dialogBox.textBox.backgroundFill.r, this.dialogBox.textBox.backgroundFill.g, this.dialogBox.textBox.backgroundFill.b);
-    rect(this.dialogBox.textBox.position.x, this.dialogBox.textBox.position.y, this.dialogBox.textBox.size.width, this.dialogBox.textBox.size.height, this.dialogBox.textBox.cornerRoundness)
-    pop()
+  displayDialogBox() {
+    if (this.scene.dialogBox) {
 
-    //animate title Box and title string
-    if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
-      this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
+
+      //calculate position of title string based on position of title box and text offset
+      this.dialogBox.titleBox.textPosition.x = this.dialogBox.titleBox.position.x + this.dialogBox.titleBox.textOffset.x;
+      this.dialogBox.titleBox.textPosition.y = this.dialogBox.titleBox.position.y + this.dialogBox.titleBox.textOffset.y;
+
+      //calculate position of text string based on position of title box and text offset
+      this.dialogBox.textBox.textPosition.x = this.dialogBox.textBox.position.x + this.dialogBox.textBox.textOffset.x;
+      this.dialogBox.textBox.textPosition.y = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y;
+      this.dialogBox.textBox.textPosition.x2 = this.dialogBox.textBox.position.x + this.dialogBox.textBox.textOffset.x2;
+      this.dialogBox.textBox.textPosition.y2 = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y2;
+
+
+
+      //display text box
+      push()
+      rectMode(this.dialogBox.textBox.rectMode);
+      noStroke();
+      fill(this.dialogBox.textBox.backgroundFill.r, this.dialogBox.textBox.backgroundFill.g, this.dialogBox.textBox.backgroundFill.b);
+      rect(this.dialogBox.textBox.position.x, this.dialogBox.textBox.position.y, this.dialogBox.textBox.size.width, this.dialogBox.textBox.size.height, this.dialogBox.textBox.cornerRoundness)
+      pop()
+
+      //display title box
+      push()
+      rectMode(this.dialogBox.titleBox.rectMode);
+      noStroke();
+      fill(this.dialogBox.titleBox.backgroundFill.r, this.dialogBox.titleBox.backgroundFill.g, this.dialogBox.titleBox.backgroundFill.b);
+      rect(this.dialogBox.titleBox.position.x, this.dialogBox.titleBox.position.y, this.dialogBox.titleBox.size.width, this.dialogBox.titleBox.size.height, this.dialogBox.titleBox.cornerRoundness)
+      pop()
+
+      //display title
+      push()
+      textAlign(LEFT, BOTTOM);
+      textFont(this.dialogBox.titleBox.font);
+      textSize(this.dialogBox.titleBox.textSize)
+      fill(this.dialogBox.titleBox.textFill.r, this.dialogBox.titleBox.textFill.g, this.dialogBox.titleBox.textFill.b);
+      text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.textPosition.x, this.dialogBox.titleBox.textPosition.y);
+      pop()
     }
-
-    //display title box
-    push()
-    rectMode(this.dialogBox.titleBox.rectMode);
-    noStroke();
-    fill(this.dialogBox.titleBox.backgroundFill.r, this.dialogBox.titleBox.backgroundFill.g, this.dialogBox.titleBox.backgroundFill.b);
-    rect(this.dialogBox.titleBox.position.x, this.dialogBox.titleBox.position.y, this.dialogBox.titleBox.size.width, this.dialogBox.titleBox.size.height, this.dialogBox.titleBox.cornerRoundness)
-    pop()
-
-    //calculate position of text based on position of title box and text offset
-    this.dialogBox.titleBox.textPosition.x = this.dialogBox.titleBox.position.x + this.dialogBox.titleBox.textOffset.x;
-    this.dialogBox.titleBox.textPosition.y = this.dialogBox.titleBox.position.y + this.dialogBox.titleBox.textOffset.y;
-
-    //display title
-    push()
-    textAlign(LEFT, BOTTOM);
-    textFont(this.dialogBox.titleBox.font);
-    textSize(this.dialogBox.titleBox.textSize)
-    fill(this.dialogBox.titleBox.textFill.r, this.dialogBox.titleBox.textFill.g, this.dialogBox.titleBox.textFill.b);
-    text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.textPosition.x, this.dialogBox.titleBox.textPosition.y);
-    pop()
   }
 
 
@@ -225,14 +262,9 @@ class Dialog extends Scene {
     if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y) {
       //typewriter effect to be added
 
-      //calculate position of text based on position of title box and text offset
-      this.dialogBox.textBox.textPosition.x = this.dialogBox.textBox.position.x + this.dialogBox.textBox.textOffset.x;
-      this.dialogBox.textBox.textPosition.y = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y;
-      this.dialogBox.textBox.textPosition.x2 = this.dialogBox.textBox.position.x + this.dialogBox.textBox.textOffset.x2;
-      this.dialogBox.textBox.textPosition.y2 = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y2;
+
 
       this.dialogBox.textBox.fullTextDisplayed = true;
-
       //display text
       push();
       textAlign(LEFT);

@@ -12,6 +12,7 @@ class IntroEmployee extends Dialog {
         y: height / 2
       },
     }
+
     //defines the title as 'welcome'
     this.dialogBox.titleBox.string = dialogsData.dialogues.introEmployee.title
 
@@ -26,6 +27,13 @@ class IntroEmployee extends Dialog {
     this.dialogBox.answerButton.b.string = dialogsData.dialogues.introEmployee.answers[1]
 
 
+    //define what will be needed in the scene
+    this.scene = {
+      dialogBox: true,
+      answerButtons: true,
+      speaker: true,
+      fadeIn: true
+    }
   }
 
   update() {

@@ -26,6 +26,15 @@ class IntroDialog extends Dialog {
     this.dialogBox.answerButton.b.string = dialogsData.dialogues.introDialogue.answers[1]
 
 
+    //define what will be needed in the scene
+    this.scene = {
+      dialogBox: true,
+      answerButtons: true,
+      speaker: true,
+      fadeIn: true,
+      fadeOut: true
+    }
+
   }
 
   update() {
