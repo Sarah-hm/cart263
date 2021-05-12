@@ -3,7 +3,7 @@ class Dialog extends Scene {
     super();
 
     //defines what will be needed/toggled in given scene, all defined in child objects and toggle different methods.
-    this.scene = {
+    this.dialog = {
         //defines if there will be a dialog box in the scene
         dialogBox: undefined,
         //defines if there will possible answer buttons in the scene
@@ -112,6 +112,21 @@ class Dialog extends Scene {
           slideOutSpeed: 5,
           easing: 0.5,
         },
+        speaker: {
+          imageMode: CENTER,
+          size: {
+            width: undefined,
+            height: undefined
+          },
+          position: {
+            x: undefined,
+            y: undefined
+          },
+          landingPosition: {
+            x: undefined,
+            y: undefined
+          }
+        },
 
         // Buttons and answers variables
         answerButton: {
@@ -182,14 +197,25 @@ class Dialog extends Scene {
     this.setSceneParameters();
     this.setBackgroundImg();
     this.fadeInDialogBox();
+    this.displaySpeaker();
     this.displayDialogBox();
-    this.animateAndDisplayDialogQuestion();
-    this.animateAndDisplayAnswers();
-    this.closeDialog();
+    this.displayAnswerButtons();
+    this.fadeOutDialog();
   }
 
   setSceneParameters() {
 
+    //If the scene parameters aren't already set, set them (prevents from not being able to fade out)
+    if (!this.dialogParametersSet) {
+      //if this scene those have a fade-in animation, set the position the landing position from the start
+      if (!this.dialog.fadeIn) {
+        this.dialogBox.textBox.position.x = this.dialogBox.textBox.landingPosition.x;
+        this.dialogBox.textBox.position.y = this.dialogBox.textBox.landingPosition.y;
+
+        this.dialogBox.titleBox.position.x = this.dialogBox.titleBox.landingPosition.x;
+        this.dialogBox.titleBox.position.y = this.dialogBox.titleBox.landingPosition.y
+      }
+    }
   }
 
   setBackgroundImg() {
@@ -200,8 +226,7 @@ class Dialog extends Scene {
   }
 
   fadeInDialogBox() {
-    if (this.scene.fadeIn) {
-
+    if (this.dialog.fadeIn) {
       //animate title Box and title string
       if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
         this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
@@ -215,7 +240,7 @@ class Dialog extends Scene {
   }
 
   displayDialogBox() {
-    if (this.scene.dialogBox) {
+    if (this.dialog.dialogBox) {
 
 
       //calculate position of title string based on position of title box and text offset
@@ -254,16 +279,17 @@ class Dialog extends Scene {
       fill(this.dialogBox.titleBox.textFill.r, this.dialogBox.titleBox.textFill.g, this.dialogBox.titleBox.textFill.b);
       text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.textPosition.x, this.dialogBox.titleBox.textPosition.y);
       pop()
+
+      //display dialog Text in a type-writer effet
+      this.displayDialogText();
     }
   }
 
 
-  animateAndDisplayDialogQuestion() {
+  displayDialogText() {
+    //If the box is not on its landing position, don't show the text yet
     if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y) {
-      //typewriter effect to be added
-
-
-
+      //typewriter effect to be added, when it will be add, the fullTextDisplayed will be turned off until typewriter is completed
       this.dialogBox.textBox.fullTextDisplayed = true;
       //display text
       push();
@@ -276,70 +302,110 @@ class Dialog extends Scene {
     }
   }
 
-  animateAndDisplayAnswers() {
-    //check if text is displayed. If so, display answer buttons
-    if (this.dialogBox.textBox.fullTextDisplayed === true) {
+  displaySpeaker() {
 
-      //(Taken from my project 1)
-      for (let i = 0; i < this.answerChoices.length; i++) {
-
-
-        //button (color fill changes if hovering over with mouse)
-        push();
-        if (
-          mouseX >
-          this.answerChoices[i].x - this.dialogBox.answerButton.size.width / 2 &&
-          mouseX <
-          this.answerChoices[i].x + this.dialogBox.answerButton.size.width / 2 &&
-          mouseY >
-          this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
-          mouseY <
-          this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2
-        ) {
-          fill(
-            this.dialogBox.answerButton.hoverFill.r,
-            this.dialogBox.answerButton.hoverFill.g,
-            this.dialogBox.answerButton.hoverFill.b
-          );
-        } else {
-          fill(
-            this.dialogBox.answerButton.fill.r,
-            this.dialogBox.answerButton.fill.g,
-            this.dialogBox.answerButton.fill.b
-          );
+    if (this.dialog.speaker) { //If the box is not on its landing position, don't show the text yet
+      if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y) {
+        if (this.dialog.fadeIn) {
+          //position changes until landing position is obtained;
         }
-        rectMode(CENTER);
-        strokeWeight(this.dialogBox.answerButton.strokeWeight);
-        stroke(
-          this.dialogBox.answerButton.strokeFill.r,
-          this.dialogBox.answerButton.strokeFill.g,
-          this.dialogBox.answerButton.strokeFill.b
-        );
-        rect(
-          this.answerChoices[i].x,
-          this.dialogBox.answerButton.position.y,
-          this.dialogBox.answerButton.size.width,
-          this.dialogBox.answerButton.size.height,
-          this.dialogBox.answerButton.cornerRoundness
-        );
-        pop();
+      }
+    }
+  }
 
-        //text
-        push();
-        fill(
-          this.dialogBox.answerButton.textFill.r,
-          this.dialogBox.answerButton.textFill.g,
-          this.dialogBox.answerButton.textFill.b
-        );
-        textAlign(CENTER, CENTER);
-        textSize(this.dialogBox.answerButton.textSize);
-        textFont(this.dialogBox.answerButton.font);
-        text(
-          this.answerChoices[i].string,
-          this.answerChoices[i].x,
-          this.dialogBox.answerButton.position.y
-        );
-        pop();
+  displayAnswerButtons() {
+    if (this.dialog.answerButtons) {
+      //check if text is displayed. If so, display answer buttons
+      if (this.dialogBox.textBox.fullTextDisplayed === true) {
+        //(Taken from my project 1)
+        for (let i = 0; i < this.answerChoices.length; i++) {
+          //button (color fill changes if hovering over with mouse)
+          push();
+          if (
+            mouseX >
+            this.answerChoices[i].x - this.dialogBox.answerButton.size.width / 2 &&
+            mouseX <
+            this.answerChoices[i].x + this.dialogBox.answerButton.size.width / 2 &&
+            mouseY >
+            this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
+            mouseY <
+            this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2
+          ) {
+            fill(
+              this.dialogBox.answerButton.hoverFill.r,
+              this.dialogBox.answerButton.hoverFill.g,
+              this.dialogBox.answerButton.hoverFill.b
+            );
+          } else {
+            fill(
+              this.dialogBox.answerButton.fill.r,
+              this.dialogBox.answerButton.fill.g,
+              this.dialogBox.answerButton.fill.b
+            );
+          }
+          rectMode(CENTER);
+          strokeWeight(this.dialogBox.answerButton.strokeWeight);
+          stroke(
+            this.dialogBox.answerButton.strokeFill.r,
+            this.dialogBox.answerButton.strokeFill.g,
+            this.dialogBox.answerButton.strokeFill.b
+          );
+          rect(
+            this.answerChoices[i].x,
+            this.dialogBox.answerButton.position.y,
+            this.dialogBox.answerButton.size.width,
+            this.dialogBox.answerButton.size.height,
+            this.dialogBox.answerButton.cornerRoundness
+          );
+          pop();
+          //text
+          push();
+          fill(
+            this.dialogBox.answerButton.textFill.r,
+            this.dialogBox.answerButton.textFill.g,
+            this.dialogBox.answerButton.textFill.b
+          );
+          textAlign(CENTER, CENTER);
+          textSize(this.dialogBox.answerButton.textSize);
+          textFont(this.dialogBox.answerButton.font);
+          text(
+            this.answerChoices[i].string,
+            this.answerChoices[i].x,
+            this.dialogBox.answerButton.position.y
+          );
+          pop();
+        }
+      }
+    }
+  }
+
+
+  fadeOutDialog() {
+    if (this.dialog.fadeOut) {
+      if (this.dialogBox.closing) {
+        //If title box is not completely off the canvas, it should continue to go down
+        if (this.dialogBox.titleBox.position.y < this.dialogBox.titleBox.exitPosition.y) {
+          this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed
+        }
+        //
+        if (this.dialogBox.textBox.position.y < this.dialogBox.textBox.exitPosition.y) {
+          this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideOutSpeed
+        }
+
+        //to be added only when the animation is completed (all are at exitPosition)
+        this.dialogBox.closed = true;
+      }
+
+      // if all dialog (title, text, buttons) are off the canvas, the reaction of the button (a or b) should be toggled
+      if (this.dialogBox.closed) {
+        //button a toggle
+        if (this.dialogBox.answerButton.a.toggle === true) {
+          this.toggleButtonA();
+        }
+        //button b toggle
+        else if (this.dialogBox.answerButton.b.toggle === true) {
+          this.toggleButtonB();
+        }
       }
     }
   }
@@ -347,34 +413,6 @@ class Dialog extends Scene {
   toggleButtonA() {}
 
   toggleButtonB() {}
-
-  closeDialog() {
-    if (this.dialogBox.closing) {
-      //If title box is not completely off the canvas, it should continue to go down
-      if (this.dialogBox.titleBox.position.y < this.dialogBox.titleBox.exitPosition.y) {
-        this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed
-      }
-      //
-      if (this.dialogBox.textBox.position.y < this.dialogBox.textBox.exitPosition.y) {
-        this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideOutSpeed
-      }
-
-      //to be added only when the animation is completed (all are at exitPosition)
-      this.dialogBox.closed = true;
-    }
-
-    // if all dialog (title, text, buttons) are off the canvas, the reaction of the button (a or b) should be toggled
-    if (this.dialogBox.closed) {
-      //button a toggle
-      if (this.dialogBox.answerButton.a.toggle === true) {
-        this.toggleButtonA();
-      }
-      //button b toggle
-      else if (this.dialogBox.answerButton.b.toggle === true) {
-        this.toggleButtonB();
-      }
-    }
-  }
 
   mousePressed() {
     //if pressed button a, give function to toggle to reaction (new scene)

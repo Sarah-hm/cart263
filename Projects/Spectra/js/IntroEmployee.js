@@ -28,7 +28,7 @@ class IntroEmployee extends Dialog {
 
 
     //define what will be needed in the scene
-    this.scene = {
+    this.dialog = {
       dialogBox: true,
       answerButtons: true,
       speaker: true,

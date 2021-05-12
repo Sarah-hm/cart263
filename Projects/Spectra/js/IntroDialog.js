@@ -27,7 +27,7 @@ class IntroDialog extends Dialog {
 
 
     //define what will be needed in the scene
-    this.scene = {
+    this.dialog = {
       dialogBox: true,
       answerButtons: true,
       speaker: true,
@@ -43,10 +43,11 @@ class IntroDialog extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
-    currentState = new IntroEmployee();
+    currentState = new TransitionInsideStore();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
+    currentState = new TransitionInsideStore();
   }
 }
