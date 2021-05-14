@@ -113,19 +113,22 @@ class Dialog extends Scene {
           easing: 0.5,
         },
         speaker: {
+          img: employeeImg,
           imageMode: CENTER,
           size: {
-            width: undefined,
-            height: undefined
+            width: 240,
+            height: 450
           },
           position: {
-            x: undefined,
-            y: undefined
+            x: width + 150,
+            y: height / 3 * 2
           },
           landingPosition: {
-            x: undefined,
-            y: undefined
-          }
+            x: width / 4 * 3.3,
+            y: height / 3 * 2
+          },
+          slideInSpeed: -5,
+          slideOutSpeed: 5
         },
 
         // Buttons and answers variables
@@ -169,11 +172,13 @@ class Dialog extends Scene {
           },
           a: {
             x: width / 3,
+            //string defined in child class
             string: undefined,
             toggle: false
           },
           b: {
             x: width / 3 * 2,
+            //string defined in child class
             string: undefined,
             toggle: false
           }
@@ -213,7 +218,7 @@ class Dialog extends Scene {
         this.dialogBox.textBox.position.y = this.dialogBox.textBox.landingPosition.y;
 
         this.dialogBox.titleBox.position.x = this.dialogBox.titleBox.landingPosition.x;
-        this.dialogBox.titleBox.position.y = this.dialogBox.titleBox.landingPosition.y
+        this.dialogBox.titleBox.position.y = this.dialogBox.titleBox.landingPosition.y;
       }
     }
   }
@@ -304,11 +309,36 @@ class Dialog extends Scene {
 
   displaySpeaker() {
 
-    if (this.dialog.speaker) { //If the box is not on its landing position, don't show the text yet
+    if (this.dialog.speaker) {
+      //If the dialog box is not on its landing position, don't show the speaker  yet
       if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y) {
+        //If fadeIn parameter is toggled, make speaker img go left until it's on its landing position
         if (this.dialog.fadeIn) {
           //position changes until landing position is obtained;
+          if (this.dialogBox.speaker.position.x > this.dialogBox.speaker.landingPosition.x) {
+            this.dialogBox.speaker.position.x += this.dialogBox.speaker.slideInSpeed
+          }
         }
+        //If fadeIn is not toggled, make the speaker position the same as landing Position.
+        else if (!this.dialog.fadeIn) {
+          this.dialogBox.speaker.position.x = this.dialogBox.speaker.landingPosition.x;
+          this.dialogBox.speaker.position.y = this.dialogBox.speaker.landingPosition.y;
+
+        }
+        // display the speaker img in the position defined above (with fade in or not);
+        push();
+        imageMode(this.dialogBox.speaker.imageMode);
+        image(
+          this.dialogBox.speaker.img,
+          this.dialogBox.speaker.position.x,
+          this.dialogBox.speaker.position.y,
+          this.dialogBox.speaker.size.width,
+          this.dialogBox.speaker.size.height
+        );
+        pop();
+        console.log(this.dialogBox.speaker.position.x)
+
+
       }
     }
   }

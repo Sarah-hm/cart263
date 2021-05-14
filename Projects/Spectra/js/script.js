@@ -35,7 +35,8 @@ let mallEscalatorsImg = undefined;
 let mallMezzanineImg = undefined;
 let mallStoreFrontImg = undefined;
 
-//intro dialog variables
+//dialog scenes variables
+let employeeImg = undefined;
 
 
 /**
@@ -52,12 +53,13 @@ function preload() {
   atkinsonItalic = loadFont(`assets/fonts/Atkinson-Hyperlegible-Italic-102.ttf`);
   atkinsonRegular = loadFont(`assets/fonts/Atkinson-Hyperlegible-Regular-102.ttf`);
 
-
-
   //intro imgs
   mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
   mallMezzanineImg = loadImage(`assets/images/mallMezzanineView.png`);
   mallStoreFrontImg = loadImage(`assets/images/mallStoreFront.png`);
+
+  //dialog scenes variables
+  employeeImg = loadImage(`assets/images/employee.png`)
 
 
 }

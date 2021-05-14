@@ -30,7 +30,7 @@ class IntroDialog extends Dialog {
     this.dialog = {
       dialogBox: true,
       answerButtons: true,
-      speaker: true,
+      speaker: false,
       fadeIn: true,
       fadeOut: true
     }
