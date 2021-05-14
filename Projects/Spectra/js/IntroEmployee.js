@@ -32,7 +32,8 @@ class IntroEmployee extends Dialog {
       dialogBox: true,
       answerButtons: true,
       speaker: true,
-      fadeIn: true
+      fadeIn: true,
+      fadeOut: true
     }
   }
 

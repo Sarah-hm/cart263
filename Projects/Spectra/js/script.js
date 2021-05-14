@@ -35,8 +35,9 @@ let mallEscalatorsImg = undefined;
 let mallMezzanineImg = undefined;
 let mallStoreFrontImg = undefined;
 
-//dialog scenes variables
+//dialog scenes + inside store variables
 let employeeImg = undefined;
+let insideStoreImg = undefined;
 
 
 /**
@@ -58,10 +59,9 @@ function preload() {
   mallMezzanineImg = loadImage(`assets/images/mallMezzanineView.png`);
   mallStoreFrontImg = loadImage(`assets/images/mallStoreFront.png`);
 
-  //dialog scenes variables
-  employeeImg = loadImage(`assets/images/employee.png`)
-
-
+  //dialog scenes +inside Store variables
+  employeeImg = loadImage(`assets/images/employee.png`);
+  insideStoreImg = loadImage(`assets/images/insideStoreImg.png`)
 }
 
 
