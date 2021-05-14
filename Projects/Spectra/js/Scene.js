@@ -25,4 +25,8 @@ class Scene {
   playMusic() {
     //Music to be added
   }
+
+  mousePressed() {
+
+  }
 }

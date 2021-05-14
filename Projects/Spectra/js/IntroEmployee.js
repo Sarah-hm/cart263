@@ -2,14 +2,14 @@ class IntroEmployee extends Dialog {
   constructor() {
     super();
     this.backgroundImg = {
-      img: mallStoreFrontImg,
+      img: insideStoreImg,
       size: {
-        width: 1100,
-        height: 600
+        width: 800,
+        height: 600,
       },
       position: {
-        x: 550,
-        y: height / 2
+        x: width / 2,
+        y: height / 2,
       },
     }
 

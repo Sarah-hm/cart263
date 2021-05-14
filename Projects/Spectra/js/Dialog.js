@@ -336,7 +336,6 @@ class Dialog extends Scene {
           this.dialogBox.speaker.size.height
         );
         pop();
-        console.log(this.dialogBox.speaker.position.x)
 
 
       }

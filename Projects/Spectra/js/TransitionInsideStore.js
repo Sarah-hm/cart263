@@ -2,7 +2,7 @@ class TransitionInsideStore extends Scene {
   constructor() {
     super();
     //variables of all intro frames before dialog box
-    this.introImgs = {
+    this.frames = {
       //FIRST FRAME : store front zooms in while losing opacity until it disappears completely
       firstFrame: {
         img: mallStoreFrontImg,
@@ -14,29 +14,24 @@ class TransitionInsideStore extends Scene {
           x: 550,
           y: height / 2
         },
-        //Final position after being fully animated
-        landingPosition: {
-          x: 0,
-          y: height / 2,
-        },
-        //the value that will be added per frame when zoom in starts
+        offset: -4, //when zooming in, will offset position x by 2 to zoom in on store front more precisely
         resizeValue: {
-          width: 13,
-          height: undefined,
-          minimum: undefined,
-          maximum: undefined
+          width: 11 / 2,
+          height: 6 / 2, //ratio of 11:6 width:height,
+          minimum: 1100, //minimum width of image
+          maximum: 2200 // maximum width of image
         },
-        animationSpeed: 5,
+        // animationSpeed: 5,
         //Opacity
         tint: {
           gray: 255,
-          alpha: undefined, //will be defined in the map() with zoom input
+          alpha: undefined, //will be defined in the map() with zoom(scale) input
         },
         //Opacity mapped by position X changing, until it reaches landing position, therefore 0 opacity
         tintMapping: {
-          inheritedVariable: undefined,
-          minInheritedValue: width,
-          maxInheritedValue: 0,
+          inheritedVariable: undefined, //defined in the animate and display method; mapped on maximum
+          minInheritedValue: 1100,
+          maxInheritedValue: 2200,
           minMappedValue: 255,
           maxMappedValue: 0,
         },
@@ -49,13 +44,8 @@ class TransitionInsideStore extends Scene {
           height: 600,
         },
         position: {
-          x: width,
-          y: height,
-        },
-        //final position after being fully animated
-        landingPosition: {
-          x: 0,
-          y: 0,
+          x: width / 2,
+          y: height / 2,
         },
         //Where and how fast the animate goes
         animationSpeed: {
@@ -83,11 +73,10 @@ class TransitionInsideStore extends Scene {
   update() {
     super.update();
 
-    //Animate first pictures of the mall with interactive animation speed based on mouse position
-    //(in decreasing order because I want want them to appear one behind one another)
+    //Animate store front to zoom in and discover the inside of the store
+    //In decreasing order to your see the first frame on top of the second
+    this.animateAndDisplaySecondFrame();
     this.animateAndDisplayFirstFrame();
-    // this.animateAndDisplaySecondFrame();
-
 
     this.checkIfAnimationsCompleted();
 
@@ -95,128 +84,69 @@ class TransitionInsideStore extends Scene {
 
 
   animateAndDisplayFirstFrame() {
+    //======= Display first frame (store front)=======
+    //zooms in while moving slightly to the right so as to give the impression were walking in in a store
 
-    //======= Display first frame (escalators in a mall)=======
-    //Moves to the left with speed based on mouseX, loses alpha until transparent
-    //If the image isn't at its landing position yet, make it go left with a speed mapped on mouseX's position.Transparency goes from 0 to 100 as it approaches landing position
+    //If the width of the image is not it's maximum value, keep 'zooming' in by making the image bigger, make it lose opacity and display it
+    //Once at maximum size, image will be fully transparent and not display anymore
     if (
-      this.introImgs.firstFrame.position.x >
-      this.introImgs.firstFrame.landingPosition.x
+      this.frames.firstFrame.size.width < this.frames.firstFrame.resizeValue.maximum
     ) {
-      //animation speed map : define inherited variable as mouseX; map it to the width of canvas and the min and max animation speed of the image; move the image
-      this.introImgs.firstFrame.animationMapping.inheritedVariable = mouseX;
-      this.introImgs.firstFrame.animationSpeed = map(
-        this.introImgs.firstFrame.animationMapping.inheritedVariable,
-        this.introImgs.firstFrame.animationMapping.minInheritedValue,
-        this.introImgs.firstFrame.animationMapping.maxInheritedValue,
-        this.introImgs.firstFrame.animationMapping.minMappedValue,
-        this.introImgs.firstFrame.animationMapping.maxMappedValue
-      );
-      this.introImgs.firstFrame.position.x -= this.introImgs.firstFrame.animationSpeed;
 
-      //tint map: as the image goes left, the more transparent the image will become (until 0)
-      //Set the inherited variable of the alpha map as the current x position of the image
-      this.introImgs.firstFrame.tintMapping.inheritedVariable = this.introImgs.firstFrame.position.x;
-      //map the image tint's alpha from fully opaque to fully transparent based on first frame's X position (with a maximum of the canvas' width)
-      this.introImgs.firstFrame.tint.alpha = map(
-        this.introImgs.firstFrame.tintMapping.inheritedVariable,
-        this.introImgs.firstFrame.tintMapping.minInheritedValue,
-        this.introImgs.firstFrame.tintMapping.maxInheritedValue,
-        this.introImgs.firstFrame.tintMapping.minMappedValue,
-        this.introImgs.firstFrame.tintMapping.maxMappedValue
+      //Make the image bigger in width and height with a ratio of 11:6
+      this.frames.firstFrame.size.width += this.frames.firstFrame.resizeValue.width;
+      this.frames.firstFrame.size.height += this.frames.firstFrame.resizeValue.height;
+      //Make the image move slightly to the right
+      this.frames.firstFrame.position.x += this.frames.firstFrame.offset
+
+      //tint map: as the image gets bigger, the more transparent the image will become (until 0)
+      //Set the inherited variable of the alpha map as the current size (using width) of the image
+      this.frames.firstFrame.tintMapping.inheritedVariable = this.frames.firstFrame.size.width;
+      //map the image tint's alpha from fully opaque to fully transparent based on first frame's minimum and maximum width
+      this.frames.firstFrame.tint.alpha = map(
+        this.frames.firstFrame.tintMapping.inheritedVariable,
+        this.frames.firstFrame.tintMapping.minInheritedValue,
+        this.frames.firstFrame.tintMapping.maxInheritedValue,
+        this.frames.firstFrame.tintMapping.minMappedValue,
+        this.frames.firstFrame.tintMapping.maxMappedValue
       );
 
       //Display first frame of the top of an escalator
       push();
       imageMode(CENTER);
       tint(
-        this.introImgs.firstFrame.tint.gray,
-        this.introImgs.firstFrame.tint.alpha
+        this.frames.firstFrame.tint.gray,
+        this.frames.firstFrame.tint.alpha
       );
       image(
-        this.introImgs.firstFrame.img,
-        this.introImgs.firstFrame.position.x,
-        this.introImgs.firstFrame.position.y,
-        this.introImgs.firstFrame.size.width,
-        this.introImgs.firstFrame.size.height
+        this.frames.firstFrame.img,
+        this.frames.firstFrame.position.x,
+        this.frames.firstFrame.position.y,
+        this.frames.firstFrame.size.width,
+        this.frames.firstFrame.size.height
       );
       pop();
     }
   }
 
   animateAndDisplaySecondFrame() {
-    //======= Display second frame (looking over inside a mall from mezzanine)=======
-    if (
-      this.introImgs.secondFrame.position.x >
-      this.introImgs.secondFrame.landingPosition.x
-    ) {
-      //Put animation speed x a ratio of 3:4 to animation speed y so the trajectory follows the ratio of the canvas
-      this.introImgs.secondFrame.animationSpeed.y =
-        (this.introImgs.secondFrame.animationSpeed.x / 4) * 3;
+    //======= Display second frame (inside the store)=======
 
-      this.introImgs.secondFrame.position.x += this.introImgs.secondFrame.animationSpeed.x;
-      this.introImgs.secondFrame.position.y += this.introImgs.secondFrame.animationSpeed.y;
-      //Display second frame of the mezzanine of a mall
-      push();
-      imageMode(CENTER);
-      // tint(this.introImgs.secondFrame.tint.gray, this.introImgs.secondFrame.tint.alpha);
-      image(
-        this.introImgs.secondFrame.img,
-        this.introImgs.secondFrame.position.x,
-        this.introImgs.secondFrame.position.y,
-        this.introImgs.secondFrame.size.width,
-        this.introImgs.secondFrame.size.height
-      );
-      pop();
-    }
-    //If the image is on its final position, it will zoom in (increasing heigh, width) and starts losing opacity until fully transparent
-    else if (
-      this.introImgs.secondFrame.position.x <=
-      this.introImgs.secondFrame.landingPosition.x &&
-      this.introImgs.secondFrame.size.width <=
-      this.introImgs.secondFrame.maxSize
-    ) {
-      //set resize value of y is a ratio of 3:4 to the resize value of x so it's resizing with the ratio of the canvas
-      this.introImgs.secondFrame.resizeValue.height =
-        (this.introImgs.secondFrame.resizeValue.width / 4) * 3;
-      this.introImgs.secondFrame.size.width += this.introImgs.secondFrame.resizeValue.width;
-      this.introImgs.secondFrame.size.height += this.introImgs.secondFrame.resizeValue.height;
-
-      //tint map: as the image zooms in, the more transparent the image will become (until 0)
-      //Set the inherited variable of the alpha map as the current width of the image
-      this.introImgs.secondFrame.tintMapping.inheritedVariable = this.introImgs.secondFrame.size.width;
-
-      //map the image tint's alpha from fully opaque to fully transparent based on first frame's X position (with a maximum of the canvas' width)
-      this.introImgs.secondFrame.tint.alpha = map(
-        this.introImgs.secondFrame.tintMapping.inheritedVariable,
-        this.introImgs.secondFrame.tintMapping.minInheritedValue,
-        this.introImgs.secondFrame.tintMapping.maxInheritedValue,
-        this.introImgs.secondFrame.tintMapping.minMappedValue,
-        this.introImgs.secondFrame.tintMapping.maxMappedValue
-      );
-
-      //Display second frame of the mezzanine of a mall
-      push();
-      imageMode(CENTER);
-      tint(
-        this.introImgs.secondFrame.tint.gray,
-        this.introImgs.secondFrame.tint.alpha
-      );
-      image(
-        this.introImgs.secondFrame.img,
-        this.introImgs.secondFrame.position.x,
-        this.introImgs.secondFrame.position.y,
-        this.introImgs.secondFrame.size.width,
-        this.introImgs.secondFrame.size.height
-      );
-      pop();
-    }
-
+    push();
+    imageMode(CENTER);
+    image(
+      this.frames.secondFrame.img,
+      this.frames.secondFrame.position.x,
+      this.frames.secondFrame.position.y,
+      this.frames.secondFrame.size.width,
+      this.frames.secondFrame.size.height
+    );
+    pop();
   }
 
 
   checkIfAnimationsCompleted() {
-    if (this.introImgs.secondFrame.position.x === this.introImgs.secondFrame.landingPosition.x) {
+    if (this.frames.firstFrame.size.width === this.frames.firstFrame.resizeValue.maximum) {
       currentState = new IntroEmployee();
     }
   }
