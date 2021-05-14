@@ -202,10 +202,11 @@ class Dialog extends Scene {
     this.setSceneParameters();
     this.setBackgroundImg();
     this.fadeInDialogBox();
+    this.fadeOutDialog();
     this.displaySpeaker();
     this.displayDialogBox();
     this.displayAnswerButtons();
-    this.fadeOutDialog();
+
   }
 
   setSceneParameters() {
@@ -240,6 +241,40 @@ class Dialog extends Scene {
       //animation text box
       if (this.dialogBox.textBox.position.y > this.dialogBox.textBox.landingPosition.y) {
         this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideInSpeed
+      }
+    }
+  }
+
+  toggleFadeOutMethod() {
+    this.dialogBox.closing = true;
+  }
+
+  fadeOutDialog() {
+    if (this.dialog.fadeOut) {
+      if (this.dialogBox.closing) {
+        //If title box is not completely off the canvas (at exit position), it should continue to go down
+        if (this.dialogBox.titleBox.position.y <= this.dialogBox.titleBox.exitPosition.y) {
+          this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed
+        }
+
+        if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.exitPosition.y) {
+          this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideOutSpeed
+        }
+
+        //to be added only when the animation is completed (all are at exitPosition)
+        // this.dialogBox.closed = true;
+      }
+
+      // if all dialog (title, text, buttons) are off the canvas, the reaction of the button (a or b) should be toggled
+      if (this.dialogBox.closed) {
+        //button a toggle
+        if (this.dialogBox.answerButton.a.toggle === true) {
+          this.toggleButtonA();
+        }
+        //button b toggle
+        else if (this.dialogBox.answerButton.b.toggle === true) {
+          this.toggleButtonB();
+        }
       }
     }
   }
@@ -409,35 +444,6 @@ class Dialog extends Scene {
   }
 
 
-  fadeOutDialog() {
-    if (this.dialog.fadeOut) {
-      if (this.dialogBox.closing) {
-        //If title box is not completely off the canvas, it should continue to go down
-        if (this.dialogBox.titleBox.position.y < this.dialogBox.titleBox.exitPosition.y) {
-          this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed
-        }
-        //
-        if (this.dialogBox.textBox.position.y < this.dialogBox.textBox.exitPosition.y) {
-          this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideOutSpeed
-        }
-
-        //to be added only when the animation is completed (all are at exitPosition)
-        this.dialogBox.closed = true;
-      }
-
-      // if all dialog (title, text, buttons) are off the canvas, the reaction of the button (a or b) should be toggled
-      if (this.dialogBox.closed) {
-        //button a toggle
-        if (this.dialogBox.answerButton.a.toggle === true) {
-          this.toggleButtonA();
-        }
-        //button b toggle
-        else if (this.dialogBox.answerButton.b.toggle === true) {
-          this.toggleButtonB();
-        }
-      }
-    }
-  }
 
   toggleButtonA() {}
 
@@ -451,8 +457,8 @@ class Dialog extends Scene {
       this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
       mouseY <
       this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2) {
-      this.dialogBox.answerButton.a.toggle = true;
-      this.dialogBox.closing = true;
+      this.dialogBox.answerButton.a.toggle = true; //toggles the reaction defined in child class's toggleButtonA method
+      this.toggleFadeOutMethod(); //If fadeout was toggled for this scene, the fade out method will start processing
     }
     //Otherwise, if pressed button b, give function to toggle to new reaction (new scene)
     else if (mouseX > this.dialogBox.answerButton.b.x - this.dialogBox.answerButton.size.width / 2 &&
@@ -461,8 +467,8 @@ class Dialog extends Scene {
       this.dialogBox.answerButton.position.y - this.dialogBox.answerButton.size.height / 2 &&
       mouseY <
       this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2) {
-      this.dialogBox.answerButton.b.toggle = true;
-      this.dialogBox.closing = true;
+      this.dialogBox.answerButton.b.toggle = true; //toggles the reaction defined in child class's toggleButtonB method
+      this.toggleFadeOutMethod(); //If fadeout was toggled for this scene, the fade out method will start processing
     }
   }
 

@@ -8,7 +8,7 @@
     },
     "introEmployee": {
       "title": "Employee",
-      "question": "Hello and welcome to literally any store ever. My name's Sandra and I'll assist you any way I can today. Can I just say I loooove your look?",
+      "question": "Hello and welcome to literally any store ever. My name's Sandra and I'll assist you any way I can today. Can I just say I loooove your look!!",
       "answers": ["thank you", "Hello Sandra! I love yours too!"]
     },
     "choosingSection": {
