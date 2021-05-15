@@ -19,6 +19,7 @@ let defaultParameters = {
 }
 
 let currentState = undefined // scenes can be: Intro, Intro Dialog, Intro Employee, Choosing Section
+let currentChangingRoom = undefined // changing rooms can be femaleChangingRoom or maleChangingRoom, both child classes of ChangingRoom
 
 //load dialog scripts via JSON
 let dialogsData = undefined;
@@ -39,6 +40,9 @@ let mallStoreFrontImg = undefined;
 let employeeImg = undefined;
 let insideStoreImg = undefined;
 
+//Changing room variables
+let changingRoomBackgroundImg = undefined
+let femaleAvatarImg = undefined
 
 /**
 Description of preload
@@ -62,6 +66,10 @@ function preload() {
   //dialog scenes +inside Store variables
   employeeImg = loadImage(`assets/images/employee.png`);
   insideStoreImg = loadImage(`assets/images/insideStoreImg.png`)
+
+  //Changing room imgs
+  changingRoomBackgroundImg = loadImage(`assets/images/changingRoomBackgroundImg.png`)
+  femaleAvatarImg = loadImage(`assets/images/femaleAvatar.png`)
 }
 
 
