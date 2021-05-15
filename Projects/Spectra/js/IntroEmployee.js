@@ -33,7 +33,7 @@ class IntroEmployee extends Dialog {
       answerButtons: true,
       speaker: true,
       fadeIn: true,
-      fadeOut: true
+      fadeOut: false
     }
   }
 
