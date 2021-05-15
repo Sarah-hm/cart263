@@ -131,7 +131,7 @@ class Dialog extends Scene {
             y: height / 3 * 2
           },
           slideInSpeed: -5,
-          slideOutSpeed: 5
+          slideOutSpeed: 10
         },
 
         // ===== Buttons and answers variables =====
@@ -217,7 +217,7 @@ class Dialog extends Scene {
     //If the scene parameters aren't already set, set them (prevents from not being able to fade out)
     if (!this.dialogParametersSet) {
       //if this scene those have a fade-in animation, set the position the landing position from the start
-      if (!this.dialog.fadeIn) {
+      if (!this.dialog.fadeIn && !this.dialogBox.closing) {
         this.dialogBox.textBox.position.x = this.dialogBox.textBox.landingPosition.x;
         this.dialogBox.textBox.position.y = this.dialogBox.textBox.landingPosition.y;
 
@@ -255,19 +255,17 @@ class Dialog extends Scene {
       if (this.dialogBox.closing) {
         //If title box is not completely off the canvas (at exit position), it should continue to go down
         if (this.dialogBox.titleBox.position.y <= this.dialogBox.titleBox.exitPosition.y) {
-          this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed
-          this.dialogBox.textBox.position.y += this.dialogBox.titleBox.slideOutSpeed
+          this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed;
+          this.dialogBox.textBox.position.y += this.dialogBox.titleBox.slideOutSpeed;
           this.dialogBox.answerButton.position.y += this.dialogBox.titleBox.slideOutSpeed;
         } else if (this.dialogBox.titleBox.position.y >= this.dialogBox.titleBox.exitPosition.y) {
-
           this.dialogBox.closed = true; // Set dialog Box as closed to toggle either button a or b;
-
-          this.dialogBox.closing = false; //resets closing to false to be safe
         }
       }
 
       // if all dialog (title, text, buttons) are off the canvas, the reaction of the button (a or b) should be toggled
       if (this.dialogBox.closed) {
+        this.dialogBox.closing = false; //resets closing to false to be safe
         //button a toggle
         if (this.dialogBox.answerButton.a.toggle === true) {
           this.toggleButtonA();
@@ -356,10 +354,12 @@ class Dialog extends Scene {
           }
         }
         //If fadeIn is not toggled, make the speaker position the same as landing Position.
-        else if (!this.dialog.fadeIn) {
+        else if (!this.dialog.fadeIn && !this.dialogBox.closing) {
           this.dialogBox.speaker.position.x = this.dialogBox.speaker.landingPosition.x;
           this.dialogBox.speaker.position.y = this.dialogBox.speaker.landingPosition.y;
-
+        } else if (this.dialog.fadeOut && this.dialogBox.closing) {
+          this.dialogBox.speaker.position.x += this.dialogBox.speaker.slideOutSpeed;
+          console.log(`hello`)
         }
         // display the speaker img in the position defined above (with fade in or not);
         push();
@@ -372,8 +372,6 @@ class Dialog extends Scene {
           this.dialogBox.speaker.size.height
         );
         pop();
-
-
       }
     }
   }

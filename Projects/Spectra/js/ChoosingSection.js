@@ -31,7 +31,7 @@ class ChoosingSection extends Dialog {
         dialogBox: true,
         answerButtons: true,
         speaker: true,
-        fadeIn: true,
+        fadeIn: false,
         fadeOut: true
       },
 
@@ -45,11 +45,13 @@ class ChoosingSection extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
-    currentState = new FemaleChangingRoom();
+    currentChangingRoom = FemaleChangingRoom
+    currentState = new InTheChangingRoom();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
-    currentState = new MaleChangingRoom();
+    currentChangingRoom = MaleChangingRoom
+    currentState = new InTheChangingRoom();
   }
 }
