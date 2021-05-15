@@ -31,7 +31,7 @@ class ChoosingSection extends Dialog {
         dialogBox: true,
         answerButtons: true,
         speaker: true,
-        fadeIn: false,
+        fadeIn: true,
         fadeOut: true
       },
 

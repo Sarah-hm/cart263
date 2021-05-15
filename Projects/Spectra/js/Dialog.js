@@ -258,7 +258,10 @@ class Dialog extends Scene {
           this.dialogBox.textBox.position.y += this.dialogBox.titleBox.slideOutSpeed
           this.dialogBox.answerButton.position.y += this.dialogBox.titleBox.slideOutSpeed;
         } else if (this.dialogBox.titleBox.position.y >= this.dialogBox.titleBox.exitPosition.y) {
-          this.dialogBox.closed = true;
+
+          this.dialogBox.closed = true; // Set dialog Box as closed to toggle either button a or b;
+
+          this.dialogBox.closing = false; //resets closing to false to be safe
         }
       }
 
