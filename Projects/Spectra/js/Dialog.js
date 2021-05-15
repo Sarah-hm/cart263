@@ -235,13 +235,14 @@ class Dialog extends Scene {
   }
 
   fadeInDialogBox() {
+    //Only process if the fade In dialog parameter is toggled in the child class
     if (this.dialog.fadeIn) {
-      //animate title Box and title string
+      //If the y position of the title box is not = to its landing position, make it go up by slideInSpeed/frame
       if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
         this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
       }
 
-      //animation text box
+      //If the y position of the textBox box is not = to its landing position, make it go up by slideInSpeed/frame
       if (this.dialogBox.textBox.position.y > this.dialogBox.textBox.landingPosition.y) {
         this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideInSpeed
       }
