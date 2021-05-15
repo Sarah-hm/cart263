@@ -209,7 +209,6 @@ class Dialog extends Scene {
     this.displaySpeaker();
     this.displayDialogBox();
     this.displayAnswerButtons();
-
   }
 
   setSceneParameters() {
@@ -217,7 +216,7 @@ class Dialog extends Scene {
     //If the scene parameters aren't already set, set them (prevents from not being able to fade out)
     if (!this.dialogParametersSet) {
       //if this scene those have a fade-in animation, set the position the landing position from the start
-      if (!this.dialog.fadeIn && !this.dialogBox.closing) {
+      if (!this.scene.fadeIn && !this.dialogBox.closing) {
         this.dialogBox.textBox.position.x = this.dialogBox.textBox.landingPosition.x;
         this.dialogBox.textBox.position.y = this.dialogBox.textBox.landingPosition.y;
 
@@ -228,15 +227,17 @@ class Dialog extends Scene {
   }
 
   setBackgroundImg() {
-    push();
-    imageMode(CENTER);
-    image(this.backgroundImg.img, this.backgroundImg.position.x, this.backgroundImg.position.y, this.backgroundImg.size.width, this.backgroundImg.size.height);
-    pop();
+    if (this.scene.background) {
+      push();
+      imageMode(CENTER);
+      image(this.backgroundImg.img, this.backgroundImg.position.x, this.backgroundImg.position.y, this.backgroundImg.size.width, this.backgroundImg.size.height);
+      pop();
+    }
   }
 
   fadeInDialogBox() {
     //Only process if the fade In dialog parameter is toggled in the child class
-    if (this.dialog.fadeIn) {
+    if (this.scene.fadeIn) {
       //If the y position of the title box is not = to its landing position, make it go up by slideInSpeed/frame
       if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
         this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
@@ -251,7 +252,7 @@ class Dialog extends Scene {
 
 
   fadeOutDialog() {
-    if (this.dialog.fadeOut) {
+    if (this.scene.fadeOut) {
       if (this.dialogBox.closing) {
         //If title box is not completely off the canvas (at exit position), it should continue to go down
         if (this.dialogBox.titleBox.position.y <= this.dialogBox.titleBox.exitPosition.y) {
@@ -279,9 +280,7 @@ class Dialog extends Scene {
   }
 
   displayDialogBox() {
-    if (this.dialog.dialogBox) {
-
-
+    if (this.scene.dialogBox) {
       //calculate position of title string based on position of title box and text offset
       this.dialogBox.titleBox.textPosition.x = this.dialogBox.titleBox.position.x + this.dialogBox.titleBox.textOffset.x;
       this.dialogBox.titleBox.textPosition.y = this.dialogBox.titleBox.position.y + this.dialogBox.titleBox.textOffset.y;
@@ -291,8 +290,6 @@ class Dialog extends Scene {
       this.dialogBox.textBox.textPosition.y = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y;
       this.dialogBox.textBox.textPosition.x2 = this.dialogBox.textBox.position.x + this.dialogBox.textBox.textOffset.x2;
       this.dialogBox.textBox.textPosition.y2 = this.dialogBox.textBox.position.y + this.dialogBox.textBox.textOffset.y2;
-
-
 
       //display text box
       push()
@@ -343,10 +340,10 @@ class Dialog extends Scene {
 
   displaySpeaker() {
 
-    if (this.dialog.speaker) {
+    if (this.scene.speaker) {
 
       // will process if fade in dialog has been toggled in child class
-      if (this.dialog.fadeIn) {
+      if (this.scene.fadeIn) {
         //will process if the y position of textBox is not as high as its landing position (smaller or equal to)
         if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y)
           //position changes until landing position is obtained;
@@ -354,11 +351,14 @@ class Dialog extends Scene {
             this.dialogBox.speaker.position.x += this.dialogBox.speaker.slideInSpeed
           }
       }
-      //If fadeIn is not toggled, make the speaker position the same as landing Position.
-      else if (!this.dialog.fadeIn && !this.dialogBox.closing) {
+      //If fadeIn is not toggled and that dialogBox isn't fading out (closing), make the speaker position the same as landing Position.
+      else if (!this.scene.fadeIn && !this.dialogBox.closing) {
         this.dialogBox.speaker.position.x = this.dialogBox.speaker.landingPosition.x;
         this.dialogBox.speaker.position.y = this.dialogBox.speaker.landingPosition.y;
-      } else if (this.dialog.fadeOut && this.dialogBox.closing) {
+      }
+
+      //If fadeOut was toggled in child class, and that dialog Box should be closing (true), make the speaker img go right
+      if (this.scene.fadeOut && this.dialogBox.closing) {
         this.dialogBox.speaker.position.x += this.dialogBox.speaker.slideOutSpeed;
       }
       // display the speaker img in the position defined above (with fade in or not);
@@ -380,7 +380,7 @@ class Dialog extends Scene {
 
 
   displayAnswerButtons() {
-    if (this.dialog.answerButtons) {
+    if (this.scene.answerButtons) {
       //check if text is displayed. If so, display answer buttons
       if (this.dialogBox.textBox.fullTextDisplayed === true) {
         //(Taken from my project 1)
@@ -462,7 +462,7 @@ class Dialog extends Scene {
       this.dialogBox.answerButton.a.toggle = true; //toggles the reaction defined in child class's toggleButtonA method
       this.dialogBox.closing = true; //If fadeout was toggled for this scene, the fade out method will start processing
       //If fade out is not toggle for this scene, go straight to toggling button a's reaction in child's class
-      if (!this.dialog.fadeOut) {
+      if (!this.scene.fadeOut) {
         this.toggleButtonA();
       }
 
@@ -477,7 +477,7 @@ class Dialog extends Scene {
       this.dialogBox.answerButton.b.toggle = true; //toggles the reaction defined in child class's toggleButtonB method
       this.dialogBox.closing = true; //If fadeout was toggled for this scene, the fade out method will start processing
       //If fade out is not toggle for this scene, go straight to toggling button b's reaction in child's class
-      if (!this.dialog.fadeOut) {
+      if (!this.scene.fadeOut) {
         this.toggleButtonB();
       }
     }

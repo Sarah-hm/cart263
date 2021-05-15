@@ -64,6 +64,11 @@
         "yeah, this was weird but I understand more now.",
         "You're a fucking sell out (it's true)"
       ]
+    },
+    "intermission": {
+      "title": "",
+      "question": "",
+      "answers": ["", ""]
     }
   }
 }

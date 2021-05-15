@@ -1,5 +1,6 @@
-class ChangingRoom extends Scene {
+class ChangingRoom {
   constructor() {
+    //variables to define the background as an image
     this.background = {
       img: changingRoomBackgroundImg,
       imageMode: CORNER,
@@ -12,12 +13,13 @@ class ChangingRoom extends Scene {
         y: 0
       }
     }
+    //Variables to define the avatar as an (undefined) image
     this.avatar = {
       img: undefined, //will be defined in the child class, either female or male
       imageMode: CENTER,
       size: {
-        width: 270,
-        height: 670
+        width: 270 / 3 * 2,
+        height: 670 / 3 * 2
       },
       position: {
         x: width / 2,
@@ -27,19 +29,16 @@ class ChangingRoom extends Scene {
   }
 
   update() {
-    super.update();
     this.setBackground();
     this.displayAvatar();
     this.displayClothes();
   }
 
   setBackground() {
-
     push();
     imageMode(this.background.imageMode);
     image(this.background.img, this.background.position.x, this.background.position.y, this.background.size.width, this.background.size.height);
     pop();
-
   }
 
   displayAvatar() {
@@ -50,6 +49,10 @@ class ChangingRoom extends Scene {
   }
 
   displayClothes() {
+
+  }
+
+  mousePressed() {
 
   }
 

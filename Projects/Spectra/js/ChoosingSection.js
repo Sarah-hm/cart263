@@ -27,7 +27,8 @@ class ChoosingSection extends Dialog {
     this.dialogBox.answerButton.b.string = dialogsData.dialogues.choosingSection.answers[1]
 
     //define what will be needed in the scene
-    this.dialog = {
+    this.scene = {
+        background: true,
         dialogBox: true,
         answerButtons: true,
         speaker: true,
@@ -45,13 +46,21 @@ class ChoosingSection extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
-    currentChangingRoom = FemaleChangingRoom
+    //Go to the In the changing room scene, which does nothing but wait
     currentState = new InTheChangingRoom();
+
+    //Toggle changing room to open and send the customer (player) to the female avatar changing room
+    changingRoomOpened = true;
+    currentChangingRoom = new FemaleChangingRoom();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
-    currentChangingRoom = MaleChangingRoom
+    //Go to the In the changing room scene, which does nothing but wait
     currentState = new InTheChangingRoom();
+
+    //Toggle changing room to open and send the customer (player) to the male avatar changing room
+    changingRoomOpened = true;
+    currentChangingRoom = new MaleChangingRoom();
   }
 }

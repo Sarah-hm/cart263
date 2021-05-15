@@ -41,8 +41,34 @@ let employeeImg = undefined;
 let insideStoreImg = undefined;
 
 //Changing room variables
-let changingRoomBackgroundImg = undefined
-let femaleAvatarImg = undefined
+let changingRoomOpened = false; //set to false until changing room are opened by customer (player) trying clothes on
+let changingRoomBackgroundImg = undefined;
+let femaleAvatarImg = undefined;
+let maleAvatarImg = undefined;
+
+//Declare all the clothes
+//feminine wardrobe
+let bodysuit = undefined;
+let jeanSkirt = undefined;
+let overallDress = undefined;
+let overallDressWithBack = undefined;
+let skirt = undefined;
+let skirtWithBack = undefined;
+let turtleNeck = undefined;
+let turtleNeckWithBack = undefined;
+let womanShirt = undefined;
+let womanShirtWithBack = undefined;
+
+//masculine wardrobe
+let formalPants = undefined;
+let manShirt = undefined;
+let manShirtWithBack = undefined;
+let manTshirt = undefined;
+let manTshirtWithBack = undefined;
+let parka = undefined;
+let parkaWithBack = undefined;
+let utilityPants = undefined;
+
 
 /**
 Description of preload
@@ -70,6 +96,29 @@ function preload() {
   //Changing room imgs
   changingRoomBackgroundImg = loadImage(`assets/images/changingRoomBackgroundImg.png`)
   femaleAvatarImg = loadImage(`assets/images/femaleAvatar.png`)
+  maleAvatarImg = loadImage(`assets/images/maleAvatar.png`)
+
+  //preload all clothes images
+  bodysuit = loadImage(`assets/images/clothes/bodysuit.png`);
+  jeanSkirt = loadImage(`assets/images/clothes/jeanSkirt.png`);
+  overallDress = loadImage(`assets/images/clothes/overallDress.png`);
+  overallDressWithBack = loadImage(`assets/images/clothes/overallDress_withBack.png`);
+  skirt = loadImage(`assets/images/clothes/skirt.png`);
+  skirtWithBack = loadImage(`assets/images/clothes/skirt_withBack.png`);
+  turtleNeck = loadImage(`assets/images/clothes/turtleNeck.png`);
+  turtleNeckWithBack = loadImage(`assets/images/clothes/turtleNeck_withBack.png`);
+  womanShirt = loadImage(`assets/images/clothes/womanShirt.png`);
+  womanShirtWithBack = loadImage(`assets/images/clothes/womanShirt_withBack.png`);
+
+  formalPants = loadImage(`assets/images/clothes/manFormalPants.png`);
+  manShirt = loadImage(`assets/images/clothes/manShirt.png`);
+  manShirtWithBack = loadImage(`assets/images/clothes/manShirt_withBack.png`);
+  manTshirt = loadImage(`assets/images/clothes/manTshirt.png`);
+  manTshirtWithBack = loadImage(`assets/images/clothes/manTshirt_withBack.png`);
+  parka = loadImage(`assets/images/clothes/parka.png`);
+  parkaWithBack = loadImage(`assets/images/clothes/parka_withBack.png`);
+  utilityPants = loadImage(`assets/images/clothes/utilityPants.png`)
+
 }
 
 
@@ -81,7 +130,8 @@ function setup() {
   createCanvas(defaultParameters.canvasWidth, defaultParameters.canvasHeight);
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
-  currentState = new IntroDialog(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee
+  currentState = new Intro(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee
+  currentChangingRoom = new ChangingRoom(); //Can be FemaleChangingRoom, MaleChangingRoom or ChangingRoom (with no avatar or appropriate clothes assigned)
 }
 
 
@@ -90,8 +140,14 @@ Description of draw()
 */
 function draw() {
   currentState.update();
+  if (currentState.changingRoomOpened === true) {
+    currentChangingRoom.update();
+  }
 }
 
 function mousePressed() {
   currentState.mousePressed();
+  if (currentState.changingRoomOPened === true) {
+    currentChangingRoom.mousePressed();
+  }
 }
