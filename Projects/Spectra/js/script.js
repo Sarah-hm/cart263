@@ -48,19 +48,19 @@ let maleAvatarImg = undefined;
 
 //Declare all the clothes
 //feminine wardrobe
-let bodysuit = undefined;
-let jeanSkirt = undefined;
-let overallDress = undefined;
-let skirt = undefined;
-let turtleNeck = undefined;
-let womanShirt = undefined;
+let bodysuitImg = undefined;
+let jeanSkirtImg = undefined;
+let overallDressImg = undefined;
+let skirtImg = undefined;
+let turtleNeckImg = undefined;
+let womanShirtImg = undefined;
 
 //masculine wardrobe
-let formalPants = undefined;
-let manShirt = undefined;
-let manTshirt = undefined;
-let parka = undefined;
-let utilityPants = undefined;
+let formalPantsImg = undefined;
+let manShirtImg = undefined;
+let manTshirtImg = undefined;
+let parkaImg = undefined;
+let utilityPantsImg = undefined;
 
 
 /**
@@ -92,18 +92,18 @@ function preload() {
   maleAvatarImg = loadImage(`assets/images/maleAvatar.png`)
 
   //preload all clothes images
-  bodysuit = loadImage(`assets/images/clothes/bodysuit.png`);
-  jeanSkirt = loadImage(`assets/images/clothes/jeanSkirt.png`);
-  overallDress = loadImage(`assets/images/clothes/overallDress.png`);
-  skirt = loadImage(`assets/images/clothes/skirt.png`);
-  turtleNeck = loadImage(`assets/images/clothes/turtleNeck.png`);
-  womanShirt = loadImage(`assets/images/clothes/womanShirt.png`);
+  bodysuitImg = loadImage(`assets/images/clothes/bodysuit.png`);
+  jeanSkirtImg = loadImage(`assets/images/clothes/jeanSkirt.png`);
+  overallDressImg = loadImage(`assets/images/clothes/overallDress.png`);
+  skirtImg = loadImage(`assets/images/clothes/skirt.png`);
+  turtleNeckImg = loadImage(`assets/images/clothes/turtleNeck.png`);
+  womanShirtImg = loadImage(`assets/images/clothes/womanShirt.png`);
 
-  formalPants = loadImage(`assets/images/clothes/manFormalPants.png`);
-  manShirt = loadImage(`assets/images/clothes/manShirt.png`);
-  manTshirt = loadImage(`assets/images/clothes/manTshirt.png`);
-  parka = loadImage(`assets/images/clothes/parka.png`);
-  utilityPants = loadImage(`assets/images/clothes/UtilityPants.png`)
+  formalPantsImg = loadImage(`assets/images/clothes/manFormalPants.png`);
+  manShirtImg = loadImage(`assets/images/clothes/manShirt.png`);
+  manTshirtImg = loadImage(`assets/images/clothes/manTshirt.png`);
+  parkaImg = loadImage(`assets/images/clothes/parka.png`);
+  utilityPantsImg = loadImage(`assets/images/clothes/UtilityPants.png`)
 
 }
 

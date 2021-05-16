@@ -71,24 +71,40 @@ class ChangingRoom {
           width: 122.3,
           height: 103.1
         },
-        overallDressImg: {
+        overallDress: {
           img: overallDressImg,
           width: 91.5,
           height: 170.9
         },
-
+        shirt: {
+          img: womanShirtImg,
+          width: 180.4,
+          height: 99.1
+        }
       }
     }
 
+    this.masculineSection = {
+        borderRight: width,
+        borderLeft: width / 5 * 3,
 
-    this.masculineClothings = [this.clothes.masculine.utilityPants, this.clothes.masculine.tShirt, this.clothes.masculine.shirt, this.clothes.masculine.parka, this.clothes.masculine.formalPants]
+      },
+      this.feminineSection = {
+        borderRight: width / 5 * 2,
+        borderLeft: 0
+      }
+
+    this.verticalBorder = 40;
+
+
+    this.masculineClothings = [this.clothes.masculine.utilityPants, this.clothes.masculine.tShirt, this.clothes.masculine.shirt, this.clothes.masculine.parka, this.clothes.masculine.formalPants];
+    this.feminineClothings = [this.clothes.feminine.bodysuit, this.clothes.feminine.jeanSkirt, this.clothes.feminine.turtleNeck, this.clothes.feminine.overallDress, this.clothes.feminine.shirt];
   }
 
   update() {
     this.setBackground();
     this.displayAvatar();
     this.displayClothes();
-    console.log(femaleAvatarImg.width)
   }
 
   setBackground() {
@@ -106,10 +122,19 @@ class ChangingRoom {
   }
 
   displayClothes() {
-    push();
-    imageMode(CENTER);
-    image(utilityPants, width / 2 + 1, height / 3 * 2 - 25, this.clothes.masculine.utilityPants.width, this.clothes.masculine.utilityPants.height);
-    pop();
+    //display the masculine clothes in the masculine section
+    for (let i = 0; i < this.masculineClothings.length; i++) {
+      let x = random(this.masculineSection.borderLeft, this.masculineSection.borderRight);
+      x = constrain(x, this.masculineSection.borderLeft, this.masculineSection.borderRight)
+      let y = random(0 + this.verticalBorder, height - this.verticalBorder)
+      y = constrain(0 + this.verticalBorder, height - this.verticalBorder)
+      console.log(x);
+      // console.log(this.masculineClothings[i].width)
+      // Displays cloths
+      push();
+      image(this.masculineClothings[i].img, x, y, this.masculineClothings[i].width, this.masculineClothings[i].height)
+      pop();
+    }
   }
 
   mousePressed() {
