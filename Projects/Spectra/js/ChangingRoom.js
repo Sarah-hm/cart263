@@ -26,7 +26,6 @@ class ChangingRoom {
         y: height / 2
       }
     }
-
   }
 
   update() {
