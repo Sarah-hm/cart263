@@ -33,6 +33,7 @@ class ChangingRoom {
     this.setBackground();
     this.displayAvatar();
     this.displayClothes();
+    console.log(femaleAvatarImg.width)
   }
 
   setBackground() {
@@ -52,7 +53,7 @@ class ChangingRoom {
   displayClothes() {
     push();
     imageMode(CENTER);
-    image(utilityPants, width / 2, height / 3 * 2);
+    image(utilityPants, width / 2 + 1, height / 3 * 2 - 25);
     pop();
   }
 

@@ -117,7 +117,7 @@ function setup() {
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
   currentState = new InTheChangingRoom(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, InTheChangingRoom
-  currentChangingRoom = new FemaleChangingRoom(); //Can be FemaleChangingRoom, MaleChangingRoom or ChangingRoom (with no avatar or appropriate clothes assigned)
+  currentChangingRoom = new MaleChangingRoom(); //Can be FemaleChangingRoom, MaleChangingRoom or ChangingRoom (with no avatar or appropriate clothes assigned)
 }
 
 
