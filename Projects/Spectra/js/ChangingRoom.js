@@ -26,6 +26,62 @@ class ChangingRoom {
         y: height / 2
       }
     }
+
+    this.clothes = {
+      masculine: {
+        utilityPants: {
+          img: utilityPantsImg,
+          width: 92.4,
+          height: 234.96
+        },
+        tShirt: {
+          img: manTshirtImg,
+          width: 139.8,
+          height: 177.1
+        },
+        shirt: {
+          img: manShirtImg,
+          width: 160.1,
+          height: 157
+        },
+        parka: {
+          img: parkaImg,
+          width: 175.1,
+          height: 255.8
+        },
+        formalPants: {
+          img: formalPantsImg,
+          width: 81.2,
+          height: 146.3
+        },
+      },
+      feminine: {
+        bodysuit: {
+          img: bodysuitImg,
+          width: 162.8,
+          height: 146.6
+        },
+        turtleNeck: {
+          img: turtleNeckImg,
+          width: 160.7,
+          height: 152.5
+        },
+        jeanSkirt: {
+          img: jeanSkirtImg,
+          width: 122.3,
+          height: 103.1
+        },
+        overallDressImg: {
+          img: overallDressImg,
+          width: 91.5,
+          height: 170.9
+        },
+
+      }
+    }
+
+
+    this.masculineClothings = [this.clothes.masculine.utilityPants, this.clothes.masculine.tShirt, this.clothes.masculine.shirt, this.clothes.masculine.parka, this.clothes.masculine.formalPants]
   }
 
   update() {
@@ -52,7 +108,7 @@ class ChangingRoom {
   displayClothes() {
     push();
     imageMode(CENTER);
-    image(utilityPants, width / 2 + 1, height / 3 * 2 - 25);
+    image(utilityPants, width / 2 + 1, height / 3 * 2 - 25, this.clothes.masculine.utilityPants.width, this.clothes.masculine.utilityPants.height);
     pop();
   }
 
