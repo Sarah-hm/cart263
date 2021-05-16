@@ -107,7 +107,7 @@ class ChangingRoom {
     this.masculineGarments = [];
 
     this.clothesCreated = false; //Defines if the clothes have already been displayed on the canvas or not
-
+    this.clothesDragged = false; //Defines if at least of on the clothes from garments array is being dragged
 
 
   }
@@ -175,18 +175,15 @@ class ChangingRoom {
 
   animateMasculineGarments(garment) {
 
-    if (!garment.hovered || !garment.onAvatar) {
+    if (!garment.dragged && !garment.onAvatar) {
       garment.x = constrain(garment.x, this.masculineSection.borderLeft, this.masculineSection.borderRight)
       garment.y = constrain(garment.y, 0 + this.verticalBorder, height - this.verticalBorder)
-    }
 
-    if (!garment.onAvatar) {
       let change = random();
       if (change < 0.05) {
         garment.vx = random(-garment.speed, garment.speed);
         garment.vy = random(-garment.speed, garment.speed);
       }
-
       garment.x += garment.vx;
       garment.y += garment.vy;
     }
@@ -212,14 +209,23 @@ class ChangingRoom {
   }
 
   hoverGarments(garment) {
-    if (mouseX > garment.x - garment.width / 2 &&
-      mouseX < garment.x + garment.width / 2 &&
-      mouseY > garment.y - garment.height / 2 &&
-      mouseY < garment.y + garment.height / 2) {
-      garment.hovered = true
-    } else {
-      garment.hovered = false
+
+    if (!this.clothesDragged) {
+      if (
+        mouseX > garment.x - garment.width / 2 &&
+        mouseX < garment.x + garment.width / 2 &&
+        mouseY > garment.y - garment.height / 2 &&
+        mouseY < garment.y + garment.height / 2) {
+        for (let i = 0; i < this.masculineGarments.length; i++) {
+          this.masculineGarments[i].hovered = false
+        }
+        garment.hovered = true
+      } else {
+        garment.hovered = false
+      }
     }
+
+
     if (garment.hovered || garment.dragged || garment.onAvatar) {
       garment.zoomRatio = 1
     } else {
@@ -232,6 +238,10 @@ class ChangingRoom {
       garment.x = mouseX;
       garment.y = mouseY;
       garment.dragged = true
+      this.clothesDragged = true;
+    } else if (!mouseIsPressed) {
+      garment.dragged = false
+      this.clothesDragged = false;
     }
   }
 
@@ -242,6 +252,16 @@ class ChangingRoom {
       mouseY > this.avatar.position.y - this.avatar.size.height / 2 &&
       mouseY < this.avatar.position.y + this.avatar.size.height / 2) {
       garment.onAvatar = true
+    }
+    //If the garment is dragged but anywhere outside of the avatar image, then set the garment.onAvatar to false
+    else if (garment.dragged) {
+      if (mouseX < this.avatar.position.x - this.avatar.size.width / 2 ||
+        mouseX > this.avatar.position.x + this.avatar.size.width / 2 ||
+        mouseY < this.avatar.position.y - this.avatar.size.height / 2 ||
+        mouseY > this.avatar.position.y + this.avatar.size.height / 2
+      ) {
+        garment.onAvatar = false;
+      }
     }
   }
 
