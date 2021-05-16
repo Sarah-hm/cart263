@@ -26,6 +26,7 @@ class ChangingRoom {
         y: height / 2
       }
     }
+
   }
 
   update() {
@@ -49,7 +50,10 @@ class ChangingRoom {
   }
 
   displayClothes() {
-
+    push();
+    imageMode(CENTER);
+    image(utilityPants, width / 2, height / 3 * 2);
+    pop();
   }
 
   mousePressed() {
