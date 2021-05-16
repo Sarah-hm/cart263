@@ -133,7 +133,7 @@ function draw() {
 
 function mousePressed() {
   currentState.mousePressed();
-  if (currentState.changingRoomOPened === true) {
-    currentChangingRoom.mousePressed();
-  }
+  // if (currentState.changingRoomOPened === true) {
+  currentChangingRoom.mousePressed();
+  // }
 }

@@ -28,11 +28,13 @@ class ChangingRoom {
     }
 
     this.clothes = {
+      created: false,
+      imageMode: CENTER,
       masculine: {
         utilityPants: {
           img: utilityPantsImg,
-          width: 92.4,
-          height: 234.96
+          width: 92.206,
+          height: 234.5716
         },
         tShirt: {
           img: manTshirtImg,
@@ -51,8 +53,8 @@ class ChangingRoom {
         },
         formalPants: {
           img: formalPantsImg,
-          width: 81.2,
-          height: 146.3
+          width: 81.2403,
+          height: 230.3061
         },
       },
       feminine: {
@@ -84,14 +86,15 @@ class ChangingRoom {
       }
     }
 
+
     this.masculineSection = {
-        borderRight: width,
-        borderLeft: width / 5 * 3,
+        borderRight: width - 50,
+        borderLeft: width / 5 * 3 + 50,
 
       },
       this.feminineSection = {
-        borderRight: width / 5 * 2,
-        borderLeft: 0
+        borderRight: width / 5 * 2 - 50,
+        borderLeft: 50
       }
 
     this.verticalBorder = 40;
@@ -99,12 +102,21 @@ class ChangingRoom {
 
     this.masculineClothings = [this.clothes.masculine.utilityPants, this.clothes.masculine.tShirt, this.clothes.masculine.shirt, this.clothes.masculine.parka, this.clothes.masculine.formalPants];
     this.feminineClothings = [this.clothes.feminine.bodysuit, this.clothes.feminine.jeanSkirt, this.clothes.feminine.turtleNeck, this.clothes.feminine.overallDress, this.clothes.feminine.shirt];
+
+    this.feminineGarments = []; //will be defined in the createGarment for() loop
+    this.masculineGarments = [];
+
+    this.clothesCreated = false; //Defines if the clothes have already been displayed on the canvas or not
+
+
+
   }
 
   update() {
     this.setBackground();
     this.displayAvatar();
-    this.displayClothes();
+    this.initializeGarments();
+    this.executeGarments();
   }
 
   setBackground() {
@@ -121,24 +133,141 @@ class ChangingRoom {
     pop();
   }
 
-  displayClothes() {
-    //display the masculine clothes in the masculine section
-    for (let i = 0; i < this.masculineClothings.length; i++) {
-      let x = random(this.masculineSection.borderLeft, this.masculineSection.borderRight);
-      x = constrain(x, this.masculineSection.borderLeft, this.masculineSection.borderRight)
-      let y = random(0 + this.verticalBorder, height - this.verticalBorder)
-      y = constrain(0 + this.verticalBorder, height - this.verticalBorder)
-      console.log(x);
-      // console.log(this.masculineClothings[i].width)
-      // Displays cloths
-      push();
-      image(this.masculineClothings[i].img, x, y, this.masculineClothings[i].width, this.masculineClothings[i].height)
-      pop();
+  createGarment(x, y, img, width, height) {
+    let garment = {
+      x: x,
+      y: y,
+      vx: 0,
+      vy: 0,
+      speed: 2,
+      img: img,
+      width: width,
+      height: height,
+      zoomRatio: 1.5,
+      hovered: false,
+      dragged: false,
+      onAvatar: false
+    }
+    return garment
+  }
+
+  initializeGarments() {
+    if (this.clothes.created === false) {
+      for (let i = 0; i < this.masculineClothings.length; i++) {
+        this.masculineGarments[i] = this.createGarment(random(this.masculineSection.borderLeft, this.masculineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.masculineClothings[i].img, this.masculineClothings[i].width, this.masculineClothings[i].height)
+      }
+
+      for (let i = 0; i < this.feminineClothings.length; i++) {
+        this.feminineGarments[i] = this.createGarment(random(this.feminineSection.borderLeft, this.feminineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.feminineClothings[i].img, this.feminineClothings[i].width, this.feminineClothings[i].height)
+      }
+
+      //Set clothes to created so this loop only runs once
+      this.clothes.created = true;
     }
   }
 
-  mousePressed() {
+  displayGarments(garment) {
+    push()
+    imageMode(this.clothes.imageMode)
+    image(garment.img, garment.x, garment.y, garment.width / garment.zoomRatio, garment.height / garment.zoomRatio)
+    pop()
+  }
 
+  animateMasculineGarments(garment) {
+
+    if (!garment.hovered || !garment.onAvatar) {
+      garment.x = constrain(garment.x, this.masculineSection.borderLeft, this.masculineSection.borderRight)
+      garment.y = constrain(garment.y, 0 + this.verticalBorder, height - this.verticalBorder)
+    }
+
+    if (!garment.onAvatar) {
+      let change = random();
+      if (change < 0.05) {
+        garment.vx = random(-garment.speed, garment.speed);
+        garment.vy = random(-garment.speed, garment.speed);
+      }
+
+      garment.x += garment.vx;
+      garment.y += garment.vy;
+    }
+  }
+
+  animateFeminineGarments(garment) {
+
+    if (!garment.hovered) {
+      garment.x = constrain(garment.x, this.feminineSection.borderLeft, this.feminineSection.borderRight)
+      garment.y = constrain(garment.y, 0 + this.verticalBorder, height - this.verticalBorder)
+    }
+
+    if (!garment.onAvatar) {
+      let change = random();
+      if (change < 0.05) {
+        garment.vx = random(-garment.speed, garment.speed);
+        garment.vy = random(-garment.speed, garment.speed);
+      }
+
+      garment.x += garment.vx;
+      garment.y += garment.vy;
+    }
+  }
+
+  hoverGarments(garment) {
+    if (mouseX > garment.x - garment.width / 2 &&
+      mouseX < garment.x + garment.width / 2 &&
+      mouseY > garment.y - garment.height / 2 &&
+      mouseY < garment.y + garment.height / 2) {
+      garment.hovered = true
+    } else {
+      garment.hovered = false
+    }
+    if (garment.hovered || garment.dragged || garment.onAvatar) {
+      garment.zoomRatio = 1
+    } else {
+      garment.zoomRatio = 1.5
+    }
+  }
+
+  dragGarments(garment) {
+    if (garment.hovered && mouseIsPressed) {
+      garment.x = mouseX;
+      garment.y = mouseY;
+      garment.dragged = true
+    }
+  }
+
+  garmentsOnAvatar(garment) {
+    if (garment.dragged &&
+      mouseX > this.avatar.position.x - this.avatar.size.width / 2 &&
+      mouseX < this.avatar.position.x + this.avatar.size.width / 2 &&
+      mouseY > this.avatar.position.y - this.avatar.size.height / 2 &&
+      mouseY < this.avatar.position.y + this.avatar.size.height / 2) {
+      garment.onAvatar = true
+    }
+  }
+
+  executeGarments() {
+    for (let i = 0; i < this.masculineGarments.length; i++) {
+
+      this.animateMasculineGarments(this.masculineGarments[i]);
+      this.hoverGarments(this.masculineGarments[i]);
+      this.dragGarments(this.masculineGarments[i]);
+      this.garmentsOnAvatar(this.masculineGarments[i]);
+      this.displayGarments(this.masculineGarments[i]);
+    }
+
+    for (let i = 0; i < this.feminineGarments.length; i++) {
+
+      this.animateFeminineGarments(this.feminineGarments[i]);
+      this.hoverGarments(this.feminineGarments[i]);
+      this.dragGarments(this.feminineGarments[i]);
+      this.displayGarments(this.feminineGarments[i]);
+    }
+  }
+
+
+
+  mousePressed() {
+    console.log(this.masculineGarments[1])
   }
 
 }
