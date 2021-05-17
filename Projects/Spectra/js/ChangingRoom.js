@@ -160,7 +160,6 @@ class ChangingRoom {
       for (let i = 0; i < this.feminineClothings.length; i++) {
         this.feminineGarments[i] = this.createGarment(random(this.feminineSection.borderLeft, this.feminineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.feminineClothings[i].img, this.feminineClothings[i].width, this.feminineClothings[i].height)
       }
-
       //Set clothes to created so this loop only runs once
       this.clothes.created = true;
     }
@@ -173,8 +172,8 @@ class ChangingRoom {
     pop()
   }
 
+  //Animate the masculine garments constrained to the right side of the avatar to wiggle randomly, in the masculine section of the store.
   animateMasculineGarments(garment) {
-
     if (!garment.dragged && !garment.onAvatar) {
       garment.x = constrain(garment.x, this.masculineSection.borderLeft, this.masculineSection.borderRight)
       garment.y = constrain(garment.y, 0 + this.verticalBorder, height - this.verticalBorder)
@@ -188,80 +187,88 @@ class ChangingRoom {
       garment.y += garment.vy;
     }
   }
-
+  //Animate the feminine garments constrained to the left side of the avatar to wiggle randomly, in the feminine section of the store.
   animateFeminineGarments(garment) {
-
-    if (!garment.hovered) {
+    if (!garment.dragged && !garment.onAvatar) {
       garment.x = constrain(garment.x, this.feminineSection.borderLeft, this.feminineSection.borderRight)
       garment.y = constrain(garment.y, 0 + this.verticalBorder, height - this.verticalBorder)
-    }
 
-    if (!garment.onAvatar) {
       let change = random();
       if (change < 0.05) {
         garment.vx = random(-garment.speed, garment.speed);
         garment.vy = random(-garment.speed, garment.speed);
       }
-
       garment.x += garment.vx;
       garment.y += garment.vy;
     }
   }
 
-  hoverGarments(garment) {
 
-    if (!this.clothesDragged) {
-      if (
+  hoverGarments(garment) {
+    if (!this.clothesDragged) { //Only process if another garment is not already being dragged
+      if ( //the mouse is inside of the garment's image bounds, toggle the hover effect (bigger img ratio) for only one of the garment
         mouseX > garment.x - garment.width / 2 &&
         mouseX < garment.x + garment.width / 2 &&
         mouseY > garment.y - garment.height / 2 &&
         mouseY < garment.y + garment.height / 2) {
         for (let i = 0; i < this.masculineGarments.length; i++) {
-          this.masculineGarments[i].hovered = false
+          this.masculineGarments[i].hovered = false //Set all garments (ei: those you go over while dragging a garment) to not hovering to limit the hover effect to one garment
         }
-        garment.hovered = true
+        for (let i = 0; i < this.feminineGarments.length; i++) {
+          this.feminineGarments[i].hovered = false //Set all garments to not hovering to limit the hover effect to one garment
+        }
+        garment.hovered = true //turn the only (this one) garment that should have a hover effect on, on
       } else {
-        garment.hovered = false
+        garment.hovered = false //if the mouse leaves inside the image or was never there, hovered should be false
       }
     }
-
-
-    if (garment.hovered || garment.dragged || garment.onAvatar) {
-      garment.zoomRatio = 1
-    } else {
-      garment.zoomRatio = 1.5
-    }
   }
 
+  //Make garment draggable
   dragGarments(garment) {
-    if (garment.hovered && mouseIsPressed) {
-      garment.x = mouseX;
-      garment.y = mouseY;
-      garment.dragged = true
-      this.clothesDragged = true;
-    } else if (!mouseIsPressed) {
-      garment.dragged = false
-      this.clothesDragged = false;
+    if (garment.hovered && mouseIsPressed) { //if the garment is being hovered over and player presses mouse
+      garment.x = mouseX; //garment position's X will become mouseX position
+      garment.y = mouseY; //garment position's Y will become mouseY position
+      garment.dragged = true //dragged will be turned true
+      this.clothesDragged = true; //clothesDragged will be true, meaning at least of the garments is being dragged
+    }
+    //Otherwise, if mouse if not Pressed
+    else if (!mouseIsPressed) {
+      garment.dragged = false //the garment will not have a dragged effect (false)
+      this.clothesDragged = false; //clothesDragged is false, meaning no other garments is being dragged
     }
   }
 
+  //Turn onAvatar true if the garment was dragged within the bounds of the avatar's image.
+  //If the garment is dragged outside of these bounds, turn onAvatar back to false.
   garmentsOnAvatar(garment) {
+    //If garment is being dragged inside the bounds of avatar's image
     if (garment.dragged &&
       mouseX > this.avatar.position.x - this.avatar.size.width / 2 &&
       mouseX < this.avatar.position.x + this.avatar.size.width / 2 &&
       mouseY > this.avatar.position.y - this.avatar.size.height / 2 &&
       mouseY < this.avatar.position.y + this.avatar.size.height / 2) {
-      garment.onAvatar = true
+      garment.onAvatar = true //turn on avatar true
     }
     //If the garment is dragged but anywhere outside of the avatar image, then set the garment.onAvatar to false
-    else if (garment.dragged) {
+    else if (garment.dragged) { //if garment is being dragged outside of the bounds of avatar's image
       if (mouseX < this.avatar.position.x - this.avatar.size.width / 2 ||
         mouseX > this.avatar.position.x + this.avatar.size.width / 2 ||
         mouseY < this.avatar.position.y - this.avatar.size.height / 2 ||
         mouseY > this.avatar.position.y + this.avatar.size.height / 2
       ) {
-        garment.onAvatar = false;
+        garment.onAvatar = false; //turn on Avatar false
       }
+    }
+  }
+
+  //If the garment is either hovered over, being dragged or on the avatar, it's ratio should be of 1.
+  //Otherwise, it's size ratio should be 50% smaller
+  defineImgRatio(garment) {
+    if (garment.hovered || garment.dragged || garment.onAvatar) {
+      garment.zoomRatio = 1 //make garment size image a ratio of 1
+    } else {
+      garment.zoomRatio = 1.5 //make garment size image a ratio 1.5 (50% smaller)
     }
   }
 
@@ -272,6 +279,7 @@ class ChangingRoom {
       this.hoverGarments(this.masculineGarments[i]);
       this.dragGarments(this.masculineGarments[i]);
       this.garmentsOnAvatar(this.masculineGarments[i]);
+      this.defineImgRatio(this.masculineGarments[i]);
       this.displayGarments(this.masculineGarments[i]);
     }
 
@@ -280,14 +288,14 @@ class ChangingRoom {
       this.animateFeminineGarments(this.feminineGarments[i]);
       this.hoverGarments(this.feminineGarments[i]);
       this.dragGarments(this.feminineGarments[i]);
+      this.garmentsOnAvatar(this.feminineGarments[i]);
+      this.defineImgRatio(this.feminineGarments[i]);
       this.displayGarments(this.feminineGarments[i]);
     }
   }
 
 
 
-  mousePressed() {
-    console.log(this.masculineGarments[1])
-  }
+  mousePressed() {}
 
 }
