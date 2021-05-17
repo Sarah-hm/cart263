@@ -32,6 +32,9 @@ let atkinsonItalic = undefined;
 let atkinsonRegular = undefined;
 let lcdFont = undefined;
 
+//declare basic scene variables;
+let backgroundMusic = undefined;
+
 // intro scene variables
 let mallEscalatorsImg = undefined;
 let mallMezzanineImg = undefined;
@@ -79,6 +82,9 @@ function preload() {
   atkinsonRegular = loadFont(`assets/fonts/Atkinson-Hyperlegible-Regular-102.ttf`);
   lcdFont = loadFont(`assets/fonts/LCD-U___.TTF`)
 
+  //basic scene (background music)
+  backgroundMusic = loadSound(`assets/sounds/sonatePacifique_Limperatrice.mp3`)
+
   //intro imgs
   mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
   mallMezzanineImg = loadImage(`assets/images/mallMezzanineView.png`);
@@ -120,7 +126,7 @@ function setup() {
 
 
   currentChangingRoom = new ChangingRoom(); //Can be FemaleChangingRoom (with female avatar and feminine appropriate clothes), MaleChangingRoom (with male avatar and masculine apporpriate clothes) or ChangingRoom (with no avatar or appropriate clothes assigned yet)
-  currentState = new ChoosingSection(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
+  currentState = new Intro(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
 
 }
 

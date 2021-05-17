@@ -3,7 +3,7 @@
   "dialogues": {
     "introDialogue": {
       "title": "Welcome",
-      "question": "You're about to enter a clothing store. You'll have to interact with micro-aggression regarding gender expression, identity and biological sex. You can also choose to play a chill version of the same game if this feels better.",
+      "question": "You're about to enter a clothing store. You'll have to interact with microaggression \n\nregarding gender expression, identity and biological sex. You can also choose to play a chill version of the same game if this feels better.",
       "answers": ["Lemme see it all", "I definitely want to chill"]
     },
     "introEmployee": {

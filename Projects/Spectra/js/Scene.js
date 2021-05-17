@@ -1,5 +1,9 @@
 class Scene {
   constructor() {
+    this.backgroundMusic = {
+      sound: backgroundMusic,
+      volume: 0.8
+    }
 
   }
 
@@ -9,7 +13,10 @@ class Scene {
 
 
   playMusic() {
-    //Music to be added
+    if (!this.backgroundMusic.sound.isPlaying()) {
+      this.backgroundMusic.sound.setVolume(this.backgroundMusic.volume)
+      this.backgroundMusic.sound.play()
+    }
   }
 
   mousePressed() {

@@ -164,9 +164,9 @@ class Dialog extends Scene {
             b: 243
           },
           hoverFill: {
-            r: 0,
-            g: 0,
-            b: 0
+            r: 59,
+            g: 205,
+            b: 204
           },
           textFill: {
             r: 0,
