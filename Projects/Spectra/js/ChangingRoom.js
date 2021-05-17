@@ -4,6 +4,10 @@ class ChangingRoom {
     this.background = {
       img: changingRoomBackgroundImg,
       imageMode: CORNER,
+      filter: {
+        mode: POSTERIZE,
+        threshold: 3
+      },
       size: {
         width: width,
         height: height
@@ -135,6 +139,10 @@ class ChangingRoom {
     this.displayAvatar();
     this.initializeGarments();
     this.executeGarments();
+    this.setFilter();
+  }
+  setFilter() {
+    filter(this.background.filter.mode, this.background.filter.threshold)
   }
 
   setBackground() {
