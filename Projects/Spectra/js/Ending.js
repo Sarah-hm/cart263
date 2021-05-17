@@ -2,7 +2,7 @@ class Ending extends Dialog {
   constructor() {
     super();
     this.backgroundImg = {
-      img: insideStoreImg,
+      img: changingRoomBackgroundImg,
       size: {
         width: 800,
         height: 600,

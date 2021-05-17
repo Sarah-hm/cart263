@@ -126,7 +126,7 @@ function setup() {
 
 
   currentChangingRoom = new ChangingRoom(); //Can be FemaleChangingRoom (with female avatar and feminine appropriate clothes), MaleChangingRoom (with male avatar and masculine apporpriate clothes) or ChangingRoom (with no avatar or appropriate clothes assigned yet)
-  currentState = new Intro(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
+  currentState = new ChoosingSection(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
 
 }
 

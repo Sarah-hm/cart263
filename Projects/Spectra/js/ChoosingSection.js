@@ -46,21 +46,11 @@ class ChoosingSection extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
-    //Go to the In the changing room scene, which does nothing but wait
-    currentState = new InTheChangingRoom();
-
-    //Toggle changing room to open and send the customer (player) to the female avatar changing room
-    changingRoomOpened = true;
-    currentChangingRoom = new FemaleChangingRoom();
+    currentState = new TransitionToFemaleChangingRoom();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
-    //Go to the In the changing room scene, which does nothing but wait
-    currentState = new InTheChangingRoom();
-
-    //Toggle changing room to open and send the customer (player) to the male avatar changing room
-    changingRoomOpened = true;
-    currentChangingRoom = new MaleChangingRoom();
+    currentState = new TransitionToMaleChangingRoom();
   }
 }

@@ -187,8 +187,7 @@ class Dialog extends Scene {
           }
         }
       }
-
-
+    //Put all answer Choices (button a and button b) in an array to display in for() loop
     this.answerChoices = [this.dialogBox.answerButton.a, this.dialogBox.answerButton.b]
 
     this.typewriter = {
