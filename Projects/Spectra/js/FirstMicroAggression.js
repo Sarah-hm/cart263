@@ -45,11 +45,13 @@ class FirstMicroAggression extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
+    currentChangingRoom.microaggressions.firstWasPlayed = true; //turn to true so it only plays once;
     currentState = new InTheChangingRoom();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
+    currentChangingRoom.microaggressions.firstWasPlayed = true; //turn to true so it only plays once;
     currentState = new InTheChangingRoom();
   }
 }

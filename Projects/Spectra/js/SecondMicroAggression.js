@@ -31,11 +31,17 @@ class SecondMicroAggression extends Dialog {
 
   update() {
     super.update();
+    this.updateBrokenness();
+  }
+
+  updateBrokenness() {
+    this.brokenness.lvl1.on = true; //Define brokenness level as the corresponding level of the current microaggression;
   }
 
   toggleButtonA() {
     super.toggleButtonA();
     currentChangingRoom.microaggressions.secondWasPlayed = true; //turn to true so it only plays once;
+    this.brokenness.lvl2.on = true; //Define brokenness level as the corresponding level of the current microaggression;
     currentState = new InTheChangingRoom();
   }
 

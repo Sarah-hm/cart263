@@ -36,6 +36,12 @@ class FourthMicroAggression extends Dialog {
 
   update() {
     super.update();
+    this.updateBrokenness();
+  }
+
+
+  updateBrokenness() {
+    this.brokenness.lvl4.on = true; //Define brokenness level as the corresponding level of the current microaggression;
   }
 
   toggleButtonA() {
