@@ -128,15 +128,58 @@ class ChangingRoom {
     }
 
     // ==== All broken game variables ====
-    this.brokenGame = false //Define if the game has just been broken by the use of innapropriate gendered clothing
+
+    //Defines what level of 'brokenness' the game is currently at and all changing thresholds to increase brokenness
+    this.brokenness = {
+      lvl1: {
+        on: false, // Turns true when a new microaggression is played
+        filter: {
+          threshold: 10,
+          triggerThreshold: 0.01,
+          timeApplied: 300
+        }
+      },
+      lvl2: {
+        on: false,
+        filter: {
+          threshold: 8,
+          triggerThreshold: 0.02,
+          timeApplied: 400
+        }
+      },
+      lvl3: {
+        on: false,
+        filter: {
+          threshold: 6,
+          triggerThreshold: 0.03,
+          timeApplied: 500
+        }
+      },
+      lvl4: {
+        on: false,
+        filter: {
+          threshold: 4,
+          triggerThreshold: 0.04,
+          timeApplied: 500
+        }
+      },
+      lvl5: {
+        on: false,
+        filter: {
+          threshold: 3,
+          triggerThreshold: 0.05,
+          timeApplied: 700
+        }
+      },
+    }
 
     //filter
     this.filter = {
       mode: POSTERIZE, //set filter mode to posterize because it's cool but I couldn't explain how it works.
-      threshold: 3, //threshold of colors for filter mode
+      threshold: 10, //threshold of colors for filter mode
       on: false, //Originally set to false; is set to true when filter is triggered to be able to turn it off and to only display it once at a time
       triggerThreshold: 0.01, //Chances of filter being toggled in the setFilter method
-      timeApplied: 1000 // Defines how much time the filter will be applied; default set to 1000
+      timeApplied: 500 // Defines how much time the filter will be applied; default set to 1000
     }
 
   }
@@ -151,18 +194,54 @@ class ChangingRoom {
 
   setFilter() {
 
-    let changeFilter = random(); // let changeFilter be a random number between 0 and 1
 
-    if (changeFilter < this.filter.triggerThreshold) { //Process only if the random changeFilter is smaller than the established threshold
-      if (!this.filter.on) {
-        this.filter.on = true //turn filter on and setTimeout to turn it off in 1000 milliseconds
-        setTimeout(() => {
-          this.filter.on = false
-        }, this.filter.timeApplied)
+    if (this.brokenness.lvl1.on) //Only process if brokenness lvl 1 has been toggled (meaning filter doesn't display at all unless at least lvl1 is true)
+    {
+      if (this.brokenness.lvl1.on && !this.brokenness.lvl2.on) //process only if brokenness lvl1 is turned on (if microaggression 1 has played), but not lvl2 yet.
+      {
+        //Set the filter values to the brokenness lvl1 values
+        this.filter.threshold = this.brokenness.lvl1.filter.threshold;
+        this.filter.triggerThreshold = this.brokenness.lvl1.filter.triggerThreshold;
+        this.filter.timeApplied = this.brokenness.lvl1.filter.timeApplied;
+      } else if (this.brokenness.lvl2.on && !this.brokenness.lvl3.on) //process only if brokenness lvl2 is turned on but not lvl3 yet.
+      {
+        //Set the filter values to the brokenness lvl2 values
+        this.filter.threshold = this.brokenness.lvl2.filter.threshold;
+        this.filter.triggerThreshold = this.brokenness.lvl2.filter.triggerThreshold;
+        this.filter.timeApplied = this.brokenness.lvl2.filter.timeApplied;
+      } else if (this.brokenness.lvl3.on && !this.brokenness.lvl4.on) //process only if brokenness lvl3 is turned on but not lvl4 yet.
+      {
+        //Set the filter values to the brokenness lvl2 values
+        this.filter.threshold = this.brokenness.lvl3.filter.threshold;
+        this.filter.triggerThreshold = this.brokenness.lvl3.filter.triggerThreshold;
+        this.filter.timeApplied = this.brokenness.lvl3.filter.timeApplied;
+      } else if (this.brokenness.lvl4.on && !this.brokenness.lvl5.on) //process only if brokenness lvl4 is turned on but not lvl5 yet.
+      {
+        //Set the filter values to the brokenness lvl2 values
+        this.filter.threshold = this.brokenness.lvl4.filter.threshold;
+        this.filter.triggerThreshold = this.brokenness.lvl4.filter.triggerThreshold;
+        this.filter.timeApplied = this.brokenness.lvl4.filter.timeApplied;
+      } else if (this.brokenness.lvl5.on) //process only if brokenness lvl5 is turned on
+      {
+        //Set the filter values to the brokenness lvl2 values
+        this.filter.threshold = this.brokenness.lvl5.filter.threshold;
+        this.filter.triggerThreshold = this.brokenness.lvl5.filter.triggerThreshold;
+        this.filter.timeApplied = this.brokenness.lvl5.filter.timeApplied;
       }
-    }
-    if (this.filter.on) { // If filter is on, apply filter
-      filter(this.filter.mode, this.filter.threshold)
+
+
+      let changeFilter = random(); // let changeFilter be a random number between 0 and 1
+      if (changeFilter < this.filter.triggerThreshold) { //Process only if the random changeFilter is smaller than the established threshold
+        if (!this.filter.on) {
+          this.filter.on = true //turn filter on and setTimeout to turn it off in 1000 milliseconds
+          setTimeout(() => {
+            this.filter.on = false
+          }, this.filter.timeApplied)
+        }
+      }
+      if (this.filter.on) { // If filter is on, apply filter
+        filter(this.filter.mode, this.filter.threshold)
+      }
     }
   }
 
@@ -391,27 +470,31 @@ class ChangingRoom {
 
   //Turn currentState to first microaggression to play the scene;
   playFirstMicroaggression() {
-    // this.microaggressions.firstWasPlayed = true;
-    currentState = new FirstMicroAggression();
+    this.brokenness.lvl1.on = true;
+    currentState = new FirstMicroAggression(); //Play first microaggression
   }
 
   //Turn currentState to second microaggression to play the scene;
   playSecondMicroaggression() {
+    this.brokenness.lvl2.on = true;
     currentState = new SecondMicroAggression();
   }
 
   //Turn currentState to third microaggression to play the scene;
   playThirdMicroaggression() {
+    this.brokenness.lvl3.on = true;
     currentState = new ThirdMicroAggression();
   }
 
   //Turn currentState to fourth microaggression to play the scene;
   playFourthMicroaggression() {
+    this.brokenness.lvl4.on = true;
     currentState = new FourthMicroAggression();
   }
 
   //Turn currentState to fifth microaggression to play the scene;
   playFifthMicroaggression() {
+    this.brokenness.lvl5.on = true;
     currentState = new FifthMicroAggression();
   }
 
