@@ -121,7 +121,7 @@ function preload() {
 
   formalPantsImg = loadImage(`assets/images/clothes/manFormalPants.png`);
   manShirtImg = loadImage(`assets/images/clothes/manShirt.png`);
-  manTshirtImg = loadImage(`assets/images/clothes/manTshirt.png`);
+  manTshirtImg = loadImage(`assets/images/clothes/tShirt.png`);
   parkaImg = loadImage(`assets/images/clothes/parka.png`);
   utilityPantsImg = loadImage(`assets/images/clothes/UtilityPants.png`)
 
