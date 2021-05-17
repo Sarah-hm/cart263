@@ -190,6 +190,63 @@ class Dialog extends Scene {
     //Put all answer Choices (button a and button b) in an array to display in for() loop
     this.answerChoices = [this.dialogBox.answerButton.a, this.dialogBox.answerButton.b]
 
+
+    //brokenness of the dialog
+    this.brokenness = {
+      employeeFilter: { //filter values to display defined in corresponding level of brokenness below
+        on: false, //defines if a filter is already being applied
+        triggerThreshold: undefined, //how many chance (on 1) of having employee filter be true;
+        timeApplied: undefined, //how many milliseconds employee filter will be true;
+        filterChangeInerval: undefined // how many milliseconds before changing to new filter when employee filter is true;
+      },
+      //Define all values based on lvl of 'brokenness'
+      lvl1: {
+        on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
+        employeeFilter: {
+          triggerThreshold: 0.01,
+          timeApplied: 300,
+          filterChangeInterval: 800
+        }
+      },
+      lvl2: {
+        on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
+        employeeFilter: {
+          triggerThreshold: 0.03,
+          timeApplied: 600,
+          filterChangeInterval: 800
+        }
+      },
+      lvl3: {
+        on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
+        employeeFilter: {
+          triggerThreshold: 0.04,
+          timeApplied: 800,
+          filterChangeInterval: 450
+        }
+      },
+      lvl4: {
+        on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
+        employeeFilter: {
+          triggerThreshold: 0.06,
+          timeApplied: 800,
+          filterChangeInterval: 400
+        }
+      },
+      lvl5: {
+        on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
+        employeeFilter: {
+          triggerThreshold: 0.08,
+          timeApplied: 600,
+          filterChangeInterval: 350
+        }
+      },
+    }
+
+    //employee filter images
+    this.employeeImgFilters = [employeeFilterOriginalImg, employeeFilterNeonImg, employeeFilterInvertedImg];
+
+    //Dumpster
+
     this.typewriter = {
       fullText: ``,
       displayText: ``,
@@ -340,7 +397,6 @@ class Dialog extends Scene {
   displaySpeaker() {
 
     if (this.scene.speaker) {
-
       // will process if fade in dialog has been toggled in child class
       if (this.scene.fadeIn) {
         //will process if the y position of textBox is not as high as its landing position (smaller or equal to)
@@ -360,6 +416,71 @@ class Dialog extends Scene {
       if (this.scene.fadeOut && this.dialogBox.closing) {
         this.dialogBox.speaker.position.x += this.dialogBox.speaker.slideOutSpeed;
       }
+
+      //===Brokenness filters ===
+      //Define, if game is brokenness, the values of filter (flickering of images) applied
+
+      if (this.brokenness.lvl1.on) //Only process if brokenness lvl 1 is true (if microaggression 1 was played);
+      {
+        //set employee filter's values to the corresponding level of brokenness' values;
+        this.brokenness.employeeFilter.triggerThreshold = this.brokenness.lvl1.employeeFilter.triggerThreshold;
+        this.brokenness.employeeFilter.timeApplied = this.brokenness.lvl1.employeeFilter.timeApplied;
+        this.brokenness.employeeFilter.filterChangeInterval = this.brokenness.lvl1.employeeFilter.filterChangeInterval
+
+        if (this.brokenness.lvl2.on) //overwrite lvl1 brokenness value if brokenness lvl2 is true;
+        {
+          this.brokenness.employeeFilter.triggerThreshold = this.brokenness.lvl2.employeeFilter.triggerThreshold;
+          this.brokenness.employeeFilter.timeApplied = this.brokenness.lvl2.employeeFilter.timeApplied;
+          this.brokenness.employeeFilter.filterChangeInterval = this.brokenness.lvl2.employeeFilter.filterChangeInterval
+        }
+
+        if (this.brokenness.lvl3.on) //overwrite lvl2 brokenness value if brokenness lvl3 is true;
+        {
+          this.brokenness.employeeFilter.triggerThreshold = this.brokenness.lvl3.employeeFilter.triggerThreshold;
+          this.brokenness.employeeFilter.timeApplied = this.brokenness.lvl3.employeeFilter.timeApplied;
+          this.brokenness.employeeFilter.filterChangeInterval = this.brokenness.lvl3.employeeFilter.filterChangeInterval
+        }
+
+        if (this.brokenness.lvl4.on) //overwrite lvl3 brokenness value if brokenness lvl2 is true;
+        {
+          this.brokenness.employeeFilter.triggerThreshold = this.brokenness.lvl4.employeeFilter.triggerThreshold;
+          this.brokenness.employeeFilter.timeApplied = this.brokenness.lvl4.employeeFilter.timeApplied;
+          this.brokenness.employeeFilter.filterChangeInterval = this.brokenness.lvl4.employeeFilter.filterChangeInterval
+        }
+
+        if (this.brokenness.lvl5.on) //overwrite lvl4 brokenness value if brokenness lvl2 is true;
+        {
+          this.brokenness.employeeFilter.triggerThreshold = this.brokenness.lvl5.employeeFilter.triggerThreshold;
+          this.brokenness.employeeFilter.timeApplied = this.brokenness.lvl5.employeeFilter.timeApplied;
+          this.brokenness.employeeFilter.filterChangeInterval = this.brokenness.lvl5.employeeFilter.filterChangeInterval
+        }
+
+        let changeEmployeeFilter = random(); // let changeEmployeeFilter be a random number between 0 and 1
+        if (changeEmployeeFilter < this.brokenness.employeeFilter.triggerThreshold) { //Process only if the random changeFilter is smaller than the established threshold
+          if (!this.brokenness.employeeFilter.on) {
+            this.brokenness.employeeFilter.on = true //turn filter on and setTimeout to turn it off in timeApplied amount of milliseconds
+            setTimeout(() => {
+              this.brokenness.employeeFilter.on = false
+            }, this.brokenness.employeeFilter.timeApplied)
+          }
+        }
+
+        if (this.brokenness.employeeFilter.on) //only process if employee Filter is true (if it has been toggled by the above if statement)
+        {
+          //Every filterChangeInterval amount of seconds, change the speaker image for a random filter of those available in the array (original image, neon, inverted)
+          setTimeout(() => {
+            this.dialogBox.speaker.img = random(this.employeeImgFilters)
+          }, this.brokenness.employeeFilter.filterChangeInterval)
+        }
+        //else, reset the speaker image to its default image
+        else {
+          this.dialogBox.speaker.img = employeeImg
+        }
+      }
+
+
+
+
       // display the speaker img in the position defined above (with fade in or not);
       push();
       imageMode(this.dialogBox.speaker.imageMode);

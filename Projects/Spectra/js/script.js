@@ -41,14 +41,17 @@ let startLogoImg0 = undefined;
 let startLogoImg1 = undefined;
 let startLogoImg2 = undefined;
 
-// intro scene variables
+//Mall images variables
 let mallEscalatorsImg = undefined;
 let mallMezzanineImg = undefined;
 let mallStoreFrontImg = undefined;
-
-//dialog scenes + inside store variables
-let employeeImg = undefined;
 let insideStoreImg = undefined;
+
+//Employee (speaker) related variables
+let employeeImg = undefined;
+let employeeFilterOriginalImg = undefined;
+let employeeFilterNeonImg = undefined;
+let employeeFilterInvertedImg = undefined;
 
 //Changing room variables
 let changingRoomOpened = false; //set to false until changing room are opened by customer (player) trying clothes on
@@ -97,14 +100,18 @@ function preload() {
   startLogoImg1 = loadImage(`assets/images/StartLogoImgs/1.png`);
   startLogoImg2 = loadImage(`assets/images/StartLogoImgs/2.png`);
 
-  //intro imgs
+  //mall imgs
   mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
   mallMezzanineImg = loadImage(`assets/images/mallMezzanineView.png`);
   mallStoreFrontImg = loadImage(`assets/images/mallStoreFront.png`);
-
-  //dialog scenes +inside Store variables
-  employeeImg = loadImage(`assets/images/employee.png`);
   insideStoreImg = loadImage(`assets/images/insideStoreImg.png`)
+
+  //Employee(speaker) images
+  employeeImg = loadImage(`assets/images/employee.png`);
+  employeeFilterOriginalImg = loadImage(`assets/images/employee_filterOriginal.png`);
+  employeeFilterNeonImg = loadImage(`assets/images/employee_filterNeon.png`);
+  employeeFilterInvertedImg = loadImage(`assets/images/employee_filterInverted.png`);
+
 
   //Changing room imgs
   changingRoomBackgroundImg = loadImage(`assets/images/changingRoomBackgroundImg.png`)
