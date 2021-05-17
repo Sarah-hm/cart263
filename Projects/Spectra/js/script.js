@@ -30,6 +30,7 @@ let atkinsonBold = undefined;
 let atkinsonBoldItalic = undefined;
 let atkinsonItalic = undefined;
 let atkinsonRegular = undefined;
+let lcdFont = undefined;
 
 // intro scene variables
 let mallEscalatorsImg = undefined;
@@ -76,6 +77,7 @@ function preload() {
   atkinsonBoldItalic = loadFont(`assets/fonts/Atkinson-Hyperlegible-BoldItalic-102.ttf`);
   atkinsonItalic = loadFont(`assets/fonts/Atkinson-Hyperlegible-Italic-102.ttf`);
   atkinsonRegular = loadFont(`assets/fonts/Atkinson-Hyperlegible-Regular-102.ttf`);
+  lcdFont = loadFont(`assets/fonts/LCD-U___.TTF`)
 
   //intro imgs
   mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
@@ -117,8 +119,8 @@ function setup() {
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
 
-  currentChangingRoom = new MaleChangingRoom(); //Can be FemaleChangingRoom, MaleChangingRoom or ChangingRoom (with no avatar or appropriate clothes assigned)
-  currentState = new InTheChangingRoom(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, InTheChangingRoom
+  currentChangingRoom = new ChangingRoom(); //Can be FemaleChangingRoom (with female avatar and feminine appropriate clothes), MaleChangingRoom (with male avatar and masculine apporpriate clothes) or ChangingRoom (with no avatar or appropriate clothes assigned yet)
+  currentState = new ChoosingSection(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
 
 }
 

@@ -21,10 +21,10 @@
     },
     "microaggression1": {
       "title": "Sandra",
-      "question": "Yes, unfortunately we don't have your size in that. You're just not... the usual body type.",
+      "question": "Yes, unfortunately we don't have your size in that. \n\nYou're just not... the usual body type.",
       "answers": [
-        "Oh, that's too bad.",
-        "Well you should look into it. Everyone deserves to dress however they want."
+        "Oh, that's too bad. Diversifying your \noffer would be great for customers ",
+        "You should. Everyone deserves to \n dress however they want."
       ]
     },
     "microaggression2": {
@@ -36,7 +36,7 @@
       "title": "Sandra... Ugh.",
       "question": "Oh you obviously can't wear that, what would others say? Ha! Ha! Ha!",
       "answers": [
-        "They're gonna say I look fierce",
+        "They're gonna say I look really good",
         "well, I frankly don't give a fuck"
       ]
     },
@@ -46,23 +46,23 @@
       "question": "Are you looking for something for your partner or is this some sort of costume hunt?",
       "answers": [
         "okay, at this point you're trolling.",
-        "Partner who? Also, my gender expression and identity is not a costume and none of your goddamn business."
+        "Partner who? And my gender expression and \nidentity is not a costume and none of ur business."
       ]
     },
     "microaggression5": {
       "title": "this little bitch",
-      "question": "I don't know. I feel like maybe you're pushing too much. It's okay to dress however you like, don't get me wrong, but you should go with something that's made for you. The real you.",
+      "question": "I don't know. I feel like maybe you're pushing too much. \n\nIt's okay to dress however you like, don't get me wrong, \nbut you should go with something that's made for you. \nThe real you.",
       "answers": [
         "something really insulting",
         "that I can still share in classroom setting"
       ]
     },
     "ending": {
-      "title": "Game Over: you Broke the Fashion Industry",
-      "question": "Congrats. You single handedly destroyed the fashion industry and its gender dichotomy. Now we have to build it from the ground up, which isn't so bad if you ask me. But I've never said that. I still want to get paid on thursday.",
+      "title": "Game Over: you Broke \nthe Fashion Industry",
+      "question": "Congrats. You single handedly destroyed the fashion industry and its gender dichotomy.\nNow we have to build it from the ground up, which isn't so bad if you ask me. \nBut I've never said that. I still want to get paid on thursday.",
       "answers": [
-        "yeah, this was weird but I understand more now.",
-        "You're a fucking sell out (it's true)"
+        "yeah, this was weird but \nI understand more now.",
+        "You're a fucking sell out \n(it's true)"
       ]
     },
     "intermission": {

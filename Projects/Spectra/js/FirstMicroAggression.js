@@ -28,6 +28,8 @@ class FirstMicroAggression extends Dialog {
     //redefine text size because answers are too long for default size
     this.dialogBox.answerButton.textSize = 12;
 
+    this.dialogBox.answerButton.size.height = height / 12.5;
+
     //Set changing room to opened to allow draw() on ChangingRoom in script.js
     this.changingRoomOpened = true;
   }

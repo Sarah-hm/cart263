@@ -353,6 +353,10 @@ class ChangingRoom {
     else if (!this.microaggressions.fifthWasPlayed) {
       this.playFifthMicroaggression();
     }
+    //If all microaggressions were played (all until the fifth), then play the ending scene.
+    else if (this.microaggressions.fifthWasPlayed) {
+      this.playEnding();
+    }
   }
 
   //Turn currentState to first microaggression to play the scene;
@@ -380,6 +384,11 @@ class ChangingRoom {
   playFifthMicroaggression() {
     currentState = new FifthMicroAggression();
   }
+
+  playEnding() {
+    currentState = new Ending();
+  }
+
 
   mousePressed() {}
 

@@ -68,7 +68,7 @@ class Dialog extends Scene {
         textBox: {
           fullTextDisplayed: false,
           string: undefined,
-          font: atkinsonRegular,
+          font: lcdFont,
           textSize: 14,
           rectMode: CENTER,
           size: {
@@ -138,7 +138,7 @@ class Dialog extends Scene {
         answerButton: {
           rectMode: CENTER,
           textSize: 14,
-          font: atkinsonBold,
+          font: lcdFont,
           strokeWeight: 8,
           cornerRoundness: 10,
           size: {
