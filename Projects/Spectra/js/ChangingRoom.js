@@ -30,59 +30,65 @@ class ChangingRoom {
     this.clothes = {
       created: false,
       imageMode: CENTER,
-      masculine: {
-        utilityPants: {
-          img: utilityPantsImg,
-          width: 92.206,
-          height: 234.5716
-        },
-        tShirt: {
-          img: manTshirtImg,
-          width: 139.8,
-          height: 177.1
-        },
-        shirt: {
-          img: manShirtImg,
-          width: 160.1,
-          height: 157
-        },
-        parka: {
-          img: parkaImg,
-          width: 175.1,
-          height: 255.8
-        },
-        formalPants: {
-          img: formalPantsImg,
-          width: 81.2403,
-          height: 230.3061
-        },
+      utilityPants: {
+        img: utilityPantsImg,
+        width: 92.206,
+        height: 234.5716,
+        gender: "masculine"
       },
-      feminine: {
-        bodysuit: {
-          img: bodysuitImg,
-          width: 162.8,
-          height: 146.6
-        },
-        turtleNeck: {
-          img: turtleNeckImg,
-          width: 160.7,
-          height: 152.5
-        },
-        jeanSkirt: {
-          img: jeanSkirtImg,
-          width: 122.3,
-          height: 103.1
-        },
-        overallDress: {
-          img: overallDressImg,
-          width: 91.5,
-          height: 170.9
-        },
-        shirt: {
-          img: womanShirtImg,
-          width: 180.4,
-          height: 99.1
-        }
+      tShirt: {
+        img: manTshirtImg,
+        width: 139.8,
+        height: 177.1,
+        gender: "masculine"
+      },
+      manShirt: {
+        img: manShirtImg,
+        width: 160.1,
+        height: 157,
+        gender: "masculine"
+      },
+      parka: {
+        img: parkaImg,
+        width: 175.1,
+        height: 255.8,
+        gender: "masculine"
+      },
+      formalPants: {
+        img: formalPantsImg,
+        width: 81.2403,
+        height: 230.3061,
+        gender: "masculine"
+      },
+      bodysuit: {
+        img: bodysuitImg,
+        width: 162.8,
+        height: 146.6,
+        gender: "feminine"
+      },
+      turtleNeck: {
+        img: turtleNeckImg,
+        width: 160.7,
+        height: 152.5,
+        gender: "feminine"
+      },
+      jeanSkirt: {
+        img: jeanSkirtImg,
+        width: 122.3,
+        height: 103.1,
+        gender: "feminine"
+      },
+      overallDress: {
+        img: overallDressImg,
+        width: 91.5,
+        height: 170.9,
+        gender: "feminine"
+      },
+      womanShirt: {
+        img: womanShirtImg,
+        width: 180.4,
+        height: 99.1,
+        gender: "feminine"
       }
     }
 
@@ -100,8 +106,8 @@ class ChangingRoom {
     this.verticalBorder = 40;
 
 
-    this.masculineClothings = [this.clothes.masculine.utilityPants, this.clothes.masculine.tShirt, this.clothes.masculine.shirt, this.clothes.masculine.parka, this.clothes.masculine.formalPants];
-    this.feminineClothings = [this.clothes.feminine.bodysuit, this.clothes.feminine.jeanSkirt, this.clothes.feminine.turtleNeck, this.clothes.feminine.overallDress, this.clothes.feminine.shirt];
+    this.masculineClothings = [this.clothes.utilityPants, this.clothes.tShirt, this.clothes.manShirt, this.clothes.parka, this.clothes.formalPants];
+    this.feminineClothings = [this.clothes.bodysuit, this.clothes.jeanSkirt, this.clothes.turtleNeck, this.clothes.overallDress, this.clothes.womanShirt];
 
     this.feminineGarments = []; //will be defined in the createGarment for() loop
     this.masculineGarments = [];
@@ -109,6 +115,16 @@ class ChangingRoom {
     this.clothesCreated = false; //Defines if the clothes have already been displayed on the canvas or not
     this.clothesDragged = false; //Defines if at least of on the clothes from garments array is being dragged
 
+    this.appropriateClothingChoice = undefined; //Defined in the child class, can be : "masculine" or "feminine"
+
+    //Declare if those microaggressions were already played, will be turned true whenever they are played.
+    this.microaggressions = {
+      firstWasPlayed: false,
+      secondtWasPlayed: false,
+      thirdWasPlayed: false,
+      fourthWasPlayed: false,
+      fifthWasPlayed: false,
+    }
 
   }
 
@@ -133,7 +149,7 @@ class ChangingRoom {
     pop();
   }
 
-  createGarment(x, y, img, width, height) {
+  createGarment(x, y, img, width, height, gender) {
     let garment = {
       x: x,
       y: y,
@@ -143,6 +159,7 @@ class ChangingRoom {
       img: img,
       width: width,
       height: height,
+      gender: gender,
       zoomRatio: 1.5,
       hovered: false,
       dragged: false,
@@ -154,11 +171,11 @@ class ChangingRoom {
   initializeGarments() {
     if (this.clothes.created === false) {
       for (let i = 0; i < this.masculineClothings.length; i++) {
-        this.masculineGarments[i] = this.createGarment(random(this.masculineSection.borderLeft, this.masculineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.masculineClothings[i].img, this.masculineClothings[i].width, this.masculineClothings[i].height)
+        this.masculineGarments[i] = this.createGarment(random(this.masculineSection.borderLeft, this.masculineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.masculineClothings[i].img, this.masculineClothings[i].width, this.masculineClothings[i].height, this.masculineClothings[i].gender)
       }
 
       for (let i = 0; i < this.feminineClothings.length; i++) {
-        this.feminineGarments[i] = this.createGarment(random(this.feminineSection.borderLeft, this.feminineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.feminineClothings[i].img, this.feminineClothings[i].width, this.feminineClothings[i].height)
+        this.feminineGarments[i] = this.createGarment(random(this.feminineSection.borderLeft, this.feminineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.feminineClothings[i].img, this.feminineClothings[i].width, this.feminineClothings[i].height, this.feminineClothings[i].gender)
       }
       //Set clothes to created so this loop only runs once
       this.clothes.created = true;
@@ -249,6 +266,20 @@ class ChangingRoom {
       mouseY > this.avatar.position.y - this.avatar.size.height / 2 &&
       mouseY < this.avatar.position.y + this.avatar.size.height / 2) {
       garment.onAvatar = true //turn on avatar true
+
+      //If the appropriate clothing defined in child class is feminine and player is using a opposite gender garment, the game breaks further
+      if (this.appropriateClothingChoice === "feminine") {
+        if (garment.gender === "masculine") {
+          this.breakGame();
+        }
+      }
+
+      //If the appropriate clothing defined in child class is masculine and player is using a opposite gender garment, the game breaks further
+      if (this.appropriateClothingChoice === "masculine") {
+        if (garment.gender === "feminine") {
+          this.breakGame();
+        }
+      }
     }
     //If the garment is dragged but anywhere outside of the avatar image, then set the garment.onAvatar to false
     else if (garment.dragged) { //if garment is being dragged outside of the bounds of avatar's image
@@ -275,6 +306,7 @@ class ChangingRoom {
   executeGarments() {
     for (let i = 0; i < this.masculineGarments.length; i++) {
 
+
       this.animateMasculineGarments(this.masculineGarments[i]);
       this.hoverGarments(this.masculineGarments[i]);
       this.dragGarments(this.masculineGarments[i]);
@@ -294,7 +326,15 @@ class ChangingRoom {
     }
   }
 
+  breakGame() {
+    if (!this.microaggressions.firstWasPlayed) {
+      this.playFirstMicroaggression();
+    }
+  }
 
+  playFirstMicroaggression() {
+    currentState = new FirstMicroAggression();
+  }
 
   mousePressed() {}
 
