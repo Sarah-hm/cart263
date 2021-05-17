@@ -21,7 +21,7 @@ class InTheChangingRoom extends Dialog {
       fadeOut: false
     }
 
-    //Set changing room to opened because we are, in fact, in the changing room.
+    //Set changing room to opened because we are, in fact, in the changing room. (to allow draw() on ChangingRoom)
     this.changingRoomOpened = true;
   }
 

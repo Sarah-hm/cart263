@@ -116,8 +116,10 @@ function setup() {
   createCanvas(defaultParameters.canvasWidth, defaultParameters.canvasHeight);
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
-  currentState = new InTheChangingRoom(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, InTheChangingRoom
+
   currentChangingRoom = new MaleChangingRoom(); //Can be FemaleChangingRoom, MaleChangingRoom or ChangingRoom (with no avatar or appropriate clothes assigned)
+  currentState = new InTheChangingRoom(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, InTheChangingRoom
+
 }
 
 
@@ -125,10 +127,11 @@ function setup() {
 Description of draw()
 */
 function draw() {
-  currentState.update();
   if (currentState.changingRoomOpened === true) {
     currentChangingRoom.update();
   }
+  currentState.update();
+
 }
 
 function mousePressed() {

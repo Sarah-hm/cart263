@@ -25,6 +25,11 @@ class FirstMicroAggression extends Dialog {
       fadeOut: true
     }
 
+    //redefine text size because answers are too long for default size
+    this.dialogBox.answerButton.textSize = 12;
+
+    //Set changing room to opened to allow draw() on ChangingRoom in script.js
+    this.changingRoomOpened = true;
   }
 
   update() {
@@ -33,11 +38,13 @@ class FirstMicroAggression extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
-    currentState = new intermission();
+    currentChangingRoom.microaggressions.firstWasPlayed = true; //turn to true so it only plays once;
+    currentState = new InTheChangingRoom();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
-    currentState = new intermission();
+    currentChangingRoom.microaggressions.firstWasPlayed = true; //turn to true so it only plays once;
+    currentState = new InTheChangingRoom();
   }
 }

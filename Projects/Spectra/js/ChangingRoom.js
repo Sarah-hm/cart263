@@ -120,11 +120,13 @@ class ChangingRoom {
     //Declare if those microaggressions were already played, will be turned true whenever they are played.
     this.microaggressions = {
       firstWasPlayed: false,
-      secondtWasPlayed: false,
+      secondWasPlayed: false,
       thirdWasPlayed: false,
       fourthWasPlayed: false,
       fifthWasPlayed: false,
     }
+
+    this.brokenGame = false //Define if the game has just been broken by the use of innapropriate gendered clothing
 
   }
 
@@ -170,6 +172,7 @@ class ChangingRoom {
 
   initializeGarments() {
     if (this.clothes.created === false) {
+
       for (let i = 0; i < this.masculineClothings.length; i++) {
         this.masculineGarments[i] = this.createGarment(random(this.masculineSection.borderLeft, this.masculineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.masculineClothings[i].img, this.masculineClothings[i].width, this.masculineClothings[i].height, this.masculineClothings[i].gender)
       }
@@ -270,6 +273,7 @@ class ChangingRoom {
       //If the appropriate clothing defined in child class is feminine and player is using a opposite gender garment, the game breaks further
       if (this.appropriateClothingChoice === "feminine") {
         if (garment.gender === "masculine") {
+          garment.onAvatar = false; //make the garment not be able to stick to the avatar, will go back to its section
           this.breakGame();
         }
       }
@@ -277,6 +281,7 @@ class ChangingRoom {
       //If the appropriate clothing defined in child class is masculine and player is using a opposite gender garment, the game breaks further
       if (this.appropriateClothingChoice === "masculine") {
         if (garment.gender === "feminine") {
+          garment.onAvatar = false; //make the garment not be able to stick to the avatar, will go back to its section
           this.breakGame();
         }
       }
@@ -327,13 +332,53 @@ class ChangingRoom {
   }
 
   breakGame() {
+
+    //If the first microaggression wasn't played, play it
     if (!this.microaggressions.firstWasPlayed) {
       this.playFirstMicroaggression();
     }
+    //If the second microaggression wasn't played, play it and turn 'wasPlayed' to true to only play it once;
+    else if (!this.microaggressions.secondWasPlayed) {
+      this.playSecondMicroaggression();
+    }
+    //If the third microaggression wasn't played, play it and turn 'wasPlayed' to true to only play it once;
+    else if (!this.microaggressions.thirdWasPlayed) {
+      this.playThirdMicroaggression();
+    }
+    //If the fourth microaggression wasn't played, play it and turn 'wasPlayed' to true to only play it once;
+    else if (!this.microaggressions.fourthWasPlayed) {
+      this.playFourthMicroaggression();
+    }
+    //If the fifth microaggression wasn't played, play it and turn 'wasPlayed' to true to only play it once;
+    else if (!this.microaggressions.fifthWasPlayed) {
+      this.playFifthMicroaggression();
+    }
   }
 
+  //Turn currentState to first microaggression to play the scene;
   playFirstMicroaggression() {
+    // this.microaggressions.firstWasPlayed = true;
     currentState = new FirstMicroAggression();
+  }
+
+  //Turn currentState to second microaggression to play the scene;
+  playSecondMicroaggression() {
+    currentState = new SecondMicroAggression();
+  }
+
+  //Turn currentState to third microaggression to play the scene;
+  playThirdMicroaggression() {
+    currentState = new ThirdMicroAggression();
+  }
+
+  //Turn currentState to fourth microaggression to play the scene;
+  playFourthMicroaggression() {
+    currentState = new FourthMicroAggression();
+  }
+
+  //Turn currentState to fifth microaggression to play the scene;
+  playFifthMicroaggression() {
+    currentState = new FifthMicroAggression();
   }
 
   mousePressed() {}
