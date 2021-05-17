@@ -4,10 +4,6 @@ class ChangingRoom {
     this.background = {
       img: changingRoomBackgroundImg,
       imageMode: CORNER,
-      filter: {
-        mode: POSTERIZE,
-        threshold: 3
-      },
       size: {
         width: width,
         height: height
@@ -97,6 +93,7 @@ class ChangingRoom {
     }
 
 
+
     this.masculineSection = {
         borderRight: width - 50,
         borderLeft: width / 5 * 3 + 50,
@@ -130,7 +127,17 @@ class ChangingRoom {
       fifthWasPlayed: false,
     }
 
+    // ==== All broken game variables ====
     this.brokenGame = false //Define if the game has just been broken by the use of innapropriate gendered clothing
+
+    //filter
+    this.filter = {
+      mode: POSTERIZE, //set filter mode to posterize because it's cool but I couldn't explain how it works.
+      threshold: 3, //threshold of colors for filter mode
+      on: false, //Originally set to false; is set to true when filter is triggered to be able to turn it off and to only display it once at a time
+      triggerThreshold: 0.01, //Chances of filter being toggled in the setFilter method
+      timeApplied: 1000 // Defines how much time the filter will be applied; default set to 1000
+    }
 
   }
 
@@ -141,9 +148,24 @@ class ChangingRoom {
     this.executeGarments();
     this.setFilter();
   }
+
   setFilter() {
-    filter(this.background.filter.mode, this.background.filter.threshold)
+
+    let changeFilter = random(); // let changeFilter be a random number between 0 and 1
+
+    if (changeFilter < this.filter.triggerThreshold) { //Process only if the random changeFilter is smaller than the established threshold
+      if (!this.filter.on) {
+        this.filter.on = true //turn filter on and setTimeout to turn it off in 1000 milliseconds
+        setTimeout(() => {
+          this.filter.on = false
+        }, this.filter.timeApplied)
+      }
+    }
+    if (this.filter.on) { // If filter is on, apply filter
+      filter(this.filter.mode, this.filter.threshold)
+    }
   }
+
 
   setBackground() {
     push();

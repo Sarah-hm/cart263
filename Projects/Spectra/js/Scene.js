@@ -9,6 +9,9 @@ class Scene {
     this.feminineSectionChosen = false; //Turned true if player chosen feminine section
     this.masculineSectionChosen = false; //Turned true if player chosen masculine section
 
+
+
+
   }
 
   update() {
