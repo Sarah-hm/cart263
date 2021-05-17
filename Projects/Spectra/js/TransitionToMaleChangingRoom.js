@@ -1,4 +1,4 @@
-class TransitionToFemaleChangingRoom extends Scene {
+class TransitionToMaleChangingRoom extends Scene {
   constructor() {
     super();
     //variables of all intro frames before dialog box
@@ -54,7 +54,7 @@ class TransitionToFemaleChangingRoom extends Scene {
     //If changing room hasn't already been opened, open it and turn it to true so it only does it once
     if (!changingRoomOpened) {
       changingRoomOpened = true;
-      currentChangingRoom = new FemaleChangingRoom();
+      currentChangingRoom = new MaleChangingRoom();
     }
   }
 

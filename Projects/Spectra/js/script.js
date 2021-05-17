@@ -35,6 +35,12 @@ let lcdFont = undefined;
 //declare basic scene variables;
 let backgroundMusic = undefined;
 
+//start page Variables
+let startMallImg = undefined;
+let startLogoImg0 = undefined;
+let startLogoImg1 = undefined;
+let startLogoImg2 = undefined;
+
 // intro scene variables
 let mallEscalatorsImg = undefined;
 let mallMezzanineImg = undefined;
@@ -85,6 +91,12 @@ function preload() {
   //basic scene (background music)
   backgroundMusic = loadSound(`assets/sounds/sonatePacifique_Limperatrice.mp3`)
 
+  //Start Page images;
+  startMallImg = loadImage(`assets/images/startMallImg.png`);
+  startLogoImg0 = loadImage(`assets/images/StartLogoImgs/0.png`);
+  startLogoImg1 = loadImage(`assets/images/StartLogoImgs/1.png`);
+  startLogoImg2 = loadImage(`assets/images/StartLogoImgs/2.png`);
+
   //intro imgs
   mallEscalatorsImg = loadImage(`assets/images/mallEscalators.png`);
   mallMezzanineImg = loadImage(`assets/images/mallMezzanineView.png`);
@@ -126,7 +138,7 @@ function setup() {
 
 
   currentChangingRoom = new ChangingRoom(); //Can be FemaleChangingRoom (with female avatar and feminine appropriate clothes), MaleChangingRoom (with male avatar and masculine apporpriate clothes) or ChangingRoom (with no avatar or appropriate clothes assigned yet)
-  currentState = new ChoosingSection(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
+  currentState = new StartPage(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
 
 }
 
