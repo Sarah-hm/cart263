@@ -1,3 +1,13 @@
+/**
+Super class of female and male changing room.
+Displays avatar and background as well as two section of clothings (masculine on the right, feminine on the left)
+Clothes are constrain to their section if they are not being dragged by the player or on the avatar and wiggle randomly
+
+Clothes can be hovered over, dragged and put on the avatar for different effects to be toggled (changing of size ratio, position based on mouseX and mouseY, stays on avatar, etc)
+
+Clothes from the 'inappropriate' gender cannot be on the avatar and will return to their section and trigger and microaggression dialog scenes
+and trigger a higher brokenness level that create glitches and filters and appearance that the game is broken.
+*/
 class ChangingRoom {
   constructor() {
     //variables to define the background as an image

@@ -1,3 +1,13 @@
+/**
+Parent class of all scenes.
+When toggled to true in the child class, this class can:
+-Display a background image and/or;
+-Display a dialog box a text and title and/or;
+-Display buttons to answer the dialog box and/or;
+-Display a speaker to communicate with the player and/or;
+-Fade in all objects that were toggled true at the beginning of the scene and/or;
+-Fade out all objects that were toggled true at the end of the scene
+*/
 class Dialog extends Scene {
   constructor() {
     super();
