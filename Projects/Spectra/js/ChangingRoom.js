@@ -13,6 +13,7 @@ class ChangingRoom {
     //variables to define the background as an image
     this.background = {
       img: changingRoomBackgroundImg,
+      distortedImg: distortedChangingRoomBackgroundImg,
       imageMode: CORNER,
       size: {
         width: width,
@@ -154,6 +155,10 @@ class ChangingRoom {
           triggerThreshold: 0.0, //chances of of triggering filter
           timeApplied: 0 //time the filter will be applied in millisecnds
         },
+        avatarFlicker: {
+          triggerThreshold: 0.0, //chances are of triggering flicker
+          timeApplied: 0 //time the other image will be applied in milliseconds
+        }
       },
       lvl2: {
         on: false,
@@ -161,6 +166,10 @@ class ChangingRoom {
           threshold: 255, //numbers of colors to average all colors to
           triggerThreshold: 0, //chances of of triggering filter
           timeApplied: 0 //time the filter will be applied in millisecnds
+        },
+        avatarFlicker: {
+          triggerThreshold: 0.0, //chances are of triggering flicker
+          timeApplied: 0 //time the other image will be applied in milliseconds
         }
       },
       lvl3: {
@@ -168,7 +177,11 @@ class ChangingRoom {
         filter: {
           threshold: 10, //numbers of colors to average all colors to
           triggerThreshold: 0.02, //chances of of triggering filter
-          timeApplied: 400 //time the filter will be applied in millisecnds
+          timeApplied: 200 //time the filter will be applied in millisecnds
+        },
+        avatarFlicker: {
+          triggerThreshold: 0.01, //chances are of triggering flicker
+          timeApplied: 100 //time the other image will be applied in milliseconds
         }
       },
       lvl4: {
@@ -177,6 +190,10 @@ class ChangingRoom {
           threshold: 4, //numbers of colors to average all colors to
           triggerThreshold: 0.04, //chances of of triggering filter
           timeApplied: 500 //time the filter will be applied in millisecnds
+        },
+        avatarFlicker: {
+          triggerThreshold: 0.1, //chances are of triggering flicker
+          timeApplied: 400 //time the other image will be applied in milliseconds
         }
       },
       lvl5: {
@@ -185,6 +202,10 @@ class ChangingRoom {
           threshold: 3, //numbers of colors to average all colors to
           triggerThreshold: 0.05, //chances of of triggering filter
           timeApplied: 700 //time the filter will be applied in millisecnds
+        },
+        avatarFlicker: {
+          triggerThreshold: 0.3, //chances are of triggering flicker
+          timeApplied: 200 //time the other image will be applied in milliseconds
         }
       },
     }
@@ -195,15 +216,19 @@ class ChangingRoom {
       threshold: 10, //threshold of colors for filter mode
       on: false, //Originally set to false; is set to true when filter is triggered to be able to turn it off and to only display it once at a time
       triggerThreshold: 0.01, //Chances of filter being toggled in the setFilter method
-      timeApplied: 500 // Defines how much time the filter will be applied; default set to 1000
+      timeApplied: 500 // Defines how much time the filter will be applied; default set to 500
     }
 
+    //avatar flicker between the other avatar when game starts breaking
+    this.avatarFlicker = {
+      threshold: undefined, //Defines the chances of having the flicker turn true, defined by the lvl of brokenness of the game
+      timeApplied: undefined //Defines how much time in milliseconds the image will be turned to the opposite avatar, defined by the lvl of brokenness of the game
+    }
   }
 
   //runs every frame
   update() {
     this.setBackground();
-    this.displayAvatar();
     this.initializeGarments();
     this.executeGarments();
     this.setFilter();
@@ -261,19 +286,101 @@ class ChangingRoom {
     }
   }
 
-  //Display background, with or without filter
+  //Display background, with or without filter with higher chances of flickering to a more distorted version of the background image the more the brokenness lvl increases
   setBackground() {
-    push();
-    imageMode(this.background.imageMode);
-    image(this.background.img, this.background.position.x, this.background.position.y, this.background.size.width, this.background.size.height);
-    pop();
+    //This will set the background to flicker at the same time as the avatar will when game is broken. Avatar setup is calculated here because this method runs first, then sends it to displayAvatar
+    if (this.brokenness.lvl1.on) //only process the entire thing if at least brokenness lvl1 is true;
+    {
+      this.avatarFlicker.triggerThreshold = this.brokenness.lvl1.avatarFlicker.triggerThreshold;
+      this.avatarFlicker.timeApplied = this.brokenness.lvl1.avatarFlicker.timeApplied;
+
+      if (this.brokenness.lvl2.on) //If brokenness lvl2 is true, overwrite the triggerThreshold and timeApplied values for those ones;
+      {
+        this.avatarFlicker.triggerThreshold = this.brokenness.lvl2.avatarFlicker.triggerThreshold;
+        this.avatarFlicker.timeApplied = this.brokenness.lvl2.avatarFlicker.timeApplied;
+      }
+      if (this.brokenness.lvl3.on) //If brokenness lvl3 is true, overwrite the triggerThreshold and timeApplied values for those ones;
+      {
+        this.avatarFlicker.triggerThreshold = this.brokenness.lvl3.avatarFlicker.triggerThreshold;
+        this.avatarFlicker.timeApplied = this.brokenness.lvl3.avatarFlicker.timeApplied;
+      }
+      if (this.brokenness.lvl4.on) //If brokenness lvl4 is true, overwrite the triggerThreshold and timeApplied values for those ones;
+      {
+        this.avatarFlicker.triggerThreshold = this.brokenness.lvl4.avatarFlicker.triggerThreshold;
+        this.avatarFlicker.timeApplied = this.brokenness.lvl4.avatarFlicker.timeApplied;
+      }
+      if (this.brokenness.lvl5.on) //If brokenness lvl5 is true, overwrite the triggerThreshold and timeApplied values for those ones;
+      {
+        this.avatarFlicker.triggerThreshold = this.brokenness.lvl5.avatarFlicker.triggerThreshold;
+        this.avatarFlicker.timeApplied = this.brokenness.lvl5.avatarFlicker.timeApplied;
+      }
+
+      let changeAvatar = random(); // let changeFilter be a random number between 0 and 1
+      if (changeAvatar < this.avatarFlicker.triggerThreshold) { //Process only if the random changeFilter is smaller than the established threshold
+        if (!this.avatarFlicker.on) {
+          this.avatarFlicker.on = true //turn filter on and setTimeout to turn it off in 1000 milliseconds
+          setTimeout(() => {
+            this.avatarFlicker.on = false
+          }, this.avatarFlicker.timeApplied)
+        }
+      }
+
+      let avatar = undefined // will be defined if the avatar flicker is on (opposite avatar) or not (initial avatar)
+
+      if (this.avatarFlicker.on) { // If filter is on, cahnge the avatar for the opposite one (if female avatar, change to male avatar)
+        this.background.img = this.background.distortedImg //Set the background image as its distorted version if the avatar flicker is on, making the avatar and background flicker at the same time
+        //If the appropriate clothes choice is feminine, make the avatar male
+        if (this.appropriateClothingChoice === "feminine") {
+          avatar = maleAvatarImg;
+        }
+        //If the appropriate clothes choice is masculine, make the avatar female
+        else if (this.appropriateClothingChoice === "masculine") {
+          avatar = femaleAvatarImg;
+        }
+      }
+      //If avatarFlicker is not on, make the avatar the original one for the chosen changing room (if female changing room, reset avatar to female)
+      else {
+        this.background.img = changingRoomBackgroundImg //If avatar Flicker is off, reset the background image to the initial changing ROom background Img.
+        //If appropriate clothes choice is feminine, reset the avatar to female
+        if (this.appropriateClothingChoice === "feminine") {
+          avatar = femaleAvatarImg;
+        }
+        //If appropriate clothes choice is masculine, reset the avatar to male
+        else if (this.appropriateClothingChoice === "masculine") {
+          avatar = maleAvatarImg;
+        }
+      }
+
+      //Display the background
+      push();
+      imageMode(this.background.imageMode);
+      image(this.background.img, this.background.position.x, this.background.position.y, this.background.size.width, this.background.size.height);
+      pop();
+
+      this.displayAvatar(avatar) //Go display the chosen avatar, defined by the presence or absence of flicker
+
+
+    }
+    //If brokenness lvl 1 is not triggered, just display the background as is and send appropriate avatar to be displayed
+    else {
+      let avatar = this.avatar.img // Define avatar as the initially given avatar by the child class
+
+      push();
+      imageMode(this.background.imageMode);
+      image(this.background.img, this.background.position.x, this.background.position.y, this.background.size.width, this.background.size.height);
+      pop();
+
+      this.displayAvatar(avatar) //Go display the initially given avatar in its method
+    }
   }
 
   //Display the avatar at the center of the canvas;
-  displayAvatar() {
+  displayAvatar(avatar) {
+
+    //Display the avatar
     push();
     imageMode(this.avatar.imageMode);
-    image(this.avatar.img, this.avatar.position.x, this.avatar.position.y, this.avatar.size.width, this.avatar.size.height);
+    image(avatar, this.avatar.position.x, this.avatar.position.y, this.avatar.size.width, this.avatar.size.height);
     pop();
   }
 
@@ -414,7 +521,7 @@ class ChangingRoom {
       if (this.appropriateClothingChoice === "feminine") {
         if (garment.gender === "masculine") {
           garment.onAvatar = false; //make the garment not be able to stick to the avatar, will go back to its section
-          this.brokenness.clothesDirectionChange.chances += this.brokenness.clothesDirectionChange.increase //Increase the chances of clothes changing direction when wiggling 
+          this.brokenness.clothesDirectionChange.chances += this.brokenness.clothesDirectionChange.increase //Increase the chances of clothes changing direction when wiggling
           this.breakGame();
         }
       }

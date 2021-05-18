@@ -66,6 +66,7 @@ let employeeFilterInvertedImg = undefined; //third filter of image of employee
 //Changing room variables
 let changingRoomOpened = false; //set to false until changing room are opened by customer (player) trying clothes on
 let changingRoomBackgroundImg = undefined; //background in the changing room scenes
+let distortedChangingRoomBackgroundImg = undefined; //distorted background in the changing room that flickers when game is broken
 let femaleAvatarImg = undefined; //female avatar image
 let maleAvatarImg = undefined //male avatar image
 
@@ -120,6 +121,7 @@ function preload() {
 
   //Changing room imgs
   changingRoomBackgroundImg = loadImage(`assets/images/changingRoomBackgroundImg.png`)
+  distortedChangingRoomBackgroundImg = loadImage(`assets/images/changingRoomBackgroundImgDistorted.png`)
   femaleAvatarImg = loadImage(`assets/images/femaleAvatar.png`)
   maleAvatarImg = loadImage(`assets/images/maleAvatar.png`)
 
