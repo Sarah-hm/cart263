@@ -119,8 +119,8 @@ class ChangingRoom {
     this.verticalBorder = 40;
 
     //Declare two arrays of clothings, masculine (displayed to the right) and feminine(displayed to the left)
-    this.masculineClothings = [this.clothes.utilityPants, this.clothes.tShirt, this.clothes.manShirt, this.clothes.parka, this.clothes.formalPants];
-    this.feminineClothings = [this.clothes.bodysuit, this.clothes.jeanSkirt, this.clothes.turtleNeck, this.clothes.overallDress, this.clothes.womanShirt];
+    this.masculineClothings = [this.clothes.formalPants, this.clothes.utilityPants, this.clothes.manShirt, this.clothes.tShirt, this.clothes.parka];
+    this.feminineClothings = [this.clothes.bodysuit, this.clothes.turtleNeck, this.clothes.womanShirt, this.clothes.jeanSkirt, this.clothes.overallDress, ];
 
     this.feminineGarments = []; //will be defined in the createGarment for() loop
     this.masculineGarments = [];

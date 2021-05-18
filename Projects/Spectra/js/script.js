@@ -43,7 +43,7 @@ let alienEncounterFont = undefined; //Title of dialogs
 let lcdFont = undefined; //text and buttons of dialogs
 
 //declare basic scene variables;
-let backgroundMusic = undefined; //L'imperatrice - Sonate Pacifique (Instrumental)
+let backgroundMusic = undefined; // by L'imperatrice - Vanille Fraise
 
 //Declare start page variables
 let startMallImg = undefined; //background of startPage scene
@@ -98,7 +98,7 @@ function preload() {
   lcdFont = loadFont(`assets/fonts/LCD-U___.TTF`)
 
   //basic scene (background music)
-  backgroundMusic = loadSound(`assets/sounds/sonatePacifique_Limperatrice.mp3`)
+  backgroundMusic = loadSound(`assets/sounds/VanilleFraise-Limperatrice.mp3`)
 
   //Start Page images;
   startMallImg = loadImage(`assets/images/startMallImg.png`);
@@ -154,7 +154,7 @@ function setup() {
   currentChangingRoom = new ChangingRoom(); //Can be FemaleChangingRoom (with female avatar and feminine appropriate clothes), MaleChangingRoom (with male avatar and masculine apporpriate clothes) or ChangingRoom (with no avatar or appropriate clothes assigned yet)
 
   //set CurrentState as StartPage to start at the beginning of the narrative
-  currentState = new IntroDialog(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
+  currentState = new StartPage(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
 
 }
 

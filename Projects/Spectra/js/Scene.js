@@ -20,6 +20,7 @@ class Scene {
   //Play music continuously throughout the scenes
   playMusic() {
     if (!this.backgroundMusic.sound.isPlaying()) {
+      console.log(`hello`)
       this.backgroundMusic.sound.setVolume(this.backgroundMusic.volume)
       this.backgroundMusic.sound.play()
     }
