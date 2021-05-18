@@ -143,13 +143,17 @@ class ChangingRoom {
 
     //Defines what level of 'brokenness' the game is currently at and all changing thresholds to increase brokenness
     this.brokenness = {
+      clothesDirectionChange: {
+        chances: 0.05, // There is a 5% initial chance that the garment will change direction
+        increase: 0.05 // //Everytime the game breaks, the chances of the direction changing increases by 5%
+      },
       lvl1: {
         on: false, // Turns true when a new microaggression is played
         filter: {
           threshold: 255, //numbers of colors to average all colors to
           triggerThreshold: 0.0, //chances of of triggering filter
           timeApplied: 0 //time the filter will be applied in millisecnds
-        }
+        },
       },
       lvl2: {
         on: false,
@@ -329,7 +333,7 @@ class ChangingRoom {
 
       //make garment change direction 5% of the time
       let change = random();
-      if (change < 0.05) {
+      if (change < this.brokenness.clothesDirectionChange.chances) {
         garment.vx = random(-garment.speed, garment.speed);
         garment.vy = random(-garment.speed, garment.speed);
       }
@@ -349,7 +353,7 @@ class ChangingRoom {
 
       //make garment change direction 5% of the time
       let change = random();
-      if (change < 0.05) {
+      if (change < this.brokenness.clothesDirectionChange.chances) {
         garment.vx = random(-garment.speed, garment.speed);
         garment.vy = random(-garment.speed, garment.speed);
       }
@@ -410,6 +414,7 @@ class ChangingRoom {
       if (this.appropriateClothingChoice === "feminine") {
         if (garment.gender === "masculine") {
           garment.onAvatar = false; //make the garment not be able to stick to the avatar, will go back to its section
+          this.brokenness.clothesDirectionChange.chances += this.brokenness.clothesDirectionChange.increase //Increase the chances of clothes changing direction when wiggling 
           this.breakGame();
         }
       }
@@ -418,6 +423,7 @@ class ChangingRoom {
       if (this.appropriateClothingChoice === "masculine") {
         if (garment.gender === "feminine") {
           garment.onAvatar = false; //make the garment not be able to stick to the avatar, will go back to its section
+          this.brokenness.clothesDirectionChange.chances += this.brokenness.clothesDirectionChange.increase //Increase the chances of clothes changing direction when wiggling
           this.breakGame();
         }
       }
