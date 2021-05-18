@@ -35,7 +35,7 @@ class SecondMicroAggression extends Dialog {
   }
 
   updateBrokenness() {
-    this.brokenness.lvl1.on = true; //Define brokenness level as the corresponding level of the current microaggression;
+    this.brokenness.lvl2.on = true; //Define brokenness level as the corresponding level of the current microaggression;
   }
 
   toggleButtonA() {

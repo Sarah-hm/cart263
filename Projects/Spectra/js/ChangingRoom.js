@@ -134,25 +134,25 @@ class ChangingRoom {
       lvl1: {
         on: false, // Turns true when a new microaggression is played
         filter: {
-          threshold: 10,
-          triggerThreshold: 0.01,
-          timeApplied: 300
+          threshold: 255,
+          triggerThreshold: 0.0,
+          timeApplied: 0
         }
       },
       lvl2: {
         on: false,
         filter: {
-          threshold: 8,
-          triggerThreshold: 0.02,
-          timeApplied: 400
+          threshold: 255,
+          triggerThreshold: 0,
+          timeApplied: 0
         }
       },
       lvl3: {
         on: false,
         filter: {
-          threshold: 6,
-          triggerThreshold: 0.03,
-          timeApplied: 500
+          threshold: 10,
+          triggerThreshold: 0.02,
+          timeApplied: 400
         }
       },
       lvl4: {

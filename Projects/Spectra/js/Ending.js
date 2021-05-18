@@ -48,11 +48,11 @@ class Ending extends Dialog {
 
   toggleButtonA() {
     super.toggleButtonA();
-    currentState = new Intro();
+    currentState = new StartPage();
   }
 
   toggleButtonB() {
     super.toggleButtonB();
-    currentState = new Intro();
+    currentState = new StartPage();
   }
 }

@@ -52,8 +52,8 @@ class TransitionToMaleChangingRoom extends Scene {
 
   displayChangingRoom() {
     //If changing room hasn't already been opened, open it and turn it to true so it only does it once
-    if (!changingRoomOpened) {
-      changingRoomOpened = true;
+    if (!this.changingRoomOpened) {
+      this.changingRoomOpened = true;
       currentChangingRoom = new MaleChangingRoom();
     }
   }
@@ -72,8 +72,6 @@ class TransitionToMaleChangingRoom extends Scene {
       //Make the image bigger in width and height with a ratio of 11:6
       this.frames.firstFrame.size.width += this.frames.firstFrame.resizeValue.width;
       this.frames.firstFrame.size.height += this.frames.firstFrame.resizeValue.height;
-      //Make the image move slightly to the right
-      this.frames.firstFrame.position.x += this.frames.firstFrame.offset
 
       //tint map: as the image gets bigger, the more transparent the image will become (until 0)
       //Set the inherited variable of the alpha map as the current size (using width) of the image
