@@ -1,6 +1,16 @@
+/**
+This dialog introduces Sandra, the costumer service employee at the clothing store.
+
+She is made to look superficially nice and give out very generic salutations and reactions.
+
+She's the cumulation of all the insidious comments and ideologies I intereacted with since I have been working and studying in the fashion industry
+*/
 class IntroEmployee extends Dialog {
   constructor() {
+    //Declare all super constructor variables
     super();
+
+    //Declare background image variables
     this.backgroundImg = {
       img: insideStoreImg,
       size: {
@@ -13,13 +23,13 @@ class IntroEmployee extends Dialog {
       },
     }
 
-    //defines the title as 'welcome'
+    //defines the title from JSON file
     this.dialogBox.titleBox.string = dialogsData.dialogues.introEmployee.title
 
-    //Defines the text/question
+    //Defines the text/question from JSON file
     this.dialogBox.textBox.string = dialogsData.dialogues.introEmployee.question
 
-    //defines the answer choices
+    //defines the answer choices from JSON file
     // answer 'a'
     this.dialogBox.answerButton.a.string = dialogsData.dialogues.introEmployee.answers[0]
 
@@ -38,15 +48,18 @@ class IntroEmployee extends Dialog {
     }
   }
 
+  //Runs every frame
   update() {
-    super.update();
+    super.update(); //Runs the super class update() method
   }
 
+  //Declare where button A should lead
   toggleButtonA() {
     super.toggleButtonA();
     currentState = new ChoosingSection();
   }
 
+  //Declare where button B should lead
   toggleButtonB() {
     super.toggleButtonB();
     currentState = new ChoosingSection();

@@ -1,6 +1,12 @@
+/**
+First scene:
+A 'start' logo appears at the center of the screen where you can click to make it sashay away and lead to the start of the game (animation first)
+*/
 class StartPage extends Scene {
   constructor() {
+    //Declare all super constructor variables
     super();
+    //Declare background image variable
     this.background = {
       img: mallEscalatorsImg,
       imageMode: CENTER,
@@ -14,6 +20,8 @@ class StartPage extends Scene {
       },
     }
 
+    //====First frame =====
+    //First picture over looking the inside of a mall; the alpha decreases when the start logo starts closing
     this.firstFrame = {
       img: startMallImg,
       imageMode: CENTER,
@@ -40,6 +48,7 @@ class StartPage extends Scene {
       },
     }
 
+    //Start logo variables
     this.startLogo = {
       img: startLogoImg0, //image the logo is going to start by displaying
       possibleImgs: [startLogoImg0, startLogoImg1, startLogoImg2], //all possible images to logo might be displaying;
@@ -52,14 +61,17 @@ class StartPage extends Scene {
         x: width / 2,
         y: height / 2
       },
+      //initial size
       size: {
         width: 5,
         height: undefined // defined in the displayStartLogo method with a ratio of 3:4 of the width value
       },
+      //maximum size when opening
       maxSize: {
         width: width,
         height: height
       },
+      //minimum size when closing
       minSize: {
         width: 5,
         height: 0
@@ -74,9 +86,10 @@ class StartPage extends Scene {
     }
   }
 
+  //runs every frame
   update() {
-    super.update();
-    this.setBackground();
+    super.update(); //Runs the super class update() method
+    this.setBackground(); //sets the background Image
     this.setFirstFrame();
     this.animateStartLogo();
     this.closeStartLogo();
@@ -84,6 +97,7 @@ class StartPage extends Scene {
 
   }
 
+  //Display background image
   setBackground() {
     push();
     imageMode(this.background.imageMode)
@@ -91,8 +105,8 @@ class StartPage extends Scene {
     pop();
   }
 
+  //Display the image of the inside of the mall at the foreground on the entire canvas
   setFirstFrame() {
-
     if (this.startLogo.closing) //only process if the startLogo is closing
     { //tint map: as the start logo zooms out, the more transparent the first frame will become (until 0)
       //Set the inherited variable of the alpha map as the size (width) of the logo
@@ -107,6 +121,7 @@ class StartPage extends Scene {
       );
     }
 
+    //display the image
     push();
     imageMode(this.firstFrame.imageMode);
     tint(this.firstFrame.tint.gray, this.firstFrame.tint.alpha);
@@ -114,6 +129,7 @@ class StartPage extends Scene {
     pop();
   }
 
+  //animate start logo to get bigger if opening; rotate if closing
   animateStartLogo() {
     if (this.startLogo.opening) //only process if the startLogo is opening
     {
@@ -127,6 +143,7 @@ class StartPage extends Scene {
     }
   }
 
+  //If start logo is closing, make it small until it reaches its minimum width and then change current State to intro
   closeStartLogo() {
     if (this.startLogo.closing) //only process if the startLogo should be closing
     {
@@ -145,6 +162,7 @@ class StartPage extends Scene {
     }
   }
 
+  //randomly display one of the three Startlogo image every flickerSpeed amount of frame to give a neon light like effect
   displayStartLogo() {
     //Changes between three images of title every FlickerSpeed
     if (frameCount % this.startLogo.flickerSpeed === 0) {
@@ -161,7 +179,7 @@ class StartPage extends Scene {
     pop();
   }
 
-
+  //if mouse is pressed when startLogo's size is its maximum size, then start closing the logo (to lead to new state)
   mousePressed() {
     super.mousePressed();
     if (this.startLogo.size.width >= this.startLogo.maxSize.width) {

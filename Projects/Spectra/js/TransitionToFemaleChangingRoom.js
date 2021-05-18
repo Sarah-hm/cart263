@@ -1,5 +1,11 @@
+/**
+Mini subclass of transitional animation towards changing room.
+
+ChoosingSection.js's background becomes slowly less opaque and shows the female changing room is the background
+*/
 class TransitionToFemaleChangingRoom extends Scene {
   constructor() {
+    //Declare all super constructor variables
     super();
     //variables of all intro frames before dialog box
     this.frames = {
@@ -32,21 +38,22 @@ class TransitionToFemaleChangingRoom extends Scene {
           inheritedVariable: undefined, //defined in the animate and display method; mapped on maximum
           minInheritedValue: 800, //mininmum width of image
           maxInheritedValue: 1500, //maximum width of image
-          minMappedValue: 255,
-          maxMappedValue: 0,
+          minMappedValue: 255, //initial alpha is 255
+          maxMappedValue: 0, //final alpha is 0
         },
       },
     }
   }
 
+  //runs every frame
   update() {
-    super.update();
+    super.update(); //Runs the super class update() method
 
-    this.displayChangingRoom();
+    this.displayChangingRoom(); //display the appropriate changing room in the background
 
-    this.animateAndDisplayFirstFrame();
+    this.animateAndDisplayFirstFrame(); //animate and display the inside of the store
 
-    this.checkIfAnimationsCompleted();
+    this.checkIfAnimationsCompleted(); //check if animation is completed; if so, change so next scene
 
   }
 
@@ -88,10 +95,12 @@ class TransitionToFemaleChangingRoom extends Scene {
       //Display the inside Store img with a mode, a tint, an image, a position and a size
       push();
       imageMode(CENTER);
+      //set tint (more specifically alpha)
       tint(
         this.frames.firstFrame.tint.gray,
         this.frames.firstFrame.tint.alpha
       );
+      //display image
       image(
         this.frames.firstFrame.img,
         this.frames.firstFrame.position.x,

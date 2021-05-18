@@ -1,5 +1,13 @@
+/**
+1st scene:
+three images of a mall animate as an introduction to the first dialog of the game
+the first frame's animation speed is mapped to mouseX's position (the more to the right, the faster the animation);
+the second and third have 'static' (non interactive) animations
+Goes to the second scene when all animations are done
+ */
 class Intro extends Scene {
   constructor() {
+    //Declare all super constructor variables
     super();
     //variables of all intro frames before dialog box
     this.introImgs = {
@@ -20,13 +28,13 @@ class Intro extends Scene {
           y: height / 2,
         },
         animationSpeed: undefined, //will be defined in the map() with user input
-        //Speed of animation is mapped on user Mouse X position, from really slowly to fast-ish
+        //Speed of animation is mapped on user Mouse X position(within the canvas' frame), from really slowly to fast-ish
         animationMapping: {
-          inheritedVariable: undefined,
-          minInheritedValue: 0,
-          maxInheritedValue: width,
-          minMappedValue: 1,
-          maxMappedValue: 7,
+          inheritedVariable: undefined, //defined in the animation method as the mouseX position
+          minInheritedValue: 0, //minimum of the left side of the canvas
+          maxInheritedValue: width, //maximum of the right side of the canvas
+          minMappedValue: 1, //really slowly animation speed
+          maxMappedValue: 7, //fast-ish animation speed
         },
         //Opacity
         tint: {
@@ -35,11 +43,11 @@ class Intro extends Scene {
         },
         //Opacity mapped by position X changing, until it reaches landing position, therefore 0 opacity
         tintMapping: {
-          inheritedVariable: undefined,
-          minInheritedValue: width,
-          maxInheritedValue: 0,
-          minMappedValue: 255,
-          maxMappedValue: 0,
+          inheritedVariable: undefined, //defined in the animation method as the positionX of image
+          minInheritedValue: width, //postionX's maximum position is at the far right of the canvas
+          maxInheritedValue: 0, //positionX's minimum position is at the far left of the canvas
+          minMappedValue: 255, //maximum alpha image can have is 255
+          maxMappedValue: 0, //minimum alpha image can have is 0
         },
       },
       //SECOND FRAME: overlooking mall goes from top left corner to bottom right and zooms while disappearing
@@ -52,11 +60,11 @@ class Intro extends Scene {
         //the value that will be added per frame when zoom in starts
         resizeValue: {
           width: 13,
-          height: undefined,
+          height: undefined, //defined in the animate method with a ratio of 3:4 to the resizeValue.width
         },
         //mininmum and maximum sizes for mapping and to trigger third frame
-        minSize: 1600,
-        maxSize: 3000,
+        minSize: 1600, //minimum width size
+        maxSize: 3000, //maximum width size
         position: {
           x: width,
           y: height,
@@ -66,24 +74,23 @@ class Intro extends Scene {
           x: 0,
           y: 0,
         },
-        //Where and how fast the animate goes
+        //Where and how fast the animation goes
         animationSpeed: {
           x: -5,
-          y: undefined,
+          y: undefined, //defined in the animate method with a ratio of 3:4 to the animationSpeed.width
         },
         //Opacity
         tint: {
           gray: 255,
-          alpha: undefined,
+          alpha: undefined, //defined in the map calculation in the display method
         },
         //Opacity mapped by zoom effect. More zoom in, the lesser opacity until 0.
         tintMapping: {
-          inheritedVariable: undefined,
-          //minimum and maximum width the image can have
-          minInheritedValue: 1600,
-          maxInheritedValue: 3000,
-          minMappedValue: 255,
-          maxMappedValue: 0,
+          inheritedVariable: undefined, //defined in the animate method as the size (width) of the frame
+          minInheritedValue: 1600, //mininmum width the image can have
+          maxInheritedValue: 3000, //maximum width the image can have
+          minMappedValue: 255, //maximum alpha frame can have is 255
+          maxMappedValue: 0, // minimum alpha frame can have is 0
         },
       },
       //THIRD FRAME : store front goes left to right while gaining opacity
@@ -110,30 +117,26 @@ class Intro extends Scene {
         },
         //Opacity mapped by position X untiol it reaches landing position, therefore 255 opacity
         tintMapping: {
-          inheritedVariable: undefined,
-          //from original X position to landing X position
-          minInheritedValue: -550,
-          maxInheritedValue: 500,
-          //from 0 to full opacity
-          minMappedValue: 0,
-          maxMappedValue: 255,
+          inheritedVariable: undefined, //defined in the animate method as the frame's X position
+          minInheritedValue: -550, //original X position
+          maxInheritedValue: 500, //landing X position
+          minMappedValue: 0, //mininmum and initial alpha level is 0
+          maxMappedValue: 255, //maximum and ending alpha level is 255
         }
       }
     };
-    this.introDialog = {
-
-    }
   }
 
   update() {
     super.update();
 
     //Animate first pictures of the mall with interactive animation speed based on mouse position
-    //(in decreasing order because I want want them to appear one behind one another)
+    //(in decreasing order to appear one behind the other)
     this.animateAndDisplayThirdFrame();
     this.animateAndDisplaySecondFrame();
     this.animateAndDisplayFirstFrame();
 
+    //Check if animation is completed. If so, go to next scene;
     this.checkIfAnimationsCompleted();
 
   }
@@ -296,6 +299,7 @@ class Intro extends Scene {
   }
 
   checkIfAnimationsCompleted() {
+    //if third frame's position is on its landing position, all the animations are completed and currentState should switch to IntroDialog (first dialog)
     if (this.introImgs.thirdFrame.position.x === this.introImgs.thirdFrame.landingPosition.x) {
       currentState = new IntroDialog();
     }

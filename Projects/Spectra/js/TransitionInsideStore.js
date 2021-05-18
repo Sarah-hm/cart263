@@ -1,5 +1,6 @@
 class TransitionInsideStore extends Scene {
   constructor() {
+    //Declare all super constructor variables
     super();
     //variables of all intro frames before dialog box
     this.frames = {
@@ -29,11 +30,11 @@ class TransitionInsideStore extends Scene {
         },
         //Opacity mapped by position X changing, until it reaches landing position, therefore 0 opacity
         tintMapping: {
-          inheritedVariable: undefined, //defined in the animate and display method; mapped on maximum
-          minInheritedValue: 1100,
-          maxInheritedValue: 2200,
-          minMappedValue: 255,
-          maxMappedValue: 0,
+          inheritedVariable: undefined, //defined in the animate and display method as image's X position
+          minInheritedValue: 1100, //initial X position of frame
+          maxInheritedValue: 2200, //final (landing) X position of frame
+          minMappedValue: 255, //maximum alpha of frame is 255
+          maxMappedValue: 0, //mininmum alpha of frame is 0
         },
       },
       //SECOND FRAME: Inside Store
@@ -59,12 +60,11 @@ class TransitionInsideStore extends Scene {
         },
         //Opacity mapped by zoom effect. More zoom in, the lesser opacity until 0.
         tintMapping: {
-          inheritedVariable: undefined,
-          //minimum and maximum width the image can have
-          minInheritedValue: 1600,
-          maxInheritedValue: 3000,
-          minMappedValue: 255,
-          maxMappedValue: 0,
+          inheritedVariable: undefined, //Defined in the animate method as the size of the frame
+          minInheritedValue: 1600, //initial size (width of image) is 1600
+          maxInheritedValue: 3000, //Maximum size(width of image) is 3000
+          minMappedValue: 255, //initial alpha of frame is 255
+          maxMappedValue: 0, // final alpha of frame is 0
         },
       },
     }
@@ -78,6 +78,7 @@ class TransitionInsideStore extends Scene {
     this.animateAndDisplaySecondFrame();
     this.animateAndDisplayFirstFrame();
 
+    //Check if animation is completed. If so, go to next scene;
     this.checkIfAnimationsCompleted();
 
   }
@@ -114,10 +115,12 @@ class TransitionInsideStore extends Scene {
       //Display first frame of the top of an escalator
       push();
       imageMode(CENTER);
+      //Set the tint (especially the alpha) of the frame
       tint(
         this.frames.firstFrame.tint.gray,
         this.frames.firstFrame.tint.alpha
       );
+      //display the image
       image(
         this.frames.firstFrame.img,
         this.frames.firstFrame.position.x,
@@ -134,6 +137,7 @@ class TransitionInsideStore extends Scene {
 
     push();
     imageMode(CENTER);
+    //display the image
     image(
       this.frames.secondFrame.img,
       this.frames.secondFrame.position.x,
@@ -146,6 +150,7 @@ class TransitionInsideStore extends Scene {
 
 
   checkIfAnimationsCompleted() {
+    //If the first frame's size (in width) has reached its maximum resize Value, the animation is completed and currentState should become IntroEmployee
     if (this.frames.firstFrame.size.width === this.frames.firstFrame.resizeValue.maximum) {
       currentState = new IntroEmployee();
     }

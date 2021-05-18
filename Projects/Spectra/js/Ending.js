@@ -1,6 +1,12 @@
+/**
+Last scene:
+Tells the player they have broken the game and hence the entire fashion industry has crumbled to the ground and must be rebuilt on better grounds, yay
+*/
 class Ending extends Dialog {
   constructor() {
+    //Declare all super constructor variables
     super();
+    //Declare background image variable
     this.backgroundImg = {
       img: changingRoomBackgroundImg,
       size: {

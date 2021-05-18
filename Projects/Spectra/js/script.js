@@ -2,12 +2,24 @@
 Spectra
 By Sarah Hontoy-Major
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+This is a dress up game with several dialog boxes. It brings the player through different scenes of a mall and inside a clothing store where they will
+be faced with microaggressions and assumptions of gender based on unrelated questions from the customer service employee (Sandra's character is based on an actual person,
+and I did in fact use her real name. Here's to hoping she didn't learn how to code and is not seeing this now).
+
+When in the changing room, the player will have an assumed gendered avatar and will be forced to dress it with appropriate clothings, so as to not break the game.
+The more the player continues to choose the 'wrong' pieces of clothings to dress their avatar with, to more broken the game will become, until it will eventually
+break completely and the player will not be able to play anymore(will be forced to restart).
+
+This is meant to portray and critique the binary dichotomy that the fashion industry is trying to impose on its customers. A lot of people are being imposed gendered clothings to
+dress with based on their body type, biological sex and/or gender assigned at birth. It can make it unbearable for some to choose how to dress everyday.
+
+Dressing up should be as fun as a game; exactly like the ones I used to play and that I inspired myself with for this project. Instead, for some, it's just another piece of
+the challenge that is going through life trying to be your most authentic self.
 */
 
 "use strict";
 
+//Declare default variables for canvas size and base background
 let defaultParameters = {
   canvasWidth: 800,
   canvasHeight: 600,
@@ -18,46 +30,44 @@ let defaultParameters = {
   }
 }
 
-let currentState = undefined // scenes can be: Intro, Intro Dialog, Intro Employee, Choosing Section
-let currentChangingRoom = undefined // changing rooms can be femaleChangingRoom or maleChangingRoom, both child classes of ChangingRoom
+//Declare variable for the two different state objects that will be found in the game.
 
-//load dialog scripts via JSON
-let dialogsData = undefined;
+let currentState = undefined // Runs all the time, states or scenes can be: Intro, Intro Dialog, Intro Employee, Choosing Section
+let currentChangingRoom = undefined // Runs from the state of 'InTransitionToChangingRoom'. changing rooms can be femaleChangingRoom or maleChangingRoom, both child classes of ChangingRoom
 
-//All fonts
-let alienEncounterFont = undefined;
-let atkinsonBold = undefined;
-let atkinsonBoldItalic = undefined;
-let atkinsonItalic = undefined;
-let atkinsonRegular = undefined;
-let lcdFont = undefined;
+//Declare JSON files
+let dialogsData = undefined; //dialogs for all communication with the game
+
+//Declare fonts
+let alienEncounterFont = undefined; //Title of dialogs
+let lcdFont = undefined; //text and buttons of dialogs
 
 //declare basic scene variables;
-let backgroundMusic = undefined;
+let backgroundMusic = undefined; //L'imperatrice - Sonate Pacifique (Instrumental)
 
-//start page Variables
-let startMallImg = undefined;
-let startLogoImg0 = undefined;
+//Declare start page variables
+let startMallImg = undefined; //background of startPage scene
+let startLogoImg0 = undefined; //flickering start Logo on startPage
 let startLogoImg1 = undefined;
 let startLogoImg2 = undefined;
 
 //Mall images variables
-let mallEscalatorsImg = undefined;
-let mallMezzanineImg = undefined;
-let mallStoreFrontImg = undefined;
-let insideStoreImg = undefined;
+let mallEscalatorsImg = undefined; //first frame of transition in the game
+let mallMezzanineImg = undefined; //second frame of transition in the game
+let mallStoreFrontImg = undefined; //third frame of transition in the game
+let insideStoreImg = undefined; //background of scenes inside the store
 
 //Employee (speaker) related variables
-let employeeImg = undefined;
-let employeeFilterOriginalImg = undefined;
-let employeeFilterNeonImg = undefined;
-let employeeFilterInvertedImg = undefined;
+let employeeImg = undefined; //image of employee
+let employeeFilterOriginalImg = undefined; //first filter of image of employee
+let employeeFilterNeonImg = undefined; //second filter of image of employee
+let employeeFilterInvertedImg = undefined; //third filter of image of employee
 
 //Changing room variables
 let changingRoomOpened = false; //set to false until changing room are opened by customer (player) trying clothes on
-let changingRoomBackgroundImg = undefined;
-let femaleAvatarImg = undefined;
-let maleAvatarImg = undefined;
+let changingRoomBackgroundImg = undefined; //background in the changing room scenes
+let femaleAvatarImg = undefined; //female avatar image
+let maleAvatarImg = undefined //male avatar image
 
 //Declare all the clothes
 //feminine wardrobe
@@ -85,10 +95,6 @@ function preload() {
 
   //all fonts
   alienEncounterFont = loadFont(`assets/fonts/SFAlienEncounters.ttf`);
-  atkinsonBold = loadFont(`assets/fonts/Atkinson-Hyperlegible-Bold-102.ttf`);
-  atkinsonBoldItalic = loadFont(`assets/fonts/Atkinson-Hyperlegible-BoldItalic-102.ttf`);
-  atkinsonItalic = loadFont(`assets/fonts/Atkinson-Hyperlegible-Italic-102.ttf`);
-  atkinsonRegular = loadFont(`assets/fonts/Atkinson-Hyperlegible-Regular-102.ttf`);
   lcdFont = loadFont(`assets/fonts/LCD-U___.TTF`)
 
   //basic scene (background music)
@@ -111,7 +117,6 @@ function preload() {
   employeeFilterOriginalImg = loadImage(`assets/images/employee_filterOriginal.png`);
   employeeFilterNeonImg = loadImage(`assets/images/employee_filterNeon.png`);
   employeeFilterInvertedImg = loadImage(`assets/images/employee_filterInverted.png`);
-
 
   //Changing room imgs
   changingRoomBackgroundImg = loadImage(`assets/images/changingRoomBackgroundImg.png`)
@@ -136,38 +141,40 @@ function preload() {
 
 
 /**
-Description of setup
+Creates a canvas of 800,600 and fill it with a base pink background just to be safe.
+Sets currentChangingRoom as 'Changing room', which means no designated avatar or appropriate clothings to choose from yet.
+Sets currentState as StartPage to start from the beginning of the game (1st scene)
 */
 function setup() {
   //create a canvas and set its default background color
   createCanvas(defaultParameters.canvasWidth, defaultParameters.canvasHeight);
   background(defaultParameters.bg.r, defaultParameters.bg.g, defaultParameters.bg.b)
 
-
+  //set current changing room as a 'skeleton' changing room with nothing assigned
   currentChangingRoom = new ChangingRoom(); //Can be FemaleChangingRoom (with female avatar and feminine appropriate clothes), MaleChangingRoom (with male avatar and masculine apporpriate clothes) or ChangingRoom (with no avatar or appropriate clothes assigned yet)
-  currentState = new ChoosingSection(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
+
+  //set CurrentState as StartPage to start at the beginning of the narrative
+  currentState = new StartPage(); //can be Intro, IntroDialog, TransitionInsideStore, IntroEmployee, ChoosingSection, TransitionToChangingRoom, InTheChangingRoom(intermission)
 
 }
 
 
 /**
-Description of draw()
+Run both current changing room and current state' update() method every frame
 */
 function draw() {
-  if (currentState.changingRoomOpened === true) {
-    currentChangingRoom.update();
+  if (currentState.changingRoomOpened === true) //Process only if changing room has been set to true in the current scene player is in
+  {
+    currentChangingRoom.update(); //run the current changing room update() method every frame
   }
-  currentState.update();
-
+  currentState.update(); //run the current state update() method every frame
 }
 
+
+//Run currentChangingRoom or currentState's mousePressed() method when mousePressed() is triggered
 function mousePressed() {
-  currentState.mousePressed();
-  // if (currentState.changingRoomOPened === true) {
-  currentChangingRoom.mousePressed();
-  // }
+  if (currentState.changingRoomOPened === true) { //Process only if changing room has been set to true in the current scene player is in
+    currentChangingRoom.mousePressed(); //run the current changing room mousePressed() method every time mousePressed()
+  }
+  currentState.mousePressed(); //run the current state's mousePressed() method every time mousePressed()
 }
-
-// function mouseReleased() {
-//   currentChangingRoom.mouseReleased()
-// }

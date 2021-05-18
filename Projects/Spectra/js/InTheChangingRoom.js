@@ -25,10 +25,9 @@ class InTheChangingRoom extends Dialog {
     this.changingRoomOpened = true;
   }
 
+  //runs every frame
   update() {
-    super.update();
-
-    //+ when an inappropriate choice of clothes is dropped on the avatar, it leads to microaggression 1 if it hasn't already been played. If it has, then it geos on to micro 2.
+    super.update(); //Runs the super class update() method
   }
 
 
