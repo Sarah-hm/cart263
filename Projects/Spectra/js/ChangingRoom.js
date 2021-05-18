@@ -27,8 +27,9 @@ class ChangingRoom {
       }
     }
 
+    //Declare every clothes wit a given image, width, height and gender
     this.clothes = {
-      created: false,
+      created: false, //declare if clothes have already been created to create them only once
       imageMode: CENTER,
       utilityPants: {
         img: utilityPantsImg,
@@ -92,21 +93,22 @@ class ChangingRoom {
       }
     }
 
-
-
+    //Declare the constrains of the masculine Section (masculine clothings will wandered inside)
     this.masculineSection = {
         borderRight: width - 50,
         borderLeft: width / 5 * 3 + 50,
-
       },
+
+      //Declare the constrains of the feminine Section (feminine clothings will wandered inside)
       this.feminineSection = {
         borderRight: width / 5 * 2 - 50,
         borderLeft: 50
       }
 
+    //Declare the vertical constrain of both masculine and feminine sections
     this.verticalBorder = 40;
 
-
+    //Declare two arrays of clothings, masculine (displayed to the right) and feminine(displayed to the left)
     this.masculineClothings = [this.clothes.utilityPants, this.clothes.tShirt, this.clothes.manShirt, this.clothes.parka, this.clothes.formalPants];
     this.feminineClothings = [this.clothes.bodysuit, this.clothes.jeanSkirt, this.clothes.turtleNeck, this.clothes.overallDress, this.clothes.womanShirt];
 
@@ -134,41 +136,41 @@ class ChangingRoom {
       lvl1: {
         on: false, // Turns true when a new microaggression is played
         filter: {
-          threshold: 255,
-          triggerThreshold: 0.0,
-          timeApplied: 0
+          threshold: 255, //numbers of colors to average all colors to
+          triggerThreshold: 0.0, //chances of of triggering filter
+          timeApplied: 0 //time the filter will be applied in millisecnds
         }
       },
       lvl2: {
         on: false,
         filter: {
-          threshold: 255,
-          triggerThreshold: 0,
-          timeApplied: 0
+          threshold: 255, //numbers of colors to average all colors to
+          triggerThreshold: 0, //chances of of triggering filter
+          timeApplied: 0 //time the filter will be applied in millisecnds
         }
       },
       lvl3: {
         on: false,
         filter: {
-          threshold: 10,
-          triggerThreshold: 0.02,
-          timeApplied: 400
+          threshold: 10, //numbers of colors to average all colors to
+          triggerThreshold: 0.02, //chances of of triggering filter
+          timeApplied: 400 //time the filter will be applied in millisecnds
         }
       },
       lvl4: {
         on: false,
         filter: {
-          threshold: 4,
-          triggerThreshold: 0.04,
-          timeApplied: 500
+          threshold: 4, //numbers of colors to average all colors to
+          triggerThreshold: 0.04, //chances of of triggering filter
+          timeApplied: 500 //time the filter will be applied in millisecnds
         }
       },
       lvl5: {
         on: false,
         filter: {
-          threshold: 3,
-          triggerThreshold: 0.05,
-          timeApplied: 700
+          threshold: 3, //numbers of colors to average all colors to
+          triggerThreshold: 0.05, //chances of of triggering filter
+          timeApplied: 700 //time the filter will be applied in millisecnds
         }
       },
     }
@@ -184,6 +186,7 @@ class ChangingRoom {
 
   }
 
+  //runs every frame
   update() {
     this.setBackground();
     this.displayAvatar();
@@ -192,9 +195,8 @@ class ChangingRoom {
     this.setFilter();
   }
 
+  //If the game has started to be broken, set a filter with values given by the level of brokenness of the game
   setFilter() {
-
-
     if (this.brokenness.lvl1.on) //Only process if brokenness lvl 1 has been toggled (meaning filter doesn't display at all unless at least lvl1 is true)
     {
       if (this.brokenness.lvl1.on && !this.brokenness.lvl2.on) //process only if brokenness lvl1 is turned on (if microaggression 1 has played), but not lvl2 yet.
@@ -245,7 +247,7 @@ class ChangingRoom {
     }
   }
 
-
+  //Display background, with or without filter
   setBackground() {
     push();
     imageMode(this.background.imageMode);
@@ -253,6 +255,7 @@ class ChangingRoom {
     pop();
   }
 
+  //Display the avatar at the center of the canvas;
   displayAvatar() {
     push();
     imageMode(this.avatar.imageMode);
@@ -260,6 +263,7 @@ class ChangingRoom {
     pop();
   }
 
+  //Create a garment everytime it is called in initializegarments() method for all masculine and feminine clothings, with a given x, y, img, widht, height and gender
   createGarment(x, y, img, width, height, gender) {
     let garment = {
       x: x,
@@ -279,14 +283,17 @@ class ChangingRoom {
     return garment
   }
 
+  //If the clothes have not been created yet, create them and then turn created true so they only initialize once at a random position
   initializeGarments() {
-    if (this.clothes.created === false) {
-
-      for (let i = 0; i < this.masculineClothings.length; i++) {
+    if (this.clothes.created === false) //Process only if clothes haven't already been created
+    {
+      for (let i = 0; i < this.masculineClothings.length; i++) //For all the masculine clothings array, create a garment with a random X and Y position
+      {
         this.masculineGarments[i] = this.createGarment(random(this.masculineSection.borderLeft, this.masculineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.masculineClothings[i].img, this.masculineClothings[i].width, this.masculineClothings[i].height, this.masculineClothings[i].gender)
       }
 
-      for (let i = 0; i < this.feminineClothings.length; i++) {
+      for (let i = 0; i < this.feminineClothings.length; i++) //For all the feminine clothings array, create a garment with a random X and Y position
+      {
         this.feminineGarments[i] = this.createGarment(random(this.feminineSection.borderLeft, this.feminineSection.borderRight), random(0 + this.verticalBorder, height - this.verticalBorder), this.feminineClothings[i].img, this.feminineClothings[i].width, this.feminineClothings[i].height, this.feminineClothings[i].gender)
       }
       //Set clothes to created so this loop only runs once
@@ -294,6 +301,7 @@ class ChangingRoom {
     }
   }
 
+  //Display the garments (masculine and feminine)
   displayGarments(garment) {
     push()
     imageMode(this.clothes.imageMode)
@@ -303,36 +311,45 @@ class ChangingRoom {
 
   //Animate the masculine garments constrained to the right side of the avatar to wiggle randomly, in the masculine section of the store.
   animateMasculineGarments(garment) {
-    if (!garment.dragged && !garment.onAvatar) {
+    if (!garment.dragged && !garment.onAvatar) //If the garment is not being dragged or is not on the avatar, constrain it to the right of the avatar and make it wiggle
+    {
+      //constrain it to the right of the avatar
       garment.x = constrain(garment.x, this.masculineSection.borderLeft, this.masculineSection.borderRight)
       garment.y = constrain(garment.y, 0 + this.verticalBorder, height - this.verticalBorder)
 
+      //make garment change direction 5% of the time
       let change = random();
       if (change < 0.05) {
         garment.vx = random(-garment.speed, garment.speed);
         garment.vy = random(-garment.speed, garment.speed);
       }
+
+      //animate garment by adding its velocity to its position
       garment.x += garment.vx;
       garment.y += garment.vy;
     }
   }
   //Animate the feminine garments constrained to the left side of the avatar to wiggle randomly, in the feminine section of the store.
   animateFeminineGarments(garment) {
-    if (!garment.dragged && !garment.onAvatar) {
+    if (!garment.dragged && !garment.onAvatar) //If the garment is not being dragged or is not on the avatar, constrain it to the left of the avatar and make it wiggle
+    {
+      //constrain it to the left of the avatar
       garment.x = constrain(garment.x, this.feminineSection.borderLeft, this.feminineSection.borderRight)
       garment.y = constrain(garment.y, 0 + this.verticalBorder, height - this.verticalBorder)
 
+      //make garment change direction 5% of the time
       let change = random();
       if (change < 0.05) {
         garment.vx = random(-garment.speed, garment.speed);
         garment.vy = random(-garment.speed, garment.speed);
       }
+      //animate garment by adding its velocity to its position
       garment.x += garment.vx;
       garment.y += garment.vy;
     }
   }
 
-
+  //Make the garment bigger and draggable when hovering over it
   hoverGarments(garment) {
     if (!this.clothesDragged) { //Only process if another garment is not already being dragged
       if ( //the mouse is inside of the garment's image bounds, toggle the hover effect (bigger img ratio) for only one of the garment
@@ -353,7 +370,7 @@ class ChangingRoom {
     }
   }
 
-  //Make garment draggable
+  //Drag garment based on the mouseX and mouseY position when garment is being hovered over and mouse is pressed
   dragGarments(garment) {
     if (garment.hovered && mouseIsPressed) { //if the garment is being hovered over and player presses mouse
       garment.x = mouseX; //garment position's X will become mouseX position
@@ -407,7 +424,7 @@ class ChangingRoom {
     }
   }
 
-  //If the garment is either hovered over, being dragged or on the avatar, it's ratio should be of 1.
+  //If the garment is either hovered over, being dragged or on the avatar, its ratio should be of 1.
   //Otherwise, it's size ratio should be 50% smaller
   defineImgRatio(garment) {
     if (garment.hovered || garment.dragged || garment.onAvatar) {
@@ -417,9 +434,10 @@ class ChangingRoom {
     }
   }
 
+  //Execute all the methods to create, animate, hover, drag, and put garments on avatar as well as display them
   executeGarments() {
+    //For the entire masculine section of clothing (to the right)
     for (let i = 0; i < this.masculineGarments.length; i++) {
-
 
       this.animateMasculineGarments(this.masculineGarments[i]);
       this.hoverGarments(this.masculineGarments[i]);
@@ -429,6 +447,7 @@ class ChangingRoom {
       this.displayGarments(this.masculineGarments[i]);
     }
 
+    //For the entire feminine section of clothing (to the left)
     for (let i = 0; i < this.feminineGarments.length; i++) {
 
       this.animateFeminineGarments(this.feminineGarments[i]);
@@ -440,8 +459,11 @@ class ChangingRoom {
     }
   }
 
-  breakGame() {
 
+  //If player has not chosen to appropriate clothes for their avatar, the game will trigger a microaggression scene.
+  //If the player has already been through that scene, the game will play the next one and so forth.
+  //If the player has played all the scenes, they will break the game completely and will not be able to keep playing
+  breakGame() {
     //If the first microaggression wasn't played, play it
     if (!this.microaggressions.firstWasPlayed) {
       this.playFirstMicroaggression();
@@ -498,6 +520,7 @@ class ChangingRoom {
     currentState = new FifthMicroAggression();
   }
 
+  //Turn currentState to Ending to play the last scene;
   playEnding() {
     currentState = new Ending();
   }

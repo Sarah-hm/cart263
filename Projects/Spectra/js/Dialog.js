@@ -16,12 +16,13 @@ class Dialog extends Scene {
         fadeOut: undefined
       },
 
+      // ===== Everything that has to do with dialog box : title, text, buttons, speaker, animation, backgroudn rectangles.... =====
       this.dialogBox = {
-        closing: false,
-        closed: false,
+        closing: false, //Declare if the dialog box is closing, set to false to start
+        closed: false, //Declare if the dialog box is closed, set to false to start
         // ===== title box =====
         titleBox: {
-          string: undefined,
+          string: undefined, //Defined in the child class via JSON file
           font: alienEncounterFont,
           textSize: 30,
           rectMode: CORNER,
@@ -42,32 +43,35 @@ class Dialog extends Scene {
             x: undefined,
             y: undefined
           },
+          //When fading in the title box, animation should stop at this position
           landingPosition: {
             x: width / 10,
             y: height / 3 * 2
           },
+          slideInSpeed: -5, //and move up -5 per frame
+          //When fading out the title box, animation should stop at this position
           exitPosition: {
             x: width / 10,
             y: height + 50
           },
+          slideOutSpeed: 10, //and move down 10 per frame
+          //background rectangle is minty blue
           backgroundFill: {
             r: 191,
             g: 225,
             b: 229
           },
+          //text color is fuschia
           textFill: {
             r: 230,
             g: 36,
             b: 133
           },
-          slideInSpeed: -5,
-          slideOutSpeed: 10,
-          easing: 0.5,
         },
         // ===== text box =====
         textBox: {
-          fullTextDisplayed: false,
-          string: undefined,
+          fullTextDisplayed: false, //Declare if the text has been fully displayed; turned to false to start
+          string: undefined, //Defined in the child class via JSON file
           font: lcdFont,
           textSize: 14,
           rectMode: CENTER,
@@ -80,39 +84,44 @@ class Dialog extends Scene {
             x: width / 2,
             y: height + 150,
           },
+          //Offset values used to calculate the textPosition based from the textBox.position in display method
           textOffset: {
             x: -width / 2.8,
             y: -40,
             x2: width / 5,
             y2: 100
           },
+          //Defines the text box within the rectangle of the textBox object; defined in the display text Box method by offseting from textBox position
           textPosition: {
             x: undefined,
             y: undefined,
             x2: undefined,
             y2: undefined
           },
+          //When fading in the dialog box, animation should stop at this position
           landingPosition: {
             x: width / 2,
             y: height / 7 * 6
           },
+          slideInSpeed: -5, //and move up -5 per frame
+          //when fading out the dialog box, animation should stop at this position
           exitPosition: {
             x: width / 2,
             y: height + 150
           },
+          slideOutSpeed: 5, //and move down 5 per frame
+          //background color of the textBox is purple-ish lilac
           backgroundFill: {
             r: 143,
             g: 140,
             b: 243
           },
+          //Text color is black
           textFill: {
             r: 0,
             g: 0,
             b: 0
           },
-          slideInSpeed: -5,
-          slideOutSpeed: 5,
-          easing: 0.5,
         },
         // ===== Speaker =====
         speaker: {
@@ -126,12 +135,13 @@ class Dialog extends Scene {
             x: width + 150,
             y: height / 3 * 2
           },
+          //When fading in the dialog box, animation should stop at this position
           landingPosition: {
             x: width / 4 * 3.3,
             y: height / 3 * 2
           },
-          slideInSpeed: -5,
-          slideOutSpeed: 10
+          slideInSpeed: -5, //and it should go left by -5 per frame
+          slideOutSpeed: 10 //if fading out, image should go right 10 per frame
         },
 
         // ===== Buttons and answers variables =====
@@ -145,29 +155,34 @@ class Dialog extends Scene {
             width: width / 3.2,
             height: height / 15
           },
+          //The buttons are set to always have an individually specific but unchanging X position, but a changing y position (go up and down)
           position: {
             //x defined under specific answer a or b
             y: height / 10 * 9.5
           },
           exitPosition: {
-            //xdefined under specific answer a or b (always the same)
+            //x defined under specific answer a or b (always the same)
             y: height + 180
           },
+          //fill of the button is pink
           fill: {
             r: 230,
             g: 36,
             b: 133
           },
+          //stroke around button is purple-ish lilac
           strokeFill: {
             r: 143,
             g: 140,
             b: 243
           },
+          //When hovered over, buttons because cyan
           hoverFill: {
             r: 59,
             g: 205,
             b: 204
           },
+          //text color is black
           textFill: {
             r: 0,
             g: 0,
@@ -175,15 +190,13 @@ class Dialog extends Scene {
           },
           a: {
             x: width / 3,
-            //string defined in child class
-            string: undefined,
-            toggle: false
+            string: undefined, //defined in child class via JSON file
+            toggle: false //Defines if button a has been toggled; causes reaction to button a
           },
           b: {
             x: width / 3 * 2,
-            //string defined in child class
-            string: undefined,
-            toggle: false
+            string: undefined, //defined in child class via JSON file
+            toggle: false //Defines if button b has been toggled; causes reaction to button b
           }
         }
       }
@@ -203,59 +216,51 @@ class Dialog extends Scene {
       lvl1: {
         on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
         employeeFilter: {
-          triggerThreshold: 0.01,
-          timeApplied: 300,
-          filterChangeInterval: 300
+          triggerThreshold: 0.01, //1% chance of having employee filter be true
+          timeApplied: 300, // milliseconds filter will be true
+          filterChangeInterval: 300 //milliseconds until filter changes
         }
       },
       lvl2: {
         on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
         employeeFilter: {
-          triggerThreshold: 0.03,
-          timeApplied: 500,
-          filterChangeInterval: 475
+          triggerThreshold: 0.03, //3% chance of having employee filter be true
+          timeApplied: 500, //milliseconds
+          filterChangeInterval: 475 //milliseconds until filter changes
         }
       },
       lvl3: {
         on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
         employeeFilter: {
-          triggerThreshold: 0.1,
-          timeApplied: 500,
-          filterChangeInterval: 450
+          triggerThreshold: 0.1, //1% chance of having employee filter be true
+          timeApplied: 500, //milliseconds
+          filterChangeInterval: 450 //milliseconds until filter changes
         }
       },
       lvl4: {
         on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
         employeeFilter: {
-          triggerThreshold: 0.4,
-          timeApplied: 500,
-          filterChangeInterval: 400
+          triggerThreshold: 0.4, //40% chances of
+          timeApplied: 500, //milliseconds
+          filterChangeInterval: 400 //milliseconds until filter changes
         }
       },
       lvl5: {
         on: false, //Defined to true in the corresponding microaggression dialog (toggled from the ChangingRoom.js brokenness level)
         employeeFilter: {
-          triggerThreshold: 0.8,
-          timeApplied: 600,
-          filterChangeInterval: 350
+          triggerThreshold: 0.8, //80% chances of
+          timeApplied: 600, //milliseconds
+          filterChangeInterval: 350 //milliseconds until filter changes
         }
       },
     }
 
     //employee filter images
     this.employeeImgFilters = [employeeFilterOriginalImg, employeeFilterNeonImg, employeeFilterInvertedImg];
-
-    //Dumpster
-
-    this.typewriter = {
-      fullText: ``,
-      displayText: ``,
-      nextChar: 0,
-      speed: 50,
-      interval: undefined,
-    }
   }
 
+
+  //Runs every frame
   update() {
     super.update();
     this.setSceneParameters();
@@ -267,11 +272,11 @@ class Dialog extends Scene {
     this.displayAnswerButtons();
   }
 
+  //Reset some parameters if fadeIn is not true in this specific scene (set position as the landing position without animation)
   setSceneParameters() {
-
     //If the scene parameters aren't already set, set them (prevents from not being able to fade out)
     if (!this.dialogParametersSet) {
-      //if this scene those have a fade-in animation, set the position the landing position from the start
+      //if this scene doesn't have a fade-in animation, set the position to the landing position from the beginning
       if (!this.scene.fadeIn && !this.dialogBox.closing) {
         this.dialogBox.textBox.position.x = this.dialogBox.textBox.landingPosition.x;
         this.dialogBox.textBox.position.y = this.dialogBox.textBox.landingPosition.y;
@@ -282,6 +287,7 @@ class Dialog extends Scene {
     }
   }
 
+  //If the child class has set background to true, display background as an image
   setBackgroundImg() {
     if (this.scene.background) {
       push();
@@ -291,6 +297,8 @@ class Dialog extends Scene {
     }
   }
 
+
+  //If the child class has set fadeIn to true, fade in the dialog Box (and everything it contains except speaker)
   fadeInDialogBox() {
     //Only process if the fade In dialog parameter is toggled in the child class
     if (this.scene.fadeIn) {
@@ -298,7 +306,6 @@ class Dialog extends Scene {
       if (this.dialogBox.titleBox.position.y > this.dialogBox.titleBox.landingPosition.y) {
         this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideInSpeed
       }
-
       //If the y position of the textBox box is not = to its landing position, make it go up by slideInSpeed/frame
       if (this.dialogBox.textBox.position.y > this.dialogBox.textBox.landingPosition.y) {
         this.dialogBox.textBox.position.y += this.dialogBox.textBox.slideInSpeed
@@ -306,16 +313,20 @@ class Dialog extends Scene {
     }
   }
 
-
+  //If the child class has set fadeOut to true, fade out the dialog Box (and everything it contains except speaker)
   fadeOutDialog() {
-    if (this.scene.fadeOut) {
-      if (this.dialogBox.closing) {
-        //If title box is not completely off the canvas (at exit position), it should continue to go down
+    if (this.scene.fadeOut) //Process if fadeout was activated in the child class
+    {
+      if (this.dialogBox.closing) //Process if dialog Box should be closing (because button a or b was toggled)
+      {
+        //If title box is not completely off the canvas (at exit position), it should continue to go down with textBox and answerBox
         if (this.dialogBox.titleBox.position.y <= this.dialogBox.titleBox.exitPosition.y) {
           this.dialogBox.titleBox.position.y += this.dialogBox.titleBox.slideOutSpeed;
           this.dialogBox.textBox.position.y += this.dialogBox.titleBox.slideOutSpeed;
           this.dialogBox.answerButton.position.y += this.dialogBox.titleBox.slideOutSpeed;
-        } else if (this.dialogBox.titleBox.position.y >= this.dialogBox.titleBox.exitPosition.y) {
+        }
+        //Otherwise, if the titleBox is at its exit position, dialogBox.closed is turn true
+        else if (this.dialogBox.titleBox.position.y >= this.dialogBox.titleBox.exitPosition.y) {
           this.dialogBox.closed = true; // Set dialog Box as closed to toggle either button a or b;
         }
       }
@@ -335,8 +346,10 @@ class Dialog extends Scene {
     }
   }
 
+  //If the child class has set dialogBox to true, display everything dialogBox contains (except speaker)
   displayDialogBox() {
-    if (this.scene.dialogBox) {
+    if (this.scene.dialogBox) //Process if child class has set dialogBox to true
+    {
       //calculate position of title string based on position of title box and text offset
       this.dialogBox.titleBox.textPosition.x = this.dialogBox.titleBox.position.x + this.dialogBox.titleBox.textOffset.x;
       this.dialogBox.titleBox.textPosition.y = this.dialogBox.titleBox.position.y + this.dialogBox.titleBox.textOffset.y;
@@ -372,17 +385,15 @@ class Dialog extends Scene {
       text(this.dialogBox.titleBox.string, this.dialogBox.titleBox.textPosition.x, this.dialogBox.titleBox.textPosition.y);
       pop()
 
-      //display dialog Text in a type-writer effet
       this.displayDialogText();
     }
   }
 
-
+  //Display text only when textBox position is on its landing Position (so not when fading in or fading out)
   displayDialogText() {
-    //If the box is not on its landing position, don't show the text yet
+    //If the box is not on its landing position, don't show the text
     if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y) {
-      //typewriter effect to be added, when it will be add, the fullTextDisplayed will be turned off until typewriter is completed
-      this.dialogBox.textBox.fullTextDisplayed = true;
+      this.dialogBox.textBox.fullTextDisplayed = true //Defines to true so buttons can appear (made that way to add a typewriter effect in the future)
       //display text
       push();
       textAlign(LEFT);
@@ -394,17 +405,18 @@ class Dialog extends Scene {
     }
   }
 
+  //If child class has set speaker to true, display a speaker on the right of the dialog box
   displaySpeaker() {
-
+    //will process if child class has set speaker to true
     if (this.scene.speaker) {
       // will process if fade in dialog has been toggled in child class
       if (this.scene.fadeIn) {
         //will process if the y position of textBox is not as high as its landing position (smaller or equal to)
-        if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y)
-          //position changes until landing position is obtained;
-          if (this.dialogBox.speaker.position.x > this.dialogBox.speaker.landingPosition.x) {
-            this.dialogBox.speaker.position.x += this.dialogBox.speaker.slideInSpeed
-          }
+        if (this.dialogBox.textBox.position.y <= this.dialogBox.textBox.landingPosition.y) {}
+        //position changes until landing position is obtained;
+        if (this.dialogBox.speaker.position.x > this.dialogBox.speaker.landingPosition.x) {
+          this.dialogBox.speaker.position.x += this.dialogBox.speaker.slideInSpeed
+        }
       }
       //If fadeIn is not toggled and that dialogBox isn't fading out (closing), make the speaker position the same as landing Position.
       else if (!this.scene.fadeIn && !this.dialogBox.closing) {
@@ -487,9 +499,6 @@ class Dialog extends Scene {
       );
       pop();
     }
-
-
-
   }
 
 
@@ -511,12 +520,14 @@ class Dialog extends Scene {
             mouseY <
             this.dialogBox.answerButton.position.y + this.dialogBox.answerButton.size.height / 2
           ) {
+            //fill with hovering color if mouseX and mouseY and inside the bounds of answerButton
             fill(
               this.dialogBox.answerButton.hoverFill.r,
               this.dialogBox.answerButton.hoverFill.g,
               this.dialogBox.answerButton.hoverFill.b
             );
-          } else {
+          } //Otherwise fill with default fill color
+          else {
             fill(
               this.dialogBox.answerButton.fill.r,
               this.dialogBox.answerButton.fill.g,
@@ -525,11 +536,13 @@ class Dialog extends Scene {
           }
           rectMode(CENTER);
           strokeWeight(this.dialogBox.answerButton.strokeWeight);
+          //draw a stroke with the stroke fill color
           stroke(
             this.dialogBox.answerButton.strokeFill.r,
             this.dialogBox.answerButton.strokeFill.g,
             this.dialogBox.answerButton.strokeFill.b
           );
+          //display rectangle at given x position
           rect(
             this.answerChoices[i].x,
             this.dialogBox.answerButton.position.y,
@@ -560,11 +573,13 @@ class Dialog extends Scene {
   }
 
 
-
+  //Here to be polite. Everything they do is in child class
   toggleButtonA() {}
 
   toggleButtonB() {}
 
+
+  //if mouse is pressed on button a or button b, dialog box should fade out (if fade out is true) and it should trigger the reaction to the corresponding button
   mousePressed() {
     //if pressed button a, give function to toggle to reaction (new scene)
     if (mouseX > this.dialogBox.answerButton.a.x - this.dialogBox.answerButton.size.width / 2 &&
@@ -596,6 +611,4 @@ class Dialog extends Scene {
       }
     }
   }
-
-
 }
